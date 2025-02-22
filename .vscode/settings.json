@@ -2,8 +2,8 @@
   "editor.formatOnSave": true,
   "biome.enabled": true,
   "editor.codeActionsOnSave": {
-    "quickfix.biome": "always",
-    "source.organizeImports.biome": "always"
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"

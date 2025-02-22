@@ -6,11 +6,20 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"ignoreUnknown": false,
-		"ignore": ["node_modules", ".next", ".vscode", "public"]
+		"ignoreUnknown": true,
+		"ignore": [
+			"**/node_modules/*",
+			"**/.next/*",
+			"**/.vscode/*",
+			"**/public/*",
+			"package-lock.json"
+		]
 	},
 	"formatter": {
-		"enabled": true
+		"enabled": true,
+		"lineWidth": 80,
+		"indentWidth": 2,
+		"indentStyle": "tab"
 	},
 	"organizeImports": {
 		"enabled": true
@@ -18,7 +27,29 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"nursery": {
+				"noImgElement": "error"
+			},
+			"performance": { "noAccumulatingSpread": "off" },
+			"style": {
+				"noParameterAssign": "off",
+				"useImportType": "error"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "warn",
+				"noDuplicateTestHooks": "error",
+				"noExportsInTest": "error",
+				"noFocusedTests": "error",
+				"noThenProperty": "warn"
+			},
+			"correctness": {
+				"noUndeclaredVariables": "error",
+				"noUnusedImports": "error",
+				"noUnusedVariables": "error",
+				"useExhaustiveDependencies": "warn",
+				"useHookAtTopLevel": "error"
+			}
 		}
 	},
 	"javascript": {
@@ -27,6 +58,12 @@
 			"jsxQuoteStyle": "single",
 			"semicolons": "asNeeded",
 			"trailingCommas": "es5"
+		}
+	},
+	"json": {
+		"parser": {
+			"allowComments": true,
+			"allowTrailingCommas": true
 		}
 	}
 }
