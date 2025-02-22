@@ -10,10 +10,7 @@
 		"ignore": ["node_modules", ".next", ".vscode", "public"]
 	},
 	"formatter": {
-		"enabled": true,
-		"indentStyle": "tab",
-		"lineWidth": 120,
-		"indentWidth": 2
+		"enabled": true
 	},
 	"organizeImports": {
 		"enabled": true
