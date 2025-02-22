@@ -29,15 +29,7 @@
     "rules": {
       "recommended": true,
       "nursery": {
-        "noImgElement": "error",
-        "useSortedClasses": {
-          "level": "warn",
-          "options": {
-            "attributes": ["classList"],
-            "functions": ["clsx", "cva"]
-          },
-          "fix": "safe"
-        }
+        "noImgElement": "error"
       },
       "performance": { "noAccumulatingSpread": "off" },
       "style": {
