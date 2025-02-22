@@ -40,7 +40,7 @@ export const Icon: React.FC<IconProps> = ({
 }) => {
   const IconComponent = getIconComponent(name)
 
-  if(!IconComponent) {  
+  if (!IconComponent) {
     return null
   }
 
