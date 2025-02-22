@@ -243,11 +243,6 @@
   }
 }
 
-.icon {
-  display: inline-block;
-  vertical-align: middle;
-
-  path {
-    fill: currentColor;
-  }
+.icon path {
+  fill: currentColor;
 }

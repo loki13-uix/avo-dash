@@ -1,11 +1,9 @@
-import { Button } from '@/shared/components/atoms/button'
+import { Icon } from '@/shared/components/atoms/icon'
 
 export default function Home() {
   return (
     <div className=''>
-      <Button icon='test' type='button' variant={'danger'}>
-        Hello
-      </Button>
+      <Icon name='test' className='size-24' />
     </div>
   )
 }

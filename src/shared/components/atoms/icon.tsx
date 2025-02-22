@@ -31,7 +31,7 @@ const getIconComponent = (
 
 export const Icon: React.FC<IconProps> = ({
   name,
-  size = 20,
+  size,
   color,
   className,
   style,
@@ -46,7 +46,7 @@ export const Icon: React.FC<IconProps> = ({
         width={size}
         height={size}
         fill={color}
-        className={cn('inline-block align-middle', className)}
+        className={cn('icon inline-block align-middle', className)}
         style={style}
         {...props}
       />
