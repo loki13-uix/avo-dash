@@ -11,15 +11,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         standard:
-          'bg-purple-10 text-white hover:bg-purple-9 disabled:bg-purple-10 disabled:text-purple-7 [&_svg]:fill-white',
+          "bg-purple-10 text-white hover:bg-purple-9 disabled:bg-purple-10 disabled:text-purple-7",
         secondary:
-          'border border-grey-12 bg-white text-grey-13 hover:border hover:border-grey-11 hover:bg-transparent hover:text-grey-12 disabled:border-grey-8 disabled:text-grey-5 [&_svg]:fill-grey-13',
-        'secondary-purple':
-          'border border-purple-10 bg-transparent text-purple-10 hover:bg-transparent hover:text-purple-9 disabled:border-purple-4 disabled:text-purple-3 [&_svg]:fill-purple-9',
+          "border bg-white text-grey-13 border-grey-12 hover:border hover:border-grey-11 hover:bg-transparent hover:text-grey-12 disabled:border-grey-8 disabled:text-grey-5",
+        "secondary-purple":
+          "bg-transparent text-purple-10 border border-purple-10 hover:bg-transparent hover:text-purple-9 disabled:border-purple-4 disabled:text-purple-3",
         success:
-          'bg-green-10 text-white hover:bg-green-9 disabled:bg-green-11 disabled:text-green-6 [&_svg]:fill-white',
+          "bg-green-10 text-white hover:bg-green-9 disabled:bg-green-10 disabled:text-green-6",
         danger:
-          'bg-red-10 text-white hover:bg-red-9 disabled:bg-red-10 disabled:text-red-6 [&_svg]:fill-white disabled:[&_svg]:fill-black',
+          "bg-red-10 text-white hover:bg-red-9 disabled:bg-red-10 disabled:text-red-6",
       },
     },
     defaultVariants: {
@@ -30,12 +30,15 @@ const buttonVariants = cva(
 
 const iconVariants = cva('fill-current', {
   variants: {
-    variant: {
-      standard: 'fill-white group-disabled:fill-white',
-      secondary: 'fill-grey-13',
-      'secondary-purple': 'fill-purple-9',
-      success: 'fill-white',
-      danger: 'fill-white',
+      variant: {
+      standard: "fill-white group-disabled:fill-purple-7",
+
+      secondary:
+        "fill-grey-13 group-hover:fill-grey-12 group-disabled:fill-grey-5",
+      "secondary-purple":
+        "fill-purple-10 group-hover:fill-purple-9 group-disabled:fill-purple-3",
+      success: "fill-white group-disabled:fill-green-6",
+      danger: "fill-white group-disabled:fill-red-6",
     },
   },
   defaultVariants: {

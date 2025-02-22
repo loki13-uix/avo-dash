@@ -40,6 +40,10 @@ export const Icon: React.FC<IconProps> = ({
 }) => {
   const IconComponent = getIconComponent(name)
 
+  if(!IconComponent) {  
+    return null
+  }
+
   return (
     <Suspense fallback={fallback}>
       <IconComponent
