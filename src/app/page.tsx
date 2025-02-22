@@ -1,12 +1,11 @@
+import { Button } from '@/shared/components/atoms/button'
+
 export default function Home() {
   return (
     <div className=''>
-      <button
-        type='button'
-        className='rounded-md bg-purple-primary px-4 py-2 text-white'
-      >
+      <Button icon='test' type='button' variant={'danger'}>
         Hello
-      </button>
+      </Button>
     </div>
   )
 }

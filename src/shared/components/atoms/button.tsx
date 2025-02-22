@@ -1,7 +1,9 @@
+import type { IconName } from '@/constants/icons'
 import { cn } from '@/lib/utils'
 import { Button as ShadcnButton } from '@/shared/components/ui/button'
 import { type VariantProps, cva } from 'class-variance-authority'
 import type * as React from 'react'
+import { Icon } from './icon'
 
 const buttonVariants = cva(
   'group flex items-center gap-2 rounded-lg font-medium transition-colors',
@@ -44,7 +46,7 @@ const iconVariants = cva('fill-current', {
 interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  icon?: React.ElementType
+  icon?: IconName
 }
 
 const Button = ({
@@ -54,13 +56,14 @@ const Button = ({
   icon,
   ...props
 }: ButtonProps) => {
-  const Icon = icon
   return (
     <ShadcnButton
       className={cn(buttonVariants({ variant }), className)}
       {...props}
     >
-      {Icon ? <Icon className={cn(iconVariants({ variant }))} /> : null}
+      {icon ? (
+        <Icon name={icon} className={cn(iconVariants({ variant }))} />
+      ) : null}
       {children}
     </ShadcnButton>
   )
