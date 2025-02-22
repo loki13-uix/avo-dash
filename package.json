@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "biome check . && next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_d416af5c3435c53"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.2",
@@ -35,6 +36,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "chromatic": "^11.25.2",
     "postcss": "^8",
     "storybook": "^8.5.8",
     "tailwindcss": "^4.0.8",
