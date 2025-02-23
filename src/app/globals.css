@@ -12,6 +12,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
+  --font-open-sans: "Open Sans", sans-serif;
+
   /* AVO THEME */
   /* Red Colors */
   --color-red-1: #fae7e7;
