@@ -1,9 +1,11 @@
-import { Icon } from '@/shared/components/atoms/icon'
+'use client'
+
+import Tree from '@/shared/components/atoms/tree'
 
 export default function Home() {
   return (
     <div className=''>
-      <Icon name='test' className='size-24' />
+      <Tree />
     </div>
   )
 }
