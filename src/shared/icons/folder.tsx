@@ -2,7 +2,7 @@ import type React from 'react'
 
 type Props = React.SVGProps<SVGSVGElement>
 
-const Folder = ({ width = '24', height = '24', ...props }: Props) => {
+const Folder = ({ width, height, ...props }: Props) => {
   return (
     <svg
       width={width}
