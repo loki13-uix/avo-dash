@@ -55,6 +55,7 @@ export const Default: Story = {
     children: 'This is a button',
     disabled: false,
     icon: 'plus-icon',
+    iconClassName: 'size-5',
   },
 }
 
@@ -63,6 +64,7 @@ export const Secondary: Story = {
     variant: 'secondary',
     children: 'This is a button',
     icon: 'plus-icon',
+    iconClassName: 'size-5',
   },
 }
 
@@ -71,6 +73,7 @@ export const SecondaryPurple: Story = {
     variant: 'secondary-purple',
     children: 'This is a button',
     icon: 'plus-icon',
+    iconClassName: 'size-5',
   },
 }
 
@@ -79,6 +82,7 @@ export const Success: Story = {
     variant: 'success',
     children: 'This is a button',
     icon: 'plus-icon',
+    iconClassName: 'size-5',
   },
 }
 
@@ -87,5 +91,6 @@ export const Danger: Story = {
     variant: 'danger',
     children: 'This is a button',
     icon: 'plus-icon',
+    iconClassName: 'size-5',
   },
 }
