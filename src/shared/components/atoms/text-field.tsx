@@ -1,12 +1,13 @@
 import { cn } from '@/lib/utils'
-import React from 'react'
+import type React from 'react'
 import { Input } from '../ui/input'
 import { Icon } from './icon'
 
-const TextField = React.forwardRef<
-  HTMLInputElement,
-  React.ComponentProps<'input'>
->(({ className, ...props }, ref) => {
+const TextField = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<'input'> & { ref?: React.Ref<HTMLInputElement> }) => {
   return (
     <div
       className={cn(
@@ -26,8 +27,6 @@ const TextField = React.forwardRef<
       />
     </div>
   )
-})
-
-TextField.displayName = 'TextField'
+}
 
 export default TextField
