@@ -45,7 +45,7 @@ export const Icon: React.FC<IconProps> = ({
       <IconComponent
         width={size}
         height={size}
-        fill={color}
+        color={color}
         className={cn('icon inline-block align-middle', className)}
         style={style}
         {...props}
