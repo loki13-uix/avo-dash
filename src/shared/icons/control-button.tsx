@@ -1,7 +1,7 @@
 import type React from 'react'
 
 type Props = React.SVGProps<SVGSVGElement>
-const ControlButton = ({ width = '24', height = '24', ...props }: Props) => {
+const ControlButton = ({ width, height, ...props }: Props) => {
   return (
     <svg
       width={width}

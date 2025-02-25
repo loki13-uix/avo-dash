@@ -2,15 +2,9 @@ import type React from 'react'
 
 type Props = React.SVGProps<SVGSVGElement>
 
-const Utilities = ({ width = '24', height = '24', ...props }: Props) => {
+const Utilities = ({ width, height, ...props }: Props) => {
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox='0 0 24 24'
-      fill='none'
-      {...props}
-    >
+    <svg width={width} height={height} viewBox='0 0 24 24' {...props}>
       <mask id='path-1-inside-1_1_452' fill='white'>
         <rect x='2' y='2' width='9.62963' height='9.63031' rx='0.541655' />
       </mask>
