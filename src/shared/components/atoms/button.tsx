@@ -6,7 +6,7 @@ import type * as React from 'react'
 import { Icon } from './icon'
 
 const buttonVariants = cva(
-  'group flex items-center gap-2 rounded-lg font-medium transition-colors',
+  'inline-flex items-center justify-center gap-2 rounded-sm font-medium transition-colors group',
   {
     variants: {
       variant: {
@@ -50,12 +50,14 @@ interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   icon?: IconName
+  iconClassName?: string | React.CSSProperties
 }
 
 const Button = ({
   className,
   variant,
   children,
+  iconClassName,
   icon,
   ...props
 }: ButtonProps) => {
@@ -65,7 +67,10 @@ const Button = ({
       {...props}
     >
       {icon ? (
-        <Icon name={icon} className={cn(iconVariants({ variant }))} />
+        <Icon
+          name={icon}
+          className={cn(iconVariants({ variant }), iconClassName)}
+        />
       ) : null}
       {children}
     </ShadcnButton>
