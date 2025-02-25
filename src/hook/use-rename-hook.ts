@@ -20,6 +20,14 @@ function useRename({
 
   const handleRename = (name: string) => {
     setNewName(name)
+    const element = ref.current
+    if (element) {
+      const renamingTextarea = element.querySelector('textarea')
+      if (renamingTextarea) {
+        const height = renamingTextarea.scrollHeight ?? 0
+        renamingTextarea.style.height = height > 0 ? `${height}px` : 'auto'
+      }
+    }
   }
 
   const handleCancel = () => {
@@ -63,6 +71,8 @@ function useRename({
         } else if (renamingTextarea) {
           renamingTextarea.focus()
           renamingTextarea.select()
+          const height = renamingTextarea.scrollHeight ?? 0
+          renamingTextarea.style.height = height > 0 ? `${height}px` : 'auto'
         }
       }
     }
