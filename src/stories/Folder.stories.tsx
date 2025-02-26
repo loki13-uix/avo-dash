@@ -12,7 +12,7 @@ const meta: Meta<typeof FolderItem> = {
     controls: {
       expanded: true,
       sort: 'requiredFirst',
-      include: ['name', 'isExpanded', 'canRename', 'isSelected', 'iconName'],
+      include: ['name', 'isExpanded', 'canRename', 'isSelected'],
     },
   },
   argTypes: {
