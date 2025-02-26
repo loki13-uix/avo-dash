@@ -1,4 +1,4 @@
-import iconsRegistry from '@/constants/icons'
+import { iconRegistry } from '@/constants/icons'
 import { Icon } from '@/shared/components/atoms/icon'
 import type { Meta, StoryObj } from '@storybook/react'
 
@@ -17,7 +17,7 @@ const meta: Meta<typeof Icon> = {
     name: {
       control: 'select',
       description: 'Name of the icon',
-      options: iconsRegistry,
+      options: Array.from(iconRegistry.keys()),
       table: {
         defaultValue: {
           summary: 'You can choose the type of icon from the dropdown',
@@ -41,11 +41,6 @@ const meta: Meta<typeof Icon> = {
       },
     },
     style: {
-      table: {
-        disable: true,
-      },
-    },
-    fallback: {
       table: {
         disable: true,
       },
