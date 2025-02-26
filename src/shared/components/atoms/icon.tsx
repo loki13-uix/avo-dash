@@ -1,55 +1,39 @@
-'use client'
-
-import type { IconName } from '@/constants/icons'
-import { cn } from '@/lib/utils'
-import dynamic from 'next/dynamic'
-import type React from 'react'
-import { type SVGProps, Suspense } from 'react'
+'use client';
+import type React from 'react';
+import type { IconName } from '@/constants/icons';
+import { iconRegistry } from '@/constants/icons';
+import { cn } from '@/lib/utils';
+import type { SVGProps } from 'react';
 
 interface IconProps extends SVGProps<SVGSVGElement> {
-  name: IconName
-  size?: number | string
-  color?: string
-  style?: React.CSSProperties
-  fallback?: React.ReactNode
+	name: IconName;
+	size?: number | string;
+	color?: string;
+	style?: React.CSSProperties;
 }
-
-const getIconComponent = (
-  name: IconName
-): React.ComponentType<SVGProps<SVGSVGElement>> =>
-  dynamic(
-    () =>
-      import(`@/shared/icons/${name}`).catch(() => {
-        console.warn(`Icon "${name}" not found`)
-        return { default: () => null }
-      }),
-    {
-      ssr: false,
-      loading: () => null,
-    }
-  )
-
 export const Icon: React.FC<IconProps> = ({
-  name,
-  size,
-  color,
-  className,
-  style,
-  fallback = null,
-  ...props
+	name,
+	size,
+	color,
+	className,
+	style,
+	...props
 }) => {
-  const IconComponent = getIconComponent(name)
+	const IconComponent = iconRegistry.get(name);
 
-  return (
-    <Suspense fallback={fallback}>
-      <IconComponent
-        width={size}
-        height={size}
-        color={color}
-        className={cn('icon inline-block align-middle', className)}
-        style={style}
-        {...props}
-      />
-    </Suspense>
-  )
-}
+	if (!IconComponent) {
+		console.warn(`Icon "${name}" not found`);
+		return null;
+	}
+
+	return (
+		<IconComponent
+			width={size}
+			height={size}
+			fill={color}
+			className={cn('icon inline-block align-middle', className)}
+			style={style}
+			{...props}
+		/>
+	);
+};
