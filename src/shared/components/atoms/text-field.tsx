@@ -5,9 +5,13 @@ import { Icon } from './icon'
 
 const TextField = ({
   className,
+  iconClassName,
   ref,
   ...props
-}: React.ComponentProps<'input'> & { ref?: React.Ref<HTMLInputElement> }) => {
+}: React.ComponentProps<'input'> & {
+  ref?: React.Ref<HTMLInputElement>
+  iconClassName?: string
+}) => {
   return (
     <div
       className={cn(
@@ -23,10 +27,13 @@ const TextField = ({
       />
       <Icon
         name='search-icon'
-        className='fill-grey-12 peer-disabled:fill-grey-3'
+        className={cn(
+          'text-grey-12 peer-disabled:text-grey-3',
+
+          iconClassName
+        )}
       />
     </div>
   )
 }
-
 export default TextField
