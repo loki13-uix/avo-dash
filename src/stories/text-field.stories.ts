@@ -36,6 +36,7 @@ type Story = StoryObj<typeof TextField>
 export const Default: Story = {
   args: {
     placeholder: 'Search...',
+    iconClassName: 'size-4',
   },
 }
 
@@ -44,6 +45,7 @@ export const Active: Story = {
   args: {
     value: 'Search text',
     autoFocus: true,
+    iconClassName: 'size-4',
   },
 }
 
@@ -53,5 +55,6 @@ export const Disabled: Story = {
     disabled: true,
     value: 'Search text',
     placeholder: 'Search...',
+    iconClassName: 'size-4',
   },
 }
