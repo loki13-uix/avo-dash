@@ -33,7 +33,9 @@ const Modal = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='secondary'>Open Dialog</Button>
+        <Button variant='secondary' className='cursor-pointer'>
+          Open Dialog
+        </Button>
       </DialogTrigger>
 
       <DialogContent
@@ -48,12 +50,8 @@ const Modal = ({
               <p className='font-semibold text-sm text-grey-13'>{title}</p>
             </div>
 
-            <div className='border border-white px-4 py-[10.5px] rounded-sm'>
-              {typeof content === 'string' ? (
-                <p className='font-semibold text-sm text-grey-13'>{content}</p>
-              ) : (
-                content
-              )}
+            <div className='border border-white px-4 py-[10.5px] rounded-sm font-semibold text-sm text-grey-13'>
+              {content}
             </div>
           </div>
         </DialogTitle>
@@ -62,13 +60,17 @@ const Modal = ({
             <DialogClose asChild>
               <Button
                 variant='secondary-purple'
-                className='h-8 px-4'
+                className='p-4 cursor-pointer'
                 onClick={onCancel}
               >
                 {cancelText}
               </Button>
             </DialogClose>
-            <Button variant='standard' className='h-8 px-6' onClick={onConfirm}>
+            <Button
+              variant='standard'
+              className='px-[22.5px] py-1.5 cursor-pointer'
+              onClick={onConfirm}
+            >
               {confirmText}
             </Button>
           </div>
