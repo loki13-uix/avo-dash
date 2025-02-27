@@ -7,28 +7,28 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog'
-import { Button } from './button'
+import { Button, type ButtonProps } from './button'
 
 import type { ReactNode } from 'react'
 
 interface Props {
   title?: string
   content?: ReactNode | string
-  confirmText?: string
-  cancelText?: string
   className?: string
-  onConfirm?: () => void
-  onCancel?: () => void
+  successButton: ButtonProps & {
+    label: string
+  }
+  dangerButton: ButtonProps & {
+    label: string
+  }
 }
 
 const Modal = ({
   title = 'Dialog Title',
   content = 'Dialog Content',
-  confirmText,
-  cancelText,
   className = 'w-[593px] h-[293px]',
-  onConfirm,
-  onCancel,
+  successButton,
+  dangerButton,
 }: Props) => {
   return (
     <Dialog>
@@ -59,19 +59,22 @@ const Modal = ({
           <div className='border-t border-t-grey-4 px-4 py-4 flex justify-end gap-x-3 rounded-b-sm w-full'>
             <DialogClose asChild>
               <Button
-                variant='secondary-purple'
-                className='p-4 cursor-pointer'
-                onClick={onCancel}
+                variant={dangerButton.variant ?? 'secondary-purple'}
+                className={cn('p-4 cursor-pointer', dangerButton.className)}
+                {...dangerButton}
               >
-                {cancelText}
+                {dangerButton.label}
               </Button>
             </DialogClose>
             <Button
-              variant='standard'
-              className='px-[22.5px] py-1.5 cursor-pointer'
-              onClick={onConfirm}
+              variant={successButton.variant ?? 'standard'}
+              className={cn(
+                'px-[22.5px] py-1.5 cursor-pointer',
+                successButton.className
+              )}
+              {...successButton}
             >
-              {confirmText}
+              {successButton.label}
             </Button>
           </div>
         </DialogFooter>

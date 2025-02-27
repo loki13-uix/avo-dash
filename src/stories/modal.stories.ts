@@ -22,23 +22,15 @@ const meta: Meta<typeof Modal> = {
         disable: true,
       },
     },
-    onCancel: {
+    successButton: {
       table: {
         disable: true,
       },
     },
-    onConfirm: {
+    dangerButton: {
       table: {
         disable: true,
       },
-    },
-    cancelText: {
-      control: 'text',
-      description: 'Accept any type of string',
-    },
-    confirmText: {
-      control: 'text',
-      description: 'Accept any type of string',
     },
   },
 }
@@ -52,7 +44,11 @@ export const Default: Story = {
     title: 'Modal Title',
     content:
       'This is just a demo text. This text can be very short, but in most cases it will text approximately two or maybe even three lines.',
-    cancelText: 'Cancel',
-    confirmText: 'OK',
+    successButton: {
+      label: 'OK',
+    },
+    dangerButton: {
+      label: 'Cancel',
+    },
   },
 }
