@@ -12,10 +12,10 @@ import {
 
 interface TableCellProps {
   defaultValue?: string
-  selectedState?: boolean
-  editableState?: boolean
-  headerState?: boolean
-  selectState?: boolean
+  isSelected?: boolean
+  isEditable?: boolean
+  isHeader?: boolean
+  isSelect?: boolean
   options?: { value: string; label: string }[]
   onChange?: (value: string) => void
   onEditingChange?: (isEditing: boolean) => void
@@ -25,10 +25,10 @@ interface TableCellProps {
 
 const TableCell = ({
   defaultValue = 'Text',
-  selectedState = false,
-  editableState: initialEditableState = false,
-  headerState = false,
-  selectState = false,
+  isSelected = false,
+  isEditable: initialIsEditable = false,
+  isHeader = false,
+  isSelect = false,
   options = [
     { value: 'light', label: 'Light' },
     { value: 'dark', label: 'Dark' },
@@ -40,34 +40,23 @@ const TableCell = ({
   onSelect,
 }: TableCellProps) => {
   const [value, setValue] = useState(defaultValue)
-  const [isEditing, setIsEditing] = useState(initialEditableState)
-  // We don't need to track select open state manually as shadcn/ui Select handles this internally
+  const [isEditing, setIsEditing] = useState(initialIsEditable)
   const inputRef = useRef<HTMLInputElement>(null)
-  const clickTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const handleClick = (e: React.MouseEvent) => {
-    if (headerState) return
+    if (isHeader) return
 
-    if (selectState) {
-      // Select component handles its own open state
+    if (isSelect) {
       return
     }
 
-    clickTimeout.current = setTimeout(() => {
-      if (onSelect) {
-        onSelect(e)
-      }
-      clickTimeout.current = null
-    }, 0)
+    if (onSelect) {
+      onSelect(e)
+    }
   }
 
   const handleDoubleClick = () => {
-    if (clickTimeout.current) {
-      clearTimeout(clickTimeout.current)
-      clickTimeout.current = null
-    }
-
-    if (!headerState && !selectState && !isEditing) {
+    if (!isHeader && !isSelect && !isEditing) {
       setIsEditing(true)
       if (onEditingChange) {
         onEditingChange(true)
@@ -75,7 +64,7 @@ const TableCell = ({
     }
   }
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
     setValue(newValue)
     if (onChange) {
@@ -114,11 +103,11 @@ const TableCell = ({
     }
   }, [isEditing])
 
-  if (headerState) {
+  if (isHeader) {
     return (
       <div
         className={cn(
-          'border border-grey-3 py-[6px] pl-2 pr-1 bg-grey-2 m-10',
+          'border border-grey-3 py-[6px] px-2 bg-grey-2',
           className
         )}
       >
@@ -129,24 +118,28 @@ const TableCell = ({
     )
   }
 
-  if (selectState) {
+  if (isSelect) {
     return (
       <div
         className={cn(
-          'border border-grey-3 py-[6px] pl-2 pr-1 hover:bg-[#F5F5FF] m-10',
-          selectedState && 'bg-[#EBEBFF]',
+          'border border-grey-3 py-[6px] px-2 hover:bg-[#F5F5FF] flex items-center',
+          isSelect && 'bg-[#EBEBFF]',
           className
         )}
       >
-        <Select onValueChange={handleSelectChange} defaultValue={value}>
-          <SelectTrigger className='border-none shadow-none p-0 h-auto bg-transparent font-normal font-open-sans text-grey-13 text-sm w-full'>
+        <Select onValueChange={handleSelectChange} value={value}>
+          <SelectTrigger className='shadow-none p-0 h-auto bg-transparent font-normal font-open-sans text-grey-13 text-sm w-full'>
             <div className='flex justify-between w-full items-center'>
-              <SelectValue defaultValue='Light' />
+              <SelectValue />
             </div>
           </SelectTrigger>
           <SelectContent>
             {options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                defaultValue={'light'}
+              >
                 {option.label}
               </SelectItem>
             ))}
@@ -159,8 +152,8 @@ const TableCell = ({
   return (
     <div
       className={cn(
-        'border border-grey-3 py-[6px] pl-2 pr-1 hover:bg-[#F5F5FF] m-10',
-        selectedState && 'bg-[#EBEBFF]',
+        'border border-grey-3 py-[6px] px-2 hover:bg-[#F5F5FF]',
+        isSelected && 'bg-[#EBEBFF]',
         isEditing && 'bg-purple-1',
         className
       )}
@@ -169,7 +162,7 @@ const TableCell = ({
       onKeyDown={handleKeyDown}
     >
       {!isEditing ? (
-        <div className='font-normal font-open-sans text-grey-13 text-sm break-all'>
+        <div className='font-normal font-open-sans text-grey-13 text-sm'>
           {value}
         </div>
       ) : (

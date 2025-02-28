@@ -1,11 +1,10 @@
-import type { SVGProps } from 'react'
-import Test from '@/shared/icons/test'
 import Admin from '@/shared/icons/admin'
 import Calendar from '@/shared/icons/calendar'
 import Camera from '@/shared/icons/camera'
 import Capture from '@/shared/icons/capture'
 import Caret from '@/shared/icons/caret'
 import Chevron from '@/shared/icons/chevron'
+import ChevronDownIcon from '@/shared/icons/chevron-down'
 import Close from '@/shared/icons/close'
 import Comment from '@/shared/icons/comment'
 import ControlButton from '@/shared/icons/control-button'
@@ -39,6 +38,7 @@ import Screen from '@/shared/icons/screen'
 import SearchIcon from '@/shared/icons/search-icon'
 import Suite from '@/shared/icons/suite'
 import Terminated from '@/shared/icons/terminated'
+import Test from '@/shared/icons/test'
 import TestCase from '@/shared/icons/test-case'
 import Tools from '@/shared/icons/tools'
 import Trash from '@/shared/icons/trash'
@@ -46,6 +46,7 @@ import TypeWeb from '@/shared/icons/type-web'
 import Upload from '@/shared/icons/upload'
 import Utilities from '@/shared/icons/utilities'
 import Wait from '@/shared/icons/wait'
+import type { SVGProps } from 'react'
 import type React from 'react'
 
 export const iconNames = [
@@ -96,6 +97,7 @@ export const iconNames = [
   'upload',
   'utilities',
   'wait',
+  'chevron-down',
 ] as const
 
 export type IconName = (typeof iconNames)[number]
@@ -151,4 +153,5 @@ export const iconRegistry = new Map<
   ['upload', Upload],
   ['utilities', Utilities],
   ['wait', Wait],
+  ['chevron-down', ChevronDownIcon],
 ] as const)

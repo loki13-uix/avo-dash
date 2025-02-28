@@ -5,23 +5,16 @@ import { Icon } from './icon'
 
 interface Props {
   checkboxProps?: React.ComponentPropsWithoutRef<typeof ShadcnCheckbox>
-  hoverState?: boolean
   selectedState?: boolean
   group?: boolean
 }
-const TableCellLeading = ({
-  checkboxProps,
-  hoverState,
-  selectedState,
-  group,
-}: Props) => {
+const TableCellLeading = ({ checkboxProps, selectedState, group }: Props) => {
   return (
     <div
       className={cn(
-        'border border-grey-3 py-[8px] px-[6px] m-10',
-        hoverState && 'bg-[#F5F5FF]',
+        'border border-grey-3 hover:bg-[#F5F5FF] px-2 py-[6px] flex items-center',
         selectedState && 'bg-[#EBEBFF]',
-        group && 'bg-grey-2 border border-grey-3'
+        group && 'bg-grey-2 border border-grey-3 gap-x-2'
       )}
     >
       <ShadcnCheckbox
@@ -29,9 +22,7 @@ const TableCellLeading = ({
         className={cn('border border-grey-8')}
       />
 
-      {group && (
-        <Icon name='chevron' rotate={270} color='#605BFF' className='size-4' />
-      )}
+      {group && <Icon name='chevron-down' color='#605BFF' className='size-4' />}
     </div>
   )
 }
