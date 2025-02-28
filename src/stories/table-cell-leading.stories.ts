@@ -14,12 +14,6 @@ const meta: Meta<typeof TableCellLeading> = {
   },
 
   argTypes: {
-    checkboxProps: {
-      description: 'Checkbox',
-      table: {
-        disable: true,
-      },
-    },
     group: {
       description: 'this is a group state',
     },
@@ -34,9 +28,7 @@ export default meta
 
 type Story = StoryObj<typeof TableCellLeading>
 export const Default: Story = {
-  args: {
-    checkboxProps: {},
-  },
+  args: {},
 }
 
 export const selected: Story = {
