@@ -6,7 +6,7 @@ import type * as React from 'react'
 import { Icon } from './icon'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 rounded-sm font-medium transition-colors group',
+  'inline-flex items-center justify-center gap-2 rounded-sm font-medium transition-colors group cursor-pointer',
   {
     variants: {
       variant: {
