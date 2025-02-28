@@ -13,7 +13,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --project-token=chpt_d416af5c3435c53",
-    "svgr": "npx @svgr/cli --typescript --out-dir src/shared/icons src/"
+    "svgr": "npx @svgr/cli --typescript --out-dir src/shared/icons src/",
+    "prepare": "husky"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -47,6 +48,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "chromatic": "^11.25.2",
+    "husky": "^9.1.7",
     "postcss": "^8",
     "storybook": "^8.5.8",
     "tailwindcss": "^4.0.8",
