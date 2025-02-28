@@ -58,6 +58,11 @@ const meta: Meta<typeof TableCell> = {
         disable: true,
       },
     },
+    options: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 
@@ -83,9 +88,10 @@ export const Editable: Story = {
   },
 }
 
-export const Select: Story = {
+export const SelectFromDropdown: Story = {
   args: {
     selectDropdown: true,
+    isSelected: true,
     defaultValue: 'light',
     options: [
       { value: 'light', label: 'Light' },

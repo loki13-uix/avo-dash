@@ -3,6 +3,7 @@
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 import type * as React from 'react'
+import { useState } from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -29,18 +30,25 @@ function SelectTrigger({
   children,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger>) {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <SelectPrimitive.Trigger
       data-slot='select-trigger'
       className={cn(
-        "border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex h-9 w-full items-center justify-between  px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none  disabled:cursor-not-allowed disabled:opacity-50 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex h-9 w-full items-center justify-between  px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none  disabled:cursor-not-allowed disabled:opacity-50 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
+      onPointerDown={() => setIsOpen(!isOpen)}
       {...props}
     >
       {children}
-      <SelectPrimitive.Icon asChild>
-        <ChevronDownIcon className='size-4 opacity-50 text-purple-8 transition-transform duration-200 data-[state=open]:rotate-180' />
+      <SelectPrimitive.Icon>
+        {isOpen ? (
+          <ChevronUpIcon className='size-4 opacity-50 text-purple-8' />
+        ) : (
+          <ChevronDownIcon className='size-4 opacity-50 text-purple-8' />
+        )}
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
