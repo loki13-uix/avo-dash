@@ -22,89 +22,11 @@ handle_error() {
 
 check_dependencies() {
   log_info "🔍 Checking dependencies..."
-  for cmd in "npx" "git" "grep"; do
+  for cmd in "npx" "git"; do
     if ! command -v "$cmd" &>/dev/null; then
       handle_error "$cmd not found. Please install it before continuing."
     fi
   done
-}
-
-get_staged_files() {
-  git diff --cached --name-only --diff-filter=ACMR | grep -E "\.tsx?$" || echo ""
-}
-
-run_biome_autofix() {
-  log_info "🔄 Running Biome auto-fix on staged files..."
-
-  local files
-  files=$(get_staged_files)
-
-  if [ -n "$files" ]; then
-    if ! echo "$files" | xargs npx biome check --write --unsafe; then
-      log_warning "⚠️ Biome couldn't fix all issues automatically. Some manual fixes may be required."
-    fi
-  else
-    log_info "ℹ️ No TypeScript files staged, skipping Biome auto-fix."
-  fi
-}
-
-run_biome_lint() {
-  log_info "🎨 Running Biome Lint on staged files..."
-
-  local files
-  files=$(get_staged_files)
-
-  if [ -n "$files" ]; then
-    if ! echo "$files" | xargs npx biome check; then
-      handle_error "Biome found issues! Fix them before committing."
-    fi
-  else
-    log_info "ℹ️ No TypeScript files staged, skipping Biome linting."
-  fi
-}
-
-run_biome_format() {
-  log_info "💅 Formatting staged files with Biome..."
-
-  local files
-  files=$(get_staged_files)
-
-  if [ -n "$files" ]; then
-    if ! echo "$files" | xargs npx biome format --write; then
-      handle_error "Biome formatting failed! Fix errors before committing."
-    fi
-  else
-    log_info "ℹ️ No TypeScript files staged, skipping Biome formatting."
-  fi
-}
-
-run_typescript_check() {
-  log_info "🛠 Checking TypeScript types..."
-  if ! npx tsc --noEmit; then
-    handle_error "Type errors found! Fix them before committing."
-  fi
-}
-
-run_build_check() {
-  log_info "🏗 Checking Next.js Build..."
-  if ! CI=true npx next build; then
-    handle_error "Build failed! Fix it before committing."
-  fi
-}
-
-run_storybook_check() {
-  log_info "📚 Checking Storybook Build..."
-  
-  local component_files
-  component_files=$(get_staged_files)
-
-  if [ -n "$component_files" ]; then
-    if ! npm run build-storybook --silent; then
-      handle_error "Storybook build failed! Fix it before committing."
-    fi
-  else
-    log_info "ℹ️ No component files changed, skipping Storybook build."
-  fi
 }
 
 main() {
@@ -112,19 +34,46 @@ main() {
 
   check_dependencies
 
-  run_biome_autofix || true  # Continue even if auto-fix fails
-  run_biome_lint
-  run_biome_format
-  run_typescript_check
+  # Run biome:fix
+  log_info "🔄 Running Biome auto-fix..."
+  if ! npm run biome:fix; then
+    log_warning "⚠️ Biome couldn't fix all issues automatically. Some manual fixes may be required."
+  fi
 
+  # Run biome:lint
+  log_info "🎨 Running Biome lint..."
+  if ! npm run biome:lint; then
+    handle_error "Biome found issues! Fix them before committing."
+  fi
+
+  # Run biome:format
+  log_info "💅 Running Biome format..."
+  if ! npm run biome:format; then
+    handle_error "Biome formatting failed! Fix errors before committing."
+  fi
+
+  # Run ts:check
+  log_info "🛠 Checking TypeScript types..."
+  if ! npm run ts:check; then
+    handle_error "Type errors found! Fix them before committing."
+  fi
+
+  # Run build:check if not skipped
   if [ -z "$SKIP_BUILD" ]; then
-    run_build_check
+    log_info "🏗 Checking Next.js Build..."
+    if ! npm run build:check; then
+      handle_error "Build failed! Fix it before committing."
+    fi
   else
     log_warning "⚠️ Skipping build as requested via SKIP_BUILD env variable."
   fi
 
+  # Run storybook:check if not skipped
   if [ -z "$SKIP_STORYBOOK" ]; then
-    run_storybook_check
+    log_info "📚 Checking Storybook Build..."
+    if ! npm run build-storybook; then
+      handle_error "Storybook build failed! Fix it before committing."
+    fi
   else
     log_warning "⚠️ Skipping Storybook build as requested via SKIP_STORYBOOK env variable."
   fi

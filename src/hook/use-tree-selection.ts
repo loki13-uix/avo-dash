@@ -1,7 +1,7 @@
+import type { TreeNode } from '@/constants/tree-data'
+import useClickOutside from '@/hook/use-click-outside'
 import { useState } from 'react'
 import type React from 'react'
-import useClickOutside from '@/hook/use-click-outside'
-import type { TreeNode } from '@/constants/tree-data'
 
 export const findParentById = (
   tree: TreeNode[],
