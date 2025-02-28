@@ -2,20 +2,14 @@ import { cn } from '@/lib/utils'
 import { useEffect, useRef, useState } from 'react'
 import type React from 'react'
 import { Input } from '../ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select'
 
 interface TableCellProps {
   defaultValue?: string
   isSelected?: boolean
   isEditable?: boolean
   isHeader?: boolean
-  isSelect?: boolean
+  selectDropdown?: boolean
   options?: { value: string; label: string }[]
   onChange?: (value: string) => void
   onEditingChange?: (isEditing: boolean) => void
@@ -28,7 +22,7 @@ const TableCell = ({
   isSelected = false,
   isEditable: initialIsEditable = false,
   isHeader = false,
-  isSelect = false,
+  selectDropdown = false,
   options = [
     { value: 'light', label: 'Light' },
     { value: 'dark', label: 'Dark' },
@@ -43,10 +37,14 @@ const TableCell = ({
   const [isEditing, setIsEditing] = useState(initialIsEditable)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  useEffect(() => {
+    setValue(defaultValue)
+  }, [defaultValue])
+
   const handleClick = (e: React.MouseEvent) => {
     if (isHeader) return
 
-    if (isSelect) {
+    if (selectDropdown) {
       return
     }
 
@@ -56,7 +54,7 @@ const TableCell = ({
   }
 
   const handleDoubleClick = () => {
-    if (!isHeader && !isSelect && !isEditing) {
+    if (!isHeader && !selectDropdown && !isEditing) {
       setIsEditing(true)
       if (onEditingChange) {
         onEditingChange(true)
@@ -118,28 +116,29 @@ const TableCell = ({
     )
   }
 
-  if (isSelect) {
+  if (selectDropdown) {
+    const selectedOption =
+      options.find((option) => option.value === value) || options[0]
+
     return (
       <div
         className={cn(
           'border border-grey-3 py-[6px] px-2 hover:bg-[#F5F5FF] flex items-center',
-          isSelect && 'bg-[#EBEBFF]',
+          isSelected && 'bg-[#EBEBFF]',
           className
         )}
       >
-        <Select onValueChange={handleSelectChange} value={value}>
+        <Select value={value} onValueChange={handleSelectChange}>
           <SelectTrigger className='shadow-none p-0 h-auto bg-transparent font-normal font-open-sans text-grey-13 text-sm w-full'>
             <div className='flex justify-between w-full items-center'>
-              <SelectValue />
+              <span className='font-normal font-open-sans text-grey-13 text-sm'>
+                {selectedOption.label}
+              </span>
             </div>
           </SelectTrigger>
           <SelectContent>
             {options.map((option) => (
-              <SelectItem
-                key={option.value}
-                value={option.value}
-                defaultValue={'light'}
-              >
+              <SelectItem key={option.value} value={option.value}>
                 {option.label}
               </SelectItem>
             ))}

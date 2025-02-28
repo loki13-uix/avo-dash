@@ -19,7 +19,7 @@ const meta: Meta<typeof TableCell> = {
         disable: true,
       },
     },
-    isSelect: {
+    selectDropdown: {
       control: 'boolean',
       table: {
         defaultValue: { summary: 'light' },
@@ -85,7 +85,7 @@ export const Editable: Story = {
 
 export const Select: Story = {
   args: {
-    isSelect: true,
+    selectDropdown: true,
     defaultValue: 'light',
     options: [
       { value: 'light', label: 'Light' },
