@@ -1,4 +1,4 @@
-import { type TreeNode, folderTree } from '@/constants/tree-data'
+import type { TreeNode } from '@/constants/tree-data'
 import { useTreeSelection } from '@/hook/use-tree-selection'
 import {
   calcPadLeft,
@@ -12,6 +12,7 @@ import FileItem from '@/shared/components/atoms/file'
 import FolderItem from '@/shared/components/atoms/folder'
 import { DropIndicator } from '@/shared/components/atoms/tree/drop-indicator'
 import { RenderPreview } from '@/shared/components/atoms/tree/preview-overlay'
+import { useTreeContext } from '@/shared/context/tree-data-context'
 import {
   DndContext,
   type DragEndEvent,
@@ -36,7 +37,7 @@ type TreeNodeProps = {
 export type Edge = 'top' | 'bottom' | 'left' | 'right'
 
 function Tree() {
-  const [treeNodes, setTreeNodes] = useState<TreeNode[]>(folderTree)
+  const { treeNodes, setTreeNodes } = useTreeContext()
   const [expandedFolders, setExpandedFolders] = useState<string[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const [draggedNode, setDraggedNode] = useState<TreeNode | null>(null)
@@ -247,6 +248,7 @@ function Tree() {
     return (
       <FolderItem
         name={node.name}
+        id={node.id}
         isSelected={isSelected}
         key={node.id}
         isExpanded={expandedFolders.includes(node.id)}

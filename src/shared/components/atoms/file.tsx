@@ -1,9 +1,11 @@
-import { cn } from '@/lib/utils'
+import { cn, setNameToTreeNode } from '@/lib/utils'
+import { useTreeContext } from '@/shared/context/tree-data-context'
 import { useEffect, useRef, useState } from 'react'
 import type React from 'react'
 import { Icon } from './icon'
 
 type FileItemProps = {
+  id: string
   canRename?: boolean
   fileName: string
   className?: string
@@ -14,6 +16,7 @@ type FileItemProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 function FileItem({
+  id,
   isSelected,
   canRename = true,
   fileName,
@@ -23,6 +26,7 @@ function FileItem({
   isPreview,
   ...props
 }: FileItemProps) {
+  const { treeNodes, setTreeNodes } = useTreeContext()
   const [isEditing, setIsEditing] = useState(false)
   const [name, setName] = useState(fileName)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -52,6 +56,7 @@ function FileItem({
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter') {
       setIsEditing(false)
+      setNameToTreeNode(name, id, treeNodes, setTreeNodes)
     }
   }
 

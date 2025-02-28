@@ -21,6 +21,36 @@ export const findSiblings = (tree: TreeNode[], id: string): TreeNode[] => {
   return parent ? parent.nodes : tree
 }
 
+export const isParentOfSelected = (
+  tree: TreeNode[],
+  parentId: string,
+  selectedIds: string[]
+): boolean => {
+  for (const id of selectedIds) {
+    let current = findParentById(tree, id)
+    while (current) {
+      if (current.id === parentId) return true
+      current = findParentById(tree, current.id)
+    }
+  }
+  return false
+}
+
+export const isChildOfSelected = (
+  tree: TreeNode[],
+  childId: string,
+  selectedIds: string[]
+): string | null => {
+  let current = findParentById(tree, childId)
+  while (current) {
+    if (selectedIds.includes(current.id)) {
+      return current.id
+    }
+    current = findParentById(tree, current.id)
+  }
+  return null
+}
+
 export const useTreeSelection = (
   treeData: TreeNode[],
   isRangeSelection: boolean,
@@ -42,14 +72,27 @@ export const useTreeSelection = (
       findParentById(treeData, id) ===
       findParentById(treeData, lastClickedId ?? '')
 
-    if (event.metaKey || (event.ctrlKey && lastClickedId)) {
-      if (isSameParent) {
-        setSelectedIds((prev) =>
-          prev.includes(id)
-            ? prev.filter((selectedId) => selectedId !== id)
-            : [...prev, id]
-        )
-      }
+    if (isParentOfSelected(treeData, id, selectedIds)) {
+      return
+    }
+
+    const parentId = isChildOfSelected(treeData, id, selectedIds)
+    if (parentId) {
+      setSelectedIds((prev) => {
+        const filtered = prev.filter((selectedId) => selectedId !== parentId)
+        return [...filtered, id]
+      })
+      setLastClickedId(id)
+      return
+    }
+
+    if (event.metaKey || event.ctrlKey) {
+      setSelectedIds((prev) =>
+        prev.includes(id)
+          ? prev.filter((selectedId) => selectedId !== id)
+          : [...prev, id]
+      )
+      setLastClickedId(id)
     } else if (isRangeSelection && event.shiftKey && isSameParent) {
       if (currentIndex !== -1 && lastClickedIndex !== -1) {
         const startIndex = Math.min(currentIndex, lastClickedIndex)

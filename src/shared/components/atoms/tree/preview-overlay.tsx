@@ -27,6 +27,7 @@ export function RenderPreview({
 
   return (
     <FolderItem
+      id={draggedNode.id}
       name={draggedNode.name}
       isSelected={true}
       key={draggedNode.id}

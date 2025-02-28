@@ -1,9 +1,17 @@
 import FileItem from '@/shared/components/atoms/file'
+import { TreeProvider } from '@/shared/context/tree-data-context'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof FileItem> = {
-  title: 'Design System/atoms/File',
+  title: 'Design System/atoms/Lists/File',
   component: FileItem,
+  decorators: [
+    (Story) => (
+      <TreeProvider>
+        <Story />
+      </TreeProvider>
+    ),
+  ],
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',

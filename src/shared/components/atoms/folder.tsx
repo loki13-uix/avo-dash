@@ -2,13 +2,15 @@
 
 import type { IconName } from '@/constants/icons'
 import useClickOutside from '@/hook/use-click-outside'
-import { cn } from '@/lib/utils'
+import { cn, setNameToTreeNode } from '@/lib/utils'
+import { useTreeContext } from '@/shared/context/tree-data-context'
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import type React from 'react'
 import { Icon } from './icon'
 
 type FolderItemProps = {
+  id: string
   name: string
   isExpanded?: boolean
   level?: number
@@ -25,6 +27,7 @@ type FolderItemProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 function FolderItem({
+  id,
   name,
   isSelected = false,
   children,
@@ -42,6 +45,7 @@ function FolderItem({
   const [folderName, setFolderName] = useState(name)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const clickTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const { treeNodes, setTreeNodes } = useTreeContext()
 
   function handleName(e: { target: { value: React.SetStateAction<string> } }) {
     setFolderName(e.target.value)
@@ -60,12 +64,16 @@ function FolderItem({
     }, 20)
   }
 
-  const handleDoubleClick = () => {
+  const handleDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (clickTimeout.current) {
       clearTimeout(clickTimeout.current)
       clickTimeout.current = null
     }
-    if (canRename) {
+
+    const target = e.target as HTMLElement
+    const isChevronIcon = target.closest('.chevron-icon')
+
+    if (canRename && !isChevronIcon) {
       setIsEditing(true)
     }
   }
@@ -77,12 +85,13 @@ function FolderItem({
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter') {
       setIsEditing(false)
+      setNameToTreeNode(folderName, id, treeNodes, setTreeNodes)
     }
   }
 
-  useClickOutside(inputRef as React.RefObject<HTMLElement>, () =>
+  useClickOutside(inputRef as React.RefObject<HTMLElement>, () => {
     setIsEditing(false)
-  )
+  })
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -98,7 +107,7 @@ function FolderItem({
       <div
         data-selected={isSelected}
         className={cn(
-          'px-2 py-1 gap-2 data-[selected="true"]:bg-purple-1 min-h-8 w-full flex transition-all duration-250 items-start',
+          'px-2 py-1 gap-2 data-[selected="true"]:bg-purple-1 min-h-8 w-full flex transition-all duration-250 items-start select-none',
           isSelected && 'bg-purple-1'
         )}
         onClick={handleClick}
@@ -110,7 +119,7 @@ function FolderItem({
             name={'chevron'}
             size={16}
             className={cn(
-              'fill-grey-12 mt-1 shrink-0',
+              'chevron-icon fill-grey-12 mt-1 shrink-0',
               isExpanded ? 'rotate-270' : 'rotate-180 '
             )}
             onClick={onToggle}

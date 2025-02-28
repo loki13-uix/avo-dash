@@ -56,6 +56,7 @@ export const isDescendant = (parent: TreeNode, childId: string): boolean => {
 }
 
 export function calcPadLeft(level: number) {
+  if (level === 0) return '16px'
   return `${level * 24}px`
 }
 
@@ -75,4 +76,25 @@ export const getParentFolderIds = (
   }
 
   return result
+}
+
+export function setNameToTreeNode(
+  newName: string,
+  id: string,
+  treeNodes: TreeNode[],
+  setTreeNodes: (treeNodes: TreeNode[]) => void
+) {
+  const updateNodeName = (nodes: TreeNode[]): TreeNode[] => {
+    return nodes.map((node) => {
+      if (node.id === id) {
+        return { ...node, name: newName }
+      }
+      if (node.nodes) {
+        return { ...node, nodes: updateNodeName(node.nodes) }
+      }
+      return node
+    })
+  }
+
+  setTreeNodes(updateNodeName(treeNodes))
 }
