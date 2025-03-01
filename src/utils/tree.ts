@@ -8,7 +8,7 @@ export const getParentFolderIds = (
   let currentNodeId = nodeId
 
   while (true) {
-    const parentNode = findParentById(treeNodes, currentNodeId)
+    const parentNode = getParentNodeById(treeNodes, currentNodeId)
     if (!parentNode) break
 
     result.push(parentNode.id)
@@ -17,25 +17,24 @@ export const getParentFolderIds = (
 
   return result
 }
-
-export function setNameToTreeNode(
+export function updateNodeName(
   newName: string,
   id: string,
   treeNodes: TreeNode[]
 ) {
-  const updateNodeName = (nodes: TreeNode[]): TreeNode[] => {
+  const updateNodeNameRecursive = (nodes: TreeNode[]): TreeNode[] => {
     return nodes.map((node) => {
       if (node.id === id) {
         return { ...node, name: newName }
       }
       if (node.nodes) {
-        return { ...node, nodes: updateNodeName(node.nodes) }
+        return { ...node, nodes: updateNodeNameRecursive(node.nodes) }
       }
       return node
     })
   }
 
-  return updateNodeName(treeNodes)
+  return updateNodeNameRecursive(treeNodes)
 }
 
 export const findNodeById = (
@@ -52,7 +51,7 @@ export const findNodeById = (
   return null
 }
 
-export const removeNode = (nodes: TreeNode[], id: string): TreeNode[] => {
+export const removeNodeById = (nodes: TreeNode[], id: string): TreeNode[] => {
   return nodes
     .map((node) => ({
       ...node,
@@ -60,7 +59,7 @@ export const removeNode = (nodes: TreeNode[], id: string): TreeNode[] => {
         .filter((child) => child.id !== id)
         .map((child) => ({
           ...child,
-          nodes: removeNode(child.nodes, id),
+          nodes: removeNodeById(child.nodes, id),
         })),
     }))
     .filter((node) => node.id !== id)
@@ -71,21 +70,21 @@ export const isDescendant = (parent: TreeNode, childId: string): boolean => {
   return parent.nodes.some((node) => isDescendant(node, childId))
 }
 
-export const findParentById = (
+export const getParentNodeById = (
   tree: TreeNode[],
   id: string,
   parent: TreeNode | null = null
 ): TreeNode | null => {
   for (const node of tree) {
     if (node.id === id) return parent
-    const found = findParentById(node.nodes, id, node)
+    const found = getParentNodeById(node.nodes, id, node)
     if (found) return found
   }
   return null
 }
 
-export const findSiblings = (tree: TreeNode[], id: string): TreeNode[] => {
-  const parent = findParentById(tree, id)
+export const getSiblingsById = (tree: TreeNode[], id: string): TreeNode[] => {
+  const parent = getParentNodeById(tree, id)
   return parent ? parent.nodes : tree
 }
 
@@ -95,26 +94,26 @@ export const isSelectedNodeHaveParent = (
   selectedIds: string[]
 ): boolean => {
   for (const id of selectedIds) {
-    let current = findParentById(tree, id)
+    let current = getParentNodeById(tree, id)
     while (current) {
       if (current.id === parentId) return true
-      current = findParentById(tree, current.id)
+      current = getParentNodeById(tree, current.id)
     }
   }
   return false
 }
 
-export const findSelectedParentOfChild = (
+export const getSelectedParentOfChild = (
   tree: TreeNode[],
   childId: string,
   selectedIds: string[]
 ): string | null => {
-  let current = findParentById(tree, childId)
+  let current = getParentNodeById(tree, childId)
   while (current) {
     if (selectedIds.includes(current.id)) {
       return current.id
     }
-    current = findParentById(tree, current.id)
+    current = getParentNodeById(tree, current.id)
   }
   return null
 }

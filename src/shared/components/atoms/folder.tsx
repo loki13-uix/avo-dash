@@ -118,7 +118,6 @@ function FolderItem({
           isSelected && 'bg-purple-1'
         )}
         onClick={handleClick}
-        onDoubleClick={handleDoubleClick}
         {...props}
       >
         {!isPreview && (
@@ -156,7 +155,10 @@ function FolderItem({
           />
         ) : (
           <div className='flex justify-between items-start w-full'>
-            <span className='text-grey text-[13px] cursor-pointer py-[0.8px] px-[3px] break-all'>
+            <span
+              className='text-grey text-[13px] cursor-pointer py-[0.8px] px-[3px] break-all'
+              onDoubleClick={handleDoubleClick}
+            >
               {folderName}
             </span>
             {isPreview && isSelected && selectedIds.length > 1 && (

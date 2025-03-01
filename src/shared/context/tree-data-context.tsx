@@ -1,5 +1,5 @@
 import type { TreeNode } from '@/constants/tree-data'
-import { setNameToTreeNode } from '@/utils/tree'
+import { updateNodeName } from '@/utils/tree'
 import type React from 'react'
 import { createContext, useContext, useState } from 'react'
 
@@ -18,7 +18,7 @@ export const TreeProvider: React.FC<{
   const [treeNodes, setTreeNodes] = useState<TreeNode[]>(initialTreeNodes)
 
   function updateTreeNodeName(nodeId: string, newName: string) {
-    const updatedTreeNodes = setNameToTreeNode(newName, nodeId, treeNodes)
+    const updatedTreeNodes = updateNodeName(newName, nodeId, treeNodes)
     setTreeNodes(updatedTreeNodes)
   }
 

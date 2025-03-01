@@ -1,9 +1,9 @@
 import type { TreeNode } from '@/constants/tree-data'
 import useClickOutside from '@/hook/use-click-outside'
 import {
-  findParentById,
-  findSelectedParentOfChild,
-  findSiblings,
+  getParentNodeById,
+  getSelectedParentOfChild,
+  getSiblingsById,
   isSelectedNodeHaveParent,
 } from '@/utils/tree'
 import { useState } from 'react'
@@ -21,20 +21,20 @@ export const useTreeSelection = <T extends HTMLElement | null>(
 
   const handleSelect = (data: TreeNode, event: React.MouseEvent) => {
     const id = data.id
-    const siblings = findSiblings(treeData, id)
+    const siblings = getSiblingsById(treeData, id)
     const currentIndex = siblings.findIndex((node) => node.id === id)
     const lastClickedIndex = siblings.findIndex(
       (node) => node.id === lastClickedId
     )
     const isSameParent =
-      findParentById(treeData, id) ===
-      findParentById(treeData, lastClickedId ?? '')
+      getParentNodeById(treeData, id) ===
+      getParentNodeById(treeData, lastClickedId ?? '')
 
     if (isSelectedNodeHaveParent(treeData, id, selectedIds)) {
       return
     }
 
-    const parentId = findSelectedParentOfChild(treeData, id, selectedIds)
+    const parentId = getSelectedParentOfChild(treeData, id, selectedIds)
     if (parentId) {
       setSelectedIds((prev) => {
         const filtered = prev.filter((selectedId) => selectedId !== parentId)

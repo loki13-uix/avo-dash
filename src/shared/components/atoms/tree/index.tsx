@@ -8,10 +8,10 @@ import { RenderPreview } from '@/shared/components/atoms/tree/preview-overlay'
 import { useTreeContext } from '@/shared/context/tree-data-context'
 import {
   findNodeById,
-  findParentById,
   getParentFolderIds,
+  getParentNodeById,
   isDescendant,
-  removeNode,
+  removeNodeById,
 } from '@/utils/tree'
 import {
   DndContext,
@@ -94,7 +94,7 @@ function Tree() {
         const node = findNodeById(newTreeNodes, id)
         if (!node) continue
 
-        newTreeNodes = removeNode(newTreeNodes, id)
+        newTreeNodes = removeNodeById(newTreeNodes, id)
         const targetNodeInNewTree = findNodeById(newTreeNodes, targetId)
 
         if (targetNode.variant === 'folder') {
@@ -102,7 +102,7 @@ function Tree() {
             targetNodeInNewTree.nodes.unshift(node)
           }
         } else {
-          const targetParent = findParentById(treeNodes, targetId)
+          const targetParent = getParentNodeById(treeNodes, targetId)
           if (targetParent) {
             const targetParentInNewTree = findNodeById(
               newTreeNodes,
@@ -129,7 +129,7 @@ function Tree() {
       const node = sourceNode
 
       // Remove node from its current location
-      newTreeNodes = removeNode(newTreeNodes, sourceId)
+      newTreeNodes = removeNodeById(newTreeNodes, sourceId)
       const targetNodeInNewTree = findNodeById(newTreeNodes, targetId)
 
       // Add node to target folder if target is a folder, otherwise to target's parent
@@ -139,7 +139,7 @@ function Tree() {
         }
       } else {
         // Find parent of target to add next to target
-        const targetParent = findParentById(treeNodes, targetId)
+        const targetParent = getParentNodeById(treeNodes, targetId)
         if (targetParent) {
           const targetParentInNewTree = findNodeById(
             newTreeNodes,
