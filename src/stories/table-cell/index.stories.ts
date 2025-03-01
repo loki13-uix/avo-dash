@@ -1,9 +1,10 @@
-import TableCell from '@/shared/components/atoms/table-cell'
+import type TableCell from '@/shared/components/atoms/table-cell'
 import type { Meta, StoryObj } from '@storybook/react'
+import TableCellWrapper from '.'
 
-const meta: Meta<typeof TableCell> = {
+const meta: Meta<typeof TableCellWrapper> = {
   title: 'Design System/atoms/table/cell',
-  component: TableCell,
+  component: TableCellWrapper,
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
@@ -13,55 +14,40 @@ const meta: Meta<typeof TableCell> = {
     },
   },
   argTypes: {
-    className: {
-      control: 'text',
+    isEditable: {
+      control: 'boolean',
       table: {
-        disable: true,
+        defaultValue: { summary: 'false' },
       },
+      description: 'This is of boolean type',
+    },
+    isHeader: {
+      control: 'boolean',
+      table: {
+        defaultValue: { summary: 'false' },
+      },
+      description: 'This is of boolean type',
+    },
+    isSelected: {
+      control: 'boolean',
+      table: {
+        defaultValue: { summary: 'false' },
+      },
+      description: 'This is of boolean type',
     },
     selectDropdown: {
       control: 'boolean',
       table: {
-        defaultValue: { summary: 'light' },
+        defaultValue: { summary: 'false' },
       },
-      description: 'This is of boolean type',
-    },
-    isEditable: {
-      control: 'boolean',
-      description: 'this is editable ',
-    },
-    isHeader: {
-      control: 'boolean',
-      description: 'this is to show header state',
-    },
-    isSelected: {
-      control: 'boolean',
       description: 'This is of boolean type',
     },
     defaultValue: {
+      control: 'text',
       table: {
         disable: true,
       },
-    },
-    onChange: {
-      table: {
-        disable: true,
-      },
-    },
-    onEditingChange: {
-      table: {
-        disable: true,
-      },
-    },
-    onSelect: {
-      table: {
-        disable: true,
-      },
-    },
-    options: {
-      table: {
-        disable: true,
-      },
+      description: 'This is of boolean type',
     },
   },
 }
@@ -71,20 +57,22 @@ export default meta
 type Story = StoryObj<typeof TableCell>
 export const Selected: Story = {
   args: {
-    defaultValue: 'Light',
     isSelected: true,
+    defaultValue: 'selected',
   },
 }
 
 export const Header: Story = {
   args: {
     isHeader: true,
+    defaultValue: 'header',
   },
 }
 
 export const Editable: Story = {
   args: {
     isEditable: true,
+    defaultValue: 'header',
   },
 }
 
@@ -93,10 +81,5 @@ export const SelectFromDropdown: Story = {
     selectDropdown: true,
     isSelected: true,
     defaultValue: 'light',
-    options: [
-      { value: 'light', label: 'Light' },
-      { value: 'dark', label: 'Dark' },
-      { value: 'system', label: 'System' },
-    ],
   },
 }

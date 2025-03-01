@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react'
 import type React from 'react'
 import { Input } from '../ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select'
-
 interface TableCellProps {
   defaultValue?: string
   isSelected?: boolean
@@ -18,28 +17,19 @@ interface TableCellProps {
 }
 
 const TableCell = ({
-  defaultValue = 'Text',
+  defaultValue,
   isSelected = false,
   isEditable = false,
   isHeader = false,
   selectDropdown = false,
-  options = [
-    { value: 'light', label: 'Light' },
-    { value: 'dark', label: 'Dark' },
-    { value: 'system', label: 'System' },
-  ],
+  options = [],
   onChange,
   onEditingChange,
   className,
   onSelect,
 }: TableCellProps) => {
-  const [value, setValue] = useState(defaultValue)
   const [isEditing, setIsEditing] = useState(isEditable)
   const inputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    setValue(defaultValue)
-  }, [defaultValue])
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -61,7 +51,6 @@ const TableCell = ({
   }
 
   const handleValueChange = (newValue: string) => {
-    setValue(newValue)
     onChange?.(newValue)
   }
 
@@ -71,14 +60,14 @@ const TableCell = ({
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || e.key === 'Escape') {
       handleEditEnd()
       e.preventDefault()
     }
   }
 
   const baseClassName = cn(
-    'border border-grey-3 py-[6px] px-2',
+    'border border-grey-3 py-[6px] px-2 font-open-sans text-grey-13 text-sm',
     isSelected && 'bg-purple-2',
     !isHeader && !isEditing && !isSelected && 'hover:bg-[#F5F5FF]',
     isEditing && 'bg-purple-1',
@@ -86,15 +75,13 @@ const TableCell = ({
   )
 
   const selectedOption = selectDropdown
-    ? options.find((opt) => opt.value === value) || options[0]
+    ? options.find((opt) => opt.value === defaultValue) || options[0]
     : null
 
   if (isHeader) {
     return (
       <div className={cn(baseClassName, 'bg-grey-2')}>
-        <div className='font-semibold font-open-sans text-grey-13 text-sm'>
-          {value}
-        </div>
+        <div className='font-semibold'>{defaultValue}</div>
       </div>
     )
   }
@@ -109,19 +96,16 @@ const TableCell = ({
       {isEditing && !selectDropdown ? (
         <Input
           ref={inputRef}
-          value={value}
+          value={defaultValue}
           onChange={(e) => handleValueChange(e.target.value)}
           onBlur={handleEditEnd}
           onKeyDown={handleKeyDown}
-          className='font-normal font-open-sans text-grey-13 text-sm bg-white rounded-sm border border-[#9494F5]'
-          onClick={(e) => e.stopPropagation()}
+          className='text-sm bg-white rounded-sm border border-[#9494F5]'
         />
       ) : selectDropdown && isSelected ? (
-        <Select value={value} onValueChange={handleValueChange}>
-          <SelectTrigger className='shadow-none p-0 h-auto bg-transparent font-normal font-open-sans text-grey-13 text-sm w-full'>
-            <span className='font-normal font-open-sans text-grey-13 text-sm'>
-              {selectedOption?.label}
-            </span>
+        <Select value={defaultValue} onValueChange={handleValueChange}>
+          <SelectTrigger className='shadow-none p-0 h-auto bg-transparent w-full '>
+            <span>{selectedOption?.label}</span>
           </SelectTrigger>
           <SelectContent>
             {options.map((option) => (
@@ -132,9 +116,7 @@ const TableCell = ({
           </SelectContent>
         </Select>
       ) : (
-        <div className='font-normal font-open-sans text-grey-13 text-sm'>
-          {selectDropdown ? selectedOption?.label : value}
-        </div>
+        <div>{selectDropdown ? selectedOption?.label : defaultValue}</div>
       )}
     </div>
   )
