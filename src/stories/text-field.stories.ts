@@ -2,7 +2,7 @@ import TextField from '@/shared/components/atoms/text-field'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
-  title: 'Design System/atoms/TextField',
+  title: 'Design System/atoms/text-field',
   component: TextField,
   parameters: {
     layout: 'centered',

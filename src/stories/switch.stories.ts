@@ -4,7 +4,7 @@ import { Switch } from '@/shared/components/atoms/switch'
 import { action } from '@storybook/addon-actions'
 
 const meta: Meta<typeof Switch> = {
-  title: 'Design System/atoms/Switch',
+  title: 'Design System/atoms/switch',
   component: Switch,
   tags: ['autodocs'],
   parameters: {
