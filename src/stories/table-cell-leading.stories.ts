@@ -18,6 +18,13 @@ const meta: Meta<typeof TableCellLeading> = {
       description: 'this is a group state',
     },
 
+    checkboxProps: {
+      description: 'this is a checkbox props',
+      table: {
+        disable: true,
+      },
+    },
+
     selectedState: {
       description: 'this is selected state',
     },

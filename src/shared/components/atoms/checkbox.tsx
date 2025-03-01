@@ -5,7 +5,6 @@ import { Label } from '@/shared/components/ui/label'
 import type * as React from 'react'
 import { switchVariants } from '../atoms/switch'
 import { Checkbox as ShadcnCheckbox } from '../ui/checkbox'
-import { Icon } from './icon'
 
 interface Props {
   label?: string
@@ -15,8 +14,6 @@ interface Props {
   checkboxProps?: React.ComponentPropsWithoutRef<typeof ShadcnCheckbox>
   id?: string
   ref?: React.Ref<HTMLButtonElement>
-  group?: boolean
-  shadcnClassName?: string
 }
 
 const CheckBox = ({
@@ -25,8 +22,6 @@ const CheckBox = ({
   className,
   id,
   ref,
-  group,
-  shadcnClassName,
   ...props
 }: Props) => {
   return (
@@ -43,14 +38,7 @@ const CheckBox = ({
           {label}
         </Label>
       )}
-      <ShadcnCheckbox
-        id={id}
-        ref={ref}
-        className={shadcnClassName}
-        {...props.checkboxProps}
-      />
-
-      {group && <Icon name='chevron-down' color='#605BFF' className='size-4' />}
+      <ShadcnCheckbox id={id} ref={ref} {...props.checkboxProps} />
     </div>
   )
 }

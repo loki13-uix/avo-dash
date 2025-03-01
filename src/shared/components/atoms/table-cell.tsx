@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import type React from 'react'
 import { Input } from '../ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select'
-interface TableCellProps {
+type TableCellProps = {
   defaultValue?: string
   isSelected?: boolean
   isEditable?: boolean
