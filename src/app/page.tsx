@@ -1,6 +1,7 @@
 'use client'
 
 import { DataTable } from '@/shared/components/atoms/data-table'
+import TableCellActions from '@/shared/components/atoms/table-cell-actions'
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useState } from 'react'
@@ -96,6 +97,14 @@ export default function Home() {
             id: '',
           },
         ]}
+      />
+
+      <TableCellActions
+        plusIcon={true}
+        penIcon={true}
+        fileWithData={true}
+        deleteIcon={true}
+        dots={true}
       />
     </div>
   )

@@ -33,14 +33,14 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className='rounded-md'>
-      <Table className='border-collapse border border-grey-3'>
-        <TableHeader>
+      <Table className='border-collapse border border-grey-3 text-grey-13'>
+        <TableHeader className='bg-grey-1'>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className='border-b'>
               {headerGroup.headers.map((header) => (
                 <TableHead
                   key={header.id}
-                  className='border-r last:border-r-0 px-4 py-2'
+                  className='border-r last:border-r-0  font-semibold'
                 >
                   {header.isPlaceholder
                     ? null
@@ -60,7 +60,7 @@ export function DataTable<TData, TValue>({
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className='border-r last:border-r-0 px-4 py-2'
+                    className='border-r last:border-r-0 '
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
