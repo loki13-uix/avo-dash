@@ -1,4 +1,5 @@
 import { iconNames } from '@/constants/icons'
+import { folderTree } from '@/constants/tree-data'
 import FileItem from '@/shared/components/atoms/file'
 import FolderItem from '@/shared/components/atoms/folder'
 import { TreeProvider } from '@/shared/context/tree-data-context'
@@ -6,18 +7,18 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import type React from 'react'
 
-const FolderWrapper: React.FC<React.ComponentProps<typeof FolderItem>> = (
-  props
-) => {
-  const [isExpanded, setIsExpanded] = useState(props.isExpanded)
+const FolderWrapper: React.FC<React.ComponentProps<typeof FolderItem>> = () => {
+  const [isExpanded, setIsExpanded] = useState(false)
 
   return (
-    <TreeProvider>
+    <TreeProvider initialTreeNodes={folderTree}>
       <div className='w-48 h-32 select-none'>
         <FolderItem
-          {...props}
           isExpanded={isExpanded}
           onToggle={() => setIsExpanded(!isExpanded)}
+          id='1'
+          name='Example Folder'
+          selectedIds={[]}
         />
       </div>
     </TreeProvider>
@@ -25,7 +26,7 @@ const FolderWrapper: React.FC<React.ComponentProps<typeof FolderItem>> = (
 }
 
 const meta: Meta<typeof FolderItem> = {
-  title: 'Design System/atoms/Lists/Folder',
+  title: 'Design System/atoms/lists/folder',
   component: FolderWrapper,
   tags: ['autodocs'],
   parameters: {

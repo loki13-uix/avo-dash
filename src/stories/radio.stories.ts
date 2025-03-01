@@ -2,7 +2,7 @@ import { Radio } from '@/shared/components/atoms/radio'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Radio> = {
-  title: 'Design System/atoms/Radio',
+  title: 'Design System/atoms/radio',
   component: Radio,
   tags: ['autodocs'],
   parameters: {

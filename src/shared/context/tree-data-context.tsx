@@ -1,21 +1,31 @@
-import { type TreeNode, folderTree } from '@/constants/tree-data'
+import type { TreeNode } from '@/constants/tree-data'
+import { setNameToTreeNode } from '@/utils/tree'
 import type React from 'react'
 import { createContext, useContext, useState } from 'react'
 
 interface TreeContextType {
   treeNodes: TreeNode[]
   setTreeNodes: (treeNodes: TreeNode[]) => void
+  updateTreeNodeName: (nodeId: string, newName: string) => void
 }
 
 const TreeContext = createContext<TreeContextType | undefined>(undefined)
 
-export const TreeProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const [treeNodes, setTreeNodes] = useState<TreeNode[]>(folderTree)
+export const TreeProvider: React.FC<{
+  children: React.ReactNode
+  initialTreeNodes: TreeNode[]
+}> = ({ children, initialTreeNodes }) => {
+  const [treeNodes, setTreeNodes] = useState<TreeNode[]>(initialTreeNodes)
+
+  function updateTreeNodeName(nodeId: string, newName: string) {
+    const updatedTreeNodes = setNameToTreeNode(newName, nodeId, treeNodes)
+    setTreeNodes(updatedTreeNodes)
+  }
 
   return (
-    <TreeContext.Provider value={{ treeNodes, setTreeNodes }}>
+    <TreeContext.Provider
+      value={{ treeNodes, setTreeNodes, updateTreeNodeName }}
+    >
       {children}
     </TreeContext.Provider>
   )

@@ -1,18 +1,18 @@
 import type { TreeNode } from '@/constants/tree-data'
 import { useTreeSelection } from '@/hook/use-tree-selection'
-import {
-  calcPadLeft,
-  findNodeById,
-  findParentNode,
-  getParentFolderIds,
-  isDescendant,
-  removeNode,
-} from '@/lib/utils'
+import { calcPadLeft } from '@/lib/utils'
 import FileItem from '@/shared/components/atoms/file'
 import FolderItem from '@/shared/components/atoms/folder'
 import { DropIndicator } from '@/shared/components/atoms/tree/drop-indicator'
 import { RenderPreview } from '@/shared/components/atoms/tree/preview-overlay'
 import { useTreeContext } from '@/shared/context/tree-data-context'
+import {
+  findNodeById,
+  findParentById,
+  getParentFolderIds,
+  isDescendant,
+  removeNode,
+} from '@/utils/tree'
 import {
   DndContext,
   type DragEndEvent,
@@ -102,7 +102,7 @@ function Tree() {
             targetNodeInNewTree.nodes.unshift(node)
           }
         } else {
-          const targetParent = findParentNode(treeNodes, targetId)
+          const targetParent = findParentById(treeNodes, targetId)
           if (targetParent) {
             const targetParentInNewTree = findNodeById(
               newTreeNodes,
@@ -139,7 +139,7 @@ function Tree() {
         }
       } else {
         // Find parent of target to add next to target
-        const targetParent = findParentNode(treeNodes, targetId)
+        const targetParent = findParentById(treeNodes, targetId)
         if (targetParent) {
           const targetParentInNewTree = findNodeById(
             newTreeNodes,

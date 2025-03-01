@@ -1,60 +1,18 @@
 import type { TreeNode } from '@/constants/tree-data'
 import useClickOutside from '@/hook/use-click-outside'
+import {
+  findParentById,
+  findSelectedParentOfChild,
+  findSiblings,
+  isSelectedNodeHaveParent,
+} from '@/utils/tree'
 import { useState } from 'react'
 import type React from 'react'
 
-export const findParentById = (
-  tree: TreeNode[],
-  id: string,
-  parent: TreeNode | null = null
-): TreeNode | null => {
-  for (const node of tree) {
-    if (node.id === id) return parent
-    const found = findParentById(node.nodes, id, node)
-    if (found) return found
-  }
-  return null
-}
-
-export const findSiblings = (tree: TreeNode[], id: string): TreeNode[] => {
-  const parent = findParentById(tree, id)
-  return parent ? parent.nodes : tree
-}
-
-export const isParentOfSelected = (
-  tree: TreeNode[],
-  parentId: string,
-  selectedIds: string[]
-): boolean => {
-  for (const id of selectedIds) {
-    let current = findParentById(tree, id)
-    while (current) {
-      if (current.id === parentId) return true
-      current = findParentById(tree, current.id)
-    }
-  }
-  return false
-}
-
-export const isChildOfSelected = (
-  tree: TreeNode[],
-  childId: string,
-  selectedIds: string[]
-): string | null => {
-  let current = findParentById(tree, childId)
-  while (current) {
-    if (selectedIds.includes(current.id)) {
-      return current.id
-    }
-    current = findParentById(tree, current.id)
-  }
-  return null
-}
-
-export const useTreeSelection = (
+export const useTreeSelection = <T extends HTMLElement | null>(
   treeData: TreeNode[],
   isRangeSelection: boolean,
-  containerRef: React.RefObject<HTMLElement>
+  containerRef: React.RefObject<T>
 ) => {
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [lastClickedId, setLastClickedId] = useState<string | null>(null)
@@ -72,11 +30,11 @@ export const useTreeSelection = (
       findParentById(treeData, id) ===
       findParentById(treeData, lastClickedId ?? '')
 
-    if (isParentOfSelected(treeData, id, selectedIds)) {
+    if (isSelectedNodeHaveParent(treeData, id, selectedIds)) {
       return
     }
 
-    const parentId = isChildOfSelected(treeData, id, selectedIds)
+    const parentId = findSelectedParentOfChild(treeData, id, selectedIds)
     if (parentId) {
       setSelectedIds((prev) => {
         const filtered = prev.filter((selectedId) => selectedId !== parentId)

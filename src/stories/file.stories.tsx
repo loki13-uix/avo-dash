@@ -1,13 +1,14 @@
+import { folderTree } from '@/constants/tree-data'
 import FileItem from '@/shared/components/atoms/file'
 import { TreeProvider } from '@/shared/context/tree-data-context'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof FileItem> = {
-  title: 'Design System/atoms/Lists/File',
+  title: 'Design System/atoms/lists/file',
   component: FileItem,
   decorators: [
     (Story) => (
-      <TreeProvider>
+      <TreeProvider initialTreeNodes={folderTree}>
         <Story />
       </TreeProvider>
     ),
