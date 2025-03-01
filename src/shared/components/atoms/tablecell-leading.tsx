@@ -7,14 +7,21 @@ type Props = {
   checkboxProps?: React.ComponentPropsWithoutRef<typeof ShadcnCheckbox>
   selectedState?: boolean
   group?: boolean
+  className?: string
 }
-const TableCellLeading = ({ checkboxProps, selectedState, group }: Props) => {
+const TableCellLeading = ({
+  checkboxProps,
+  selectedState,
+  group,
+  className,
+}: Props) => {
   return (
     <div
       className={cn(
         'border border-grey-3 hover:bg-[#F5F5FF] px-2 py-[6px] flex items-center',
-        selectedState && 'bg-[#EBEBFF]',
-        group && 'bg-grey-2 border border-grey-3 gap-x-2'
+        selectedState && 'bg-purple-1',
+        group && 'bg-grey-2 border border-grey-3 gap-x-2',
+        className
       )}
     >
       <ShadcnCheckbox

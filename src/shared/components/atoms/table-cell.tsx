@@ -29,7 +29,12 @@ const TableCell = ({
   onSelect,
 }: TableCellProps) => {
   const [isEditing, setIsEditing] = useState(isEditable)
+  const [inputValue, setInputValue] = useState(defaultValue || '')
   const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    setInputValue(defaultValue || '')
+  }, [defaultValue])
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -45,13 +50,18 @@ const TableCell = ({
     }
   }
 
-  const handleEditEnd = () => {
+  const handleEditEnd = (commit: boolean) => {
     setIsEditing(false)
     onEditingChange?.(false)
+    if (commit && inputValue !== defaultValue) {
+      onChange?.(inputValue)
+    } else {
+      setInputValue(defaultValue || '')
+    }
   }
 
   const handleValueChange = (newValue: string) => {
-    onChange?.(newValue)
+    setInputValue(newValue)
   }
 
   const handleClick = (e: React.MouseEvent) => {
@@ -60,8 +70,11 @@ const TableCell = ({
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' || e.key === 'Escape') {
-      handleEditEnd()
+    if (e.key === 'Enter') {
+      handleEditEnd(true)
+      e.preventDefault()
+    } else if (e.key === 'Escape') {
+      handleEditEnd(false)
       e.preventDefault()
     }
   }
@@ -96,9 +109,9 @@ const TableCell = ({
       {isEditing && !selectDropdown ? (
         <Input
           ref={inputRef}
-          value={defaultValue}
+          value={inputValue}
           onChange={(e) => handleValueChange(e.target.value)}
-          onBlur={handleEditEnd}
+          onBlur={() => handleEditEnd(true)}
           onKeyDown={handleKeyDown}
           className='text-sm bg-white rounded-sm border border-[#9494F5]'
         />
