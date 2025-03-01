@@ -2,8 +2,17 @@
 
 import { DataTable } from '@/shared/components/atoms/data-table'
 import { Checkbox } from '@/shared/components/ui/checkbox'
-import { ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
+import { useState } from 'react'
 export default function Home() {
+  const [headerChecked, setHeaderChecked] = useState<boolean | 'indeterminate'>(
+    false
+  )
+
+  function handleHeaderCheckedChange(checked: boolean | 'indeterminate') {
+    setHeaderChecked(checked)
+  }
+
   const columns: ColumnDef<{
     id: string
     name: string
@@ -16,7 +25,10 @@ export default function Home() {
       header: () => {
         return (
           <div className='flex items-center justify-center'>
-            <Checkbox />
+            <Checkbox
+              checked={headerChecked}
+              onCheckedChange={handleHeaderCheckedChange}
+            />
           </div>
         )
       },
@@ -57,7 +69,31 @@ export default function Home() {
             email: 'john.doe@example.com',
             phone: '1234567890',
             address: '123 Main St, Anytown, USA',
-            id: ''
+            id: '',
+          },
+          {
+            name: 'John Doe1',
+            age: 25,
+            email: 'john.doe@example.com',
+            phone: '1234567890',
+            address: '123 Main St, Anytown, USA',
+            id: '',
+          },
+          {
+            name: 'John Doe1',
+            age: 26,
+            email: 'john.doe@example.com',
+            phone: '1234567890',
+            address: '123 Main St, Anytown, USA',
+            id: '',
+          },
+          {
+            name: 'John Doe1',
+            age: 25,
+            email: 'john.doe@example.com',
+            phone: '1234567890',
+            address: '123 Main St, Anytown, USA',
+            id: '',
           },
         ]}
       />
