@@ -1,4 +1,4 @@
-import path from 'node:path'
+// import path from 'node:path'
 import type { StorybookConfig } from '@storybook/nextjs'
 
 const config: StorybookConfig = {
@@ -14,21 +14,21 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: ['../public'],
-  webpackFinal: async (config) => {
-    // Resolve aliases
-    config.resolve = {
-      ...config.resolve,
-      modules: [path.resolve(__dirname, '..'), 'node_modules'],
-      extensions: ['.ts', '.tsx', '.js', '.jsx', '.mdx'],
-    }
+  // webpackFinal: async (config) => {
+  //   // Resolve aliases
+  //   config.resolve = {
+  //     ...config.resolve,
+  //     modules: [path.resolve(__dirname, '..'), 'node_modules'],
+  //     extensions: ['.ts', '.tsx', '.js', '.jsx', '.mdx'],
+  //   }
 
-    // Add support for @/ alias
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@': path.resolve(__dirname, '../src'),
-    }
+  //   // Add support for @/ alias
+  //   config.resolve.alias = {
+  //     ...config.resolve.alias,
+  //     '@': path.resolve(__dirname, '../src'),
+  //   }
 
-    return config
-  },
+  //   return config
+  // },
 }
 export default config

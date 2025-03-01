@@ -1,32 +1,32 @@
 import { type TreeNode, folderTree } from '@/constants/tree-data'
-import { useRef, useState } from 'react'
-import FolderItem from '@/shared/components/atoms/folder'
 import { useTreeSelection } from '@/hook/use-tree-selection'
-import type React from 'react'
-import FileItem from '@/shared/components/atoms/file'
 import {
-  DndContext,
-  useSensors,
-  useSensor,
-  PointerSensor,
-  DragOverlay,
-  type DragStartEvent,
-  type DragEndEvent,
-  rectIntersection,
-} from '@dnd-kit/core'
-import {
+  calcPadLeft,
   findNodeById,
+  findParentNode,
+  getParentFolderIds,
   isDescendant,
   removeNode,
-  findParentNode,
-  calcPadLeft,
-  getParentFolderIds,
 } from '@/lib/utils'
+import FileItem from '@/shared/components/atoms/file'
+import FolderItem from '@/shared/components/atoms/folder'
+import { DropIndicator } from '@/shared/components/atoms/tree/drop-indicator'
+import { RenderPreview } from '@/shared/components/atoms/tree/preview-overlay'
+import {
+  DndContext,
+  type DragEndEvent,
+  DragOverlay,
+  type DragStartEvent,
+  PointerSensor,
+  rectIntersection,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { RenderPreview } from '@/shared/components/atoms/tree/preview-overlay'
-import { DropIndicator } from '@/shared/components/atoms/tree/drop-indicator'
+import { useRef, useState } from 'react'
+import type React from 'react'
 
 type TreeNodeProps = {
   node: TreeNode
