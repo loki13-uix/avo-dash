@@ -2,7 +2,7 @@ import { Button } from '@/shared/components/atoms/button'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Button> = {
-  title: 'Design System/atoms/Button',
+  title: 'Design System/atoms/button',
   component: Button,
   tags: ['autodocs'],
   parameters: {

@@ -3,7 +3,7 @@ import { Icon } from '@/shared/components/atoms/icon'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Icon> = {
-  title: 'Design System/atoms/Icons',
+  title: 'Design System/atoms/icons',
   component: Icon,
   tags: ['autodocs'],
   parameters: {
