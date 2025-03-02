@@ -1,16 +1,20 @@
+import { cn } from '@/lib/utils'
 import { DropIndicator } from '@/shared/components/atoms/tree/drop-indicator'
 import { TableCell, TableRow } from '@/shared/components/ui/table'
 import { useSortable } from '@dnd-kit/sortable'
 import type { Row } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
+
 interface DraggableTableRowProps<TData> {
   row: Row<TData>
   isSelected?: boolean
+  isDragOverlay?: boolean
 }
 
 export function DraggableTableRow<TData>({
   row,
   isSelected = false,
+  isDragOverlay = false,
 }: DraggableTableRowProps<TData>) {
   const { attributes, listeners, setNodeRef, isDragging, isOver } = useSortable(
     {
@@ -21,10 +25,10 @@ export function DraggableTableRow<TData>({
   const style = {
     opacity: isDragging ? 0.5 : 1,
     cursor: isDragging ? 'grabbing' : 'grab',
-    backgroundColor: isSelected ? 'var(--grey-1)' : undefined,
+    backgroundColor: isSelected ? 'var(--purple-1)' : undefined,
   }
 
-  return (
+  const rowContent = (
     <TableRow
       ref={setNodeRef}
       style={style}
@@ -35,13 +39,15 @@ export function DraggableTableRow<TData>({
       {row.getVisibleCells().map((cell) => (
         <TableCell
           key={cell.id}
-          className='border-r last:border-r-0 p-0 h-8'
+          className={cn('p-0 h-8', isDragOverlay && 'border-r last:border-r-0')}
           style={{ width: cell.column.getSize() }}
         >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </TableCell>
       ))}
-      {isOver && <DropIndicator edge='bottom' gap='8px' />}
+      {isOver && !isDragOverlay && <DropIndicator edge='bottom' gap='8px' />}
     </TableRow>
   )
+
+  return rowContent
 }

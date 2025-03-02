@@ -12,6 +12,7 @@ import {
 import {
   DndContext,
   type DragEndEvent,
+  DragOverlay,
   type DragStartEvent,
   PointerSensor,
   closestCorners,
@@ -25,6 +26,7 @@ import {
 } from '@dnd-kit/sortable'
 import {
   type ColumnDef,
+  type Row,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -46,8 +48,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
   isSortable = true,
   selectedRows = [],
 }: DataTableProps<TData, TValue>) {
-  const [_activeId, setActiveId] = useState<string | null>(null)
-  const [_draggedNode, setDraggedNode] = useState<TData | TData[] | null>(null)
+  const [activeId, setActiveId] = useState<string | null>(null)
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -62,26 +63,31 @@ export function DataTable<TData extends { id: string | number }, TValue>({
     getCoreRowModel: getCoreRowModel(),
   })
 
+  function DraggableRowOverlay<TData>({ row }: { row: Row<TData> }) {
+    const selectedCount = selectedRows.length
+    return (
+      <DragOverlay className='relative'>
+        <div className='bg-purple-1 border border-purple-primary rounded-[2px]'>
+          <DraggableTableRow row={row} isDragOverlay />
+        </div>
+        {selectedCount > 1 && (
+          <div className='absolute -left-1 -top-1 right-1 h-full bg-purple-1 border border-purple-primary -z-10 rounded-[4px]' />
+        )}
+      </DragOverlay>
+    )
+  }
+
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event
     const index = active.data.current?.sortable?.index
     setActiveId(index)
-
-    const draggedId = data[index].id.toString()
-    if (selectedRows.includes(draggedId)) {
-      const selectedItems = data.filter((item) =>
-        selectedRows.includes(item.id.toString())
-      )
-      setDraggedNode(selectedItems)
-    } else {
-      setDraggedNode(data[index])
-    }
+    localStorage.setItem('activeId', index)
   }
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
     setActiveId(null)
-    setDraggedNode(null)
+    localStorage.removeItem('activeId')
     if (!over) return
 
     const activeIndex = active.data.current?.sortable?.index
@@ -179,14 +185,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
       onDragStart={handleDragStart}
     >
       <div className='rounded-md border border-grey-3'>{tableContent}</div>
-      {/* <DragOverlay>
-        {activeId ? (
-          <CellPreview
-            draggedNode={draggedNode}
-            isMultiple={Array.isArray(draggedNode)}
-          />
-        ) : null}
-      </DragOverlay> */}
+      {activeId && <DraggableRowOverlay row={table.getRow(activeId)} />}
     </DndContext>
   ) : (
     <div className='rounded-md'>{tableContent}</div>

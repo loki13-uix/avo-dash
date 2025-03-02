@@ -29,7 +29,7 @@ const TableCellLeading = ({
     >
       <ShadcnCheckbox
         {...checkboxProps}
-        className={cn('border border-grey-8')}
+        className={cn('border border-grey-8 bg-white')}
       />
 
       {group && <Icon name='chevron-down' color='#605BFF' className='size-4' />}

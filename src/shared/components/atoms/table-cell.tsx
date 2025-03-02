@@ -1,3 +1,4 @@
+'use client'
 import { cn } from '@/lib/utils'
 import { useEffect, useRef, useState } from 'react'
 import type React from 'react'
@@ -84,9 +85,12 @@ const TableCell = ({
     }
   }
 
+  const activeId = localStorage.getItem('activeId')
+
   const baseClassName = cn(
     'border border-grey-3 py-[6px] px-2 font-open-sans text-grey-13 text-sm',
     isSelected && 'bg-purple-1',
+    !isHeader && !isEditing && !isSelected && !activeId && 'hover:bg-purple-1',
     isEditing && 'bg-purple-1',
     className
   )

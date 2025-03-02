@@ -1,10 +1,17 @@
 'use client'
 import { DataTable } from '@/shared/components/atoms/data-table'
-import TableCell from '@/shared/components/atoms/table-cell'
 import TableCellActions from '@/shared/components/atoms/table-cell-actions'
 import TableCellLeading from '@/shared/components/atoms/tablecell-leading'
 import type { ColumnDef } from '@tanstack/react-table'
+import dynamic from 'next/dynamic'
 import { useState } from 'react'
+
+const TableCell = dynamic(
+  () => import('@/shared/components/atoms/table-cell'),
+  {
+    ssr: false,
+  }
+)
 
 export default function Home() {
   const [headerChecked, setHeaderChecked] = useState<boolean | 'indeterminate'>(
@@ -257,7 +264,14 @@ export default function Home() {
       accessorKey: 'actions',
       size: 100,
       enableResizing: true,
-      cell: () => <TableCellActions dots plusIcon className='border-0' />,
+      cell: ({ row }) => (
+        <TableCellActions
+          dots
+          plusIcon
+          className='border-0'
+          isSelected={selectedRows.includes(row.original.id)}
+        />
+      ),
     },
   ]
   return (
