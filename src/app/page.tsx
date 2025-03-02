@@ -1,6 +1,7 @@
 'use client'
 import { DataTable } from '@/shared/components/atoms/data-table'
 import TableCell from '@/shared/components/atoms/table-cell'
+import TableCellActions from '@/shared/components/atoms/table-cell-actions'
 import TableCellLeading from '@/shared/components/atoms/tablecell-leading'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useState } from 'react'
@@ -67,18 +68,19 @@ export default function Home() {
     {
       header: () => {
         return (
-          <div className='bg-grey-2'>
-            <TableCellLeading
-              className='border-0'
-              checkboxProps={{
-                checked: headerChecked,
-                onCheckedChange: handleHeaderCheckedChange,
-              }}
-            />
-          </div>
+          <TableCellLeading
+            className='border-0'
+            isHeader
+            checkboxProps={{
+              checked: headerChecked,
+              onCheckedChange: handleHeaderCheckedChange,
+            }}
+          />
         )
       },
       accessorKey: 'id',
+      size: 36,
+      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCellLeading
@@ -105,13 +107,25 @@ export default function Home() {
         <TableCell defaultValue='Name' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'name',
+      size: 300,
+      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCell
             defaultValue={row.original.name}
-            className='border-0 w-full'
+            className='border-0 h-8'
+            selectDropdown
+            options={[
+              {
+                label: 'John Doe',
+                value: 'John Doe',
+              },
+              {
+                label: 'John Doe2',
+                value: 'John Doe2',
+              },
+            ]}
             isSelected={selectedRows.includes(row.original.id)}
-            isEditable
             onChange={(newValue) => {
               setData(
                 data.map((item) =>
@@ -130,13 +144,14 @@ export default function Home() {
         <TableCell defaultValue='Age' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'age',
+      size: 122,
+      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCell
             defaultValue={row.original.age.toString()}
-            className='border-0'
+            className='border-0 h-8'
             isSelected={selectedRows.includes(row.original.id)}
-            isEditable
             onChange={(newValue) => {
               const newAge = Number.parseInt(newValue)
               if (!Number.isNaN(newAge)) {
@@ -158,12 +173,23 @@ export default function Home() {
         <TableCell defaultValue='Email' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'email',
+      size: 400,
+      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCell
             defaultValue={row.original.email}
-            className='border-0'
+            className='border-0 h-8'
             isSelected={selectedRows.includes(row.original.id)}
+            onChange={(newValue) => {
+              setData(
+                data.map((item) =>
+                  item.id === row.original.id
+                    ? { ...item, email: newValue }
+                    : item
+                )
+              )
+            }}
           />
         )
       },
@@ -173,12 +199,23 @@ export default function Home() {
         <TableCell defaultValue='Phone' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'phone',
+      size: 250,
+      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCell
             defaultValue={row.original.phone}
-            className='border-0'
+            className='border-0 h-8'
             isSelected={selectedRows.includes(row.original.id)}
+            onChange={(newValue) => {
+              setData(
+                data.map((item) =>
+                  item.id === row.original.id
+                    ? { ...item, phone: newValue }
+                    : item
+                )
+              )
+            }}
           />
         )
       },
@@ -192,15 +229,35 @@ export default function Home() {
         />
       ),
       accessorKey: 'address',
+      size: 500,
+      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCell
             defaultValue={row.original.address}
-            className='border-0'
+            className='border-0 h-8'
             isSelected={selectedRows.includes(row.original.id)}
+            onChange={(newValue) => {
+              setData(
+                data.map((item) =>
+                  item.id === row.original.id
+                    ? { ...item, address: newValue }
+                    : item
+                )
+              )
+            }}
           />
         )
       },
+    },
+    {
+      header: () => (
+        <TableCellActions dots plusIcon className='border-0' isHeader />
+      ),
+      accessorKey: 'actions',
+      size: 100,
+      enableResizing: true,
+      cell: () => <TableCellActions dots plusIcon className='border-0' />,
     },
   ]
   return (

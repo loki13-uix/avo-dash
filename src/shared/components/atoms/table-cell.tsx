@@ -64,6 +64,9 @@ const TableCell = ({
 
   const handleValueChange = (newValue: string) => {
     setInputValue(newValue)
+    if (selectDropdown) {
+      onChange?.(newValue)
+    }
   }
 
   const handleClick = (e: React.MouseEvent) => {
@@ -118,7 +121,7 @@ const TableCell = ({
         />
       ) : selectDropdown && isSelected ? (
         <Select value={defaultValue} onValueChange={handleValueChange}>
-          <SelectTrigger className='shadow-none p-0 h-auto bg-transparent w-full '>
+          <SelectTrigger className='shadow-none p-0 h-auto bg-transparent w-full'>
             <span>{selectedOption?.label}</span>
           </SelectTrigger>
           <SelectContent>
