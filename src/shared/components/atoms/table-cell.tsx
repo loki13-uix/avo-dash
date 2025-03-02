@@ -96,7 +96,7 @@ const TableCell = ({
 
   if (isHeader) {
     return (
-      <div className={cn(baseClassName, 'bg-grey-2')}>
+      <div className={cn(baseClassName, 'bg-grey-1')}>
         <div className='font-semibold'>{defaultValue}</div>
       </div>
     )
@@ -120,7 +120,7 @@ const TableCell = ({
         />
       ) : selectDropdown && isSelected ? (
         <Select value={defaultValue} onValueChange={handleValueChange}>
-          <SelectTrigger className='shadow-none p-0 h-auto bg-transparent w-full '>
+          <SelectTrigger className='shadow-none p-0 h-auto bg-transparent w-full'>
             <span>{selectedOption?.label}</span>
           </SelectTrigger>
           <SelectContent>

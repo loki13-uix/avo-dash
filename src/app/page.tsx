@@ -1,6 +1,7 @@
 'use client'
 import { DataTable } from '@/shared/components/atoms/data-table'
 import TableCell from '@/shared/components/atoms/table-cell'
+import TableCellActions from '@/shared/components/atoms/table-cell-actions'
 import TableCellLeading from '@/shared/components/atoms/tablecell-leading'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useState } from 'react'
@@ -67,20 +68,19 @@ export default function Home() {
     {
       header: () => {
         return (
-          <div className='bg-grey-2'>
-            <TableCellLeading
-              className='border-0'
-              checkboxProps={{
-                checked: headerChecked,
-                onCheckedChange: handleHeaderCheckedChange,
-              }}
-            />
-          </div>
+          <TableCellLeading
+            className='border-0'
+            isHeader
+            checkboxProps={{
+              checked: headerChecked,
+              onCheckedChange: handleHeaderCheckedChange,
+            }}
+          />
         )
       },
       accessorKey: 'id',
+      size: 36,
       enableResizing: true,
-      size: 50,
       cell: ({ row }) => {
         return (
           <TableCellLeading
@@ -107,7 +107,8 @@ export default function Home() {
         <TableCell defaultValue='Name' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'name',
-      size: 200,
+      size: 300,
+      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCell
@@ -143,7 +144,8 @@ export default function Home() {
         <TableCell defaultValue='Age' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'age',
-      size: 100,
+      size: 122,
+      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCell
@@ -171,7 +173,8 @@ export default function Home() {
         <TableCell defaultValue='Email' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'email',
-      size: 250,
+      size: 400,
+      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCell
@@ -196,7 +199,8 @@ export default function Home() {
         <TableCell defaultValue='Phone' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'phone',
-      size: 150,
+      size: 250,
+      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCell
@@ -225,7 +229,8 @@ export default function Home() {
         />
       ),
       accessorKey: 'address',
-      size: 300,
+      size: 500,
+      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCell
@@ -244,6 +249,15 @@ export default function Home() {
           />
         )
       },
+    },
+    {
+      header: () => (
+        <TableCellActions dots plusIcon className='border-0' isHeader />
+      ),
+      accessorKey: 'actions',
+      size: 100,
+      enableResizing: true,
+      cell: () => <TableCellActions dots plusIcon className='border-0' />,
     },
   ]
   return (

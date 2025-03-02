@@ -35,13 +35,13 @@ export function DraggableTableRow<TData>({
       {row.getVisibleCells().map((cell) => (
         <TableCell
           key={cell.id}
-          className='border-r last:bord p-0 h-8'
+          className='border-r last:border-r-0 p-0 h-8'
           style={{ width: cell.column.getSize() }}
         >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </TableCell>
       ))}
-      {isOver && <DropIndicator edge='bottom' gap='4px' />}
+      {isOver && <DropIndicator edge='bottom' gap='8px' />}
     </TableRow>
   )
 }

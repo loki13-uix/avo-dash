@@ -34,7 +34,7 @@ import { useState } from 'react'
 interface DataTableProps<TData extends { id: string | number }, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  setData: (data: TData[]) => void
+  setData: (data: TData[] | ((prev: TData[]) => TData[])) => void
   isSortable?: boolean
   selectedRows?: string[]
 }
@@ -47,7 +47,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
   selectedRows = [],
 }: DataTableProps<TData, TValue>) {
   const [_activeId, setActiveId] = useState<string | null>(null)
-  const [_draggedNode, setDraggedNode] = useState<TData | null>(null)
+  const [_draggedNode, setDraggedNode] = useState<TData | TData[] | null>(null)
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -93,7 +93,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
 
         if (selectedRows.includes(activeId)) {
           const selectedIndices = items
-            .map((item: { id: { toString: () => string } }, index: any) =>
+            .map((item: { id: { toString: () => string } }, index: number) =>
               selectedRows.includes(item.id.toString()) ? index : -1
             )
             .filter((index: number) => index !== -1)
@@ -131,7 +131,6 @@ export function DataTable<TData extends { id: string | number }, TValue>({
               <TableHead
                 key={header.id}
                 className='border-r last:border-r-0 h-8'
-                style={{ width: header.getSize() }}
               >
                 {header.isPlaceholder
                   ? null
