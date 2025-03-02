@@ -85,12 +85,9 @@ const TableCell = ({
     }
   }
 
-  const activeId = localStorage.getItem('activeId')
-
   const baseClassName = cn(
     'border border-grey-3 py-[6px] px-2 font-open-sans text-grey-13 text-sm',
     isSelected && 'bg-purple-1',
-    !isHeader && !isEditing && !isSelected && !activeId && 'hover:bg-purple-1',
     isEditing && 'bg-purple-1',
     className
   )
@@ -123,7 +120,7 @@ const TableCell = ({
           onKeyDown={handleKeyDown}
           className='text-sm bg-white rounded-sm border border-[#9494F5]'
         />
-      ) : selectDropdown && isSelected ? (
+      ) : selectDropdown ? (
         <Select value={defaultValue} onValueChange={handleValueChange}>
           <SelectTrigger className='shadow-none p-0 h-auto bg-transparent w-full'>
             <span>{selectedOption?.label}</span>

@@ -81,13 +81,11 @@ export function DataTable<TData extends { id: string | number }, TValue>({
     const { active } = event
     const index = active.data.current?.sortable?.index
     setActiveId(index)
-    localStorage.setItem('activeId', index)
   }
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
     setActiveId(null)
-    localStorage.removeItem('activeId')
     if (!over) return
 
     const activeIndex = active.data.current?.sortable?.index

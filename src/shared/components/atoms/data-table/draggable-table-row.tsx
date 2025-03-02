@@ -39,7 +39,10 @@ export function DraggableTableRow<TData>({
       {row.getVisibleCells().map((cell) => (
         <TableCell
           key={cell.id}
-          className={cn('p-0 h-8', isDragOverlay && 'border-r last:border-r-0')}
+          className={cn(
+            'p-0 h-8',
+            !isDragOverlay && 'border-r last:border-r-0'
+          )}
           style={{ width: cell.column.getSize() }}
         >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
