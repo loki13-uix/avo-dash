@@ -2,7 +2,7 @@ import Modal from '@/shared/components/atoms/modal'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Modal> = {
-  title: 'Design System/atoms/Modal',
+  title: 'Design System/atoms/modal',
   component: Modal,
   parameters: {
     layout: 'centered',

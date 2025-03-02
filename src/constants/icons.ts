@@ -14,6 +14,7 @@ import ControlTextfield from '@/shared/icons/control-textfield'
 import Copy from '@/shared/icons/copy'
 import Details from '@/shared/icons/details'
 import Directory from '@/shared/icons/directory'
+import Dots from '@/shared/icons/dots'
 import Execution from '@/shared/icons/execution'
 import Export from '@/shared/icons/export'
 import FileData from '@/shared/icons/file-data'
@@ -98,6 +99,7 @@ export const iconNames = [
   'utilities',
   'wait',
   'chevron-down',
+  'dots',
 ] as const
 
 export type IconName = (typeof iconNames)[number]
@@ -120,6 +122,7 @@ export const iconRegistry = new Map<
   ['control-table', ControlTable],
   ['control-textfield', ControlTextfield],
   ['copy', Copy],
+  ['dots', Dots],
   ['details', Details],
   ['directory', Directory],
   ['execution', Execution],
