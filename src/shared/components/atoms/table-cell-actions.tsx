@@ -1,5 +1,7 @@
 import { cn } from '@/lib/utils'
+import { useState } from 'react'
 import { Icon } from './icon'
+import PopoverDemo from './popover'
 
 type Props = {
   plusIcon?: boolean
@@ -10,6 +12,7 @@ type Props = {
   isSelected?: boolean
   isHeader?: boolean
   className?: string
+  onDotsClick?: () => void
 }
 
 const TableCellActions = ({
@@ -22,6 +25,7 @@ const TableCellActions = ({
   isSelected,
   className,
 }: Props) => {
+  const [open, setOpen] = useState(false)
   return (
     <div
       className={cn(
@@ -37,7 +41,15 @@ const TableCellActions = ({
         <Icon name='file-data' color='#605BFF' className='size-5' />
       )}
       {deleteIcon && <Icon name='trash' color='#605BFF' className='size-5' />}
-      {dots && <Icon name='dots' color='#605BFF' className='size-5' />}
+      {dots && (
+        <Icon
+          name='dots'
+          color='#605BFF'
+          className='size-5'
+          onClick={() => setOpen((prev) => !prev)}
+        />
+      )}
+      {open && <PopoverDemo open={open} setOpen={setOpen} />}
     </div>
   )
 }
