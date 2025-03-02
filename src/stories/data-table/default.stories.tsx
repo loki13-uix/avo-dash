@@ -43,30 +43,57 @@ const NameColumn = ({
   row,
   isSelected,
   isReadOnly = false,
+  isDropdown = false,
+  onValueChange,
 }: {
   row: TableRow
   isSelected: boolean
   isReadOnly?: boolean
+  onValueChange?: (id: string, value: string) => void
+  isDropdown?: boolean
 }) => (
   <TableCell
     defaultValue={row.name}
-    className='border-none w-full px-2 py-1.5'
+    className='border-none px-2 py-1.5'
     isSelected={isSelected}
     isReadOnly={isReadOnly}
+    onChange={(newValue) => {
+      if (onValueChange) {
+        onValueChange(row.id, newValue)
+      }
+    }}
+    selectDropdown={isDropdown}
+    options={[
+      {
+        label: 'John Doe',
+        value: 'John Doe',
+      },
+      {
+        label: 'John Doe2',
+        value: 'John Doe2',
+      },
+    ]}
   />
 )
 
 const EmailColumn = ({
   row,
   isSelected,
+  onValueChange,
 }: {
   row: TableRow
   isSelected: boolean
+  onValueChange?: (id: string, value: string) => void
 }) => (
   <TableCell
     defaultValue={row.email}
     className='border-none w-full px-2 py-1.5'
     isSelected={isSelected}
+    onChange={(newValue) => {
+      if (onValueChange) {
+        onValueChange(row.id, newValue)
+      }
+    }}
   />
 )
 
@@ -142,6 +169,9 @@ const createColumns = ({
   setSelectedRows = () => {},
   headerChecked = false,
   onHeaderCheckedChange = () => {},
+  onNameChange = () => {},
+  onEmailChange = () => {},
+  includeDropdown = false,
 }: {
   includeIcons?: boolean
   includeCheckbox?: boolean
@@ -149,6 +179,9 @@ const createColumns = ({
   setSelectedRows?: (rows: string[]) => void
   headerChecked?: boolean | 'indeterminate'
   onHeaderCheckedChange?: (checked: boolean) => void
+  onNameChange?: (id: string, value: string) => void
+  onEmailChange?: (id: string, value: string) => void
+  includeDropdown?: boolean
 }): ColumnDef<TableRow>[] => {
   const columns: ColumnDef<TableRow>[] = []
 
@@ -164,6 +197,7 @@ const createColumns = ({
         />
       ),
       accessorKey: 'checkbox',
+      size: 36,
       cell: ({ row }) => (
         <CheckboxColumn
           row={row.original}
@@ -178,16 +212,19 @@ const createColumns = ({
     header: () => (
       <TableCell
         defaultValue='Column with Select content'
-        className='border-none w-[250px]'
+        className='border-none'
         isHeader
       />
     ),
     accessorKey: 'name',
+    size: 300,
     cell: ({ row }) => (
       <NameColumn
         row={row.original}
         isSelected={selectedRows.includes(row.original.id)}
         isReadOnly={!includeIcons}
+        onValueChange={onNameChange}
+        isDropdown={includeDropdown}
       />
     ),
   })
@@ -196,15 +233,17 @@ const createColumns = ({
     header: () => (
       <TableCell
         defaultValue='Column with Text content'
-        className='border-none w-[250px]'
+        className='border-none'
         isHeader
       />
     ),
     accessorKey: 'email',
+    size: 300,
     cell: ({ row }) => (
       <EmailColumn
         row={row.original}
         isSelected={selectedRows.includes(row.original.id)}
+        onValueChange={onEmailChange}
       />
     ),
   })
@@ -213,6 +252,8 @@ const createColumns = ({
     columns.push({
       header: () => <ActionsColumn isHeader={true} />,
       accessorKey: 'icon',
+      size: 36,
+
       cell: ({ row }) => (
         <ActionsColumn
           row={row.original}
@@ -272,6 +313,19 @@ export const ReadOnly: Story = {
 export const DataControls: Story = {
   render: (args) => {
     const { selectedRows, setSelectedRows } = useSelectionState()
+    const [data, setData] = useState(initialData)
+
+    const handleNameChange = (id: string, value: string) => {
+      setData(
+        data.map((item) => (item.id === id ? { ...item, name: value } : item))
+      )
+    }
+
+    const handleEmailChange = (id: string, value: string) => {
+      setData(
+        data.map((item) => (item.id === id ? { ...item, email: value } : item))
+      )
+    }
 
     return (
       <DataTable
@@ -280,9 +334,12 @@ export const DataControls: Story = {
           includeIcons: true,
           selectedRows,
           setSelectedRows,
+          onNameChange: handleNameChange,
+          onEmailChange: handleEmailChange,
         })}
-        data={initialData}
+        data={data}
         selectedRows={selectedRows}
+        setData={setData}
       />
     )
   },
@@ -296,6 +353,19 @@ export const DataWithControls: Story = {
       setSelectedRows,
       handleHeaderCheckedChange,
     } = useSelectionState()
+    const [data, setData] = useState(initialData)
+
+    const handleNameChange = (id: string, value: string) => {
+      setData(
+        data.map((item) => (item.id === id ? { ...item, name: value } : item))
+      )
+    }
+
+    const handleEmailChange = (id: string, value: string) => {
+      setData(
+        data.map((item) => (item.id === id ? { ...item, email: value } : item))
+      )
+    }
 
     return (
       <DataTable
@@ -307,9 +377,12 @@ export const DataWithControls: Story = {
           setSelectedRows,
           headerChecked,
           onHeaderCheckedChange: handleHeaderCheckedChange,
+          onNameChange: handleNameChange,
+          onEmailChange: handleEmailChange,
         })}
-        data={initialData}
+        data={data}
         selectedRows={selectedRows}
+        setData={setData}
       />
     )
   },
@@ -323,6 +396,19 @@ export const DataWithControlsAndSelection: Story = {
       setSelectedRows,
       handleHeaderCheckedChange,
     } = useSelectionState()
+    const [data, setData] = useState(initialData)
+
+    const handleNameChange = (id: string, value: string) => {
+      setData(
+        data.map((item) => (item.id === id ? { ...item, name: value } : item))
+      )
+    }
+
+    const handleEmailChange = (id: string, value: string) => {
+      setData(
+        data.map((item) => (item.id === id ? { ...item, email: value } : item))
+      )
+    }
 
     return (
       <DataTable
@@ -330,12 +416,16 @@ export const DataWithControlsAndSelection: Story = {
         columns={createColumns({
           includeIcons: true,
           includeCheckbox: true,
+          includeDropdown: true,
           selectedRows,
           setSelectedRows,
           headerChecked,
           onHeaderCheckedChange: handleHeaderCheckedChange,
+          onNameChange: handleNameChange,
+          onEmailChange: handleEmailChange,
         })}
-        data={initialData}
+        data={data}
+        setData={setData}
         selectedRows={selectedRows}
       />
     )
