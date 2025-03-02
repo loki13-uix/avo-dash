@@ -14,6 +14,7 @@ type TableCellProps = {
   onEditingChange?: (isEditing: boolean) => void
   className?: string
   onSelect?: (event: React.MouseEvent) => void
+  isReadOnly?: boolean
 }
 
 const TableCell = ({
@@ -27,6 +28,7 @@ const TableCell = ({
   onEditingChange,
   className,
   onSelect,
+  isReadOnly,
 }: TableCellProps) => {
   const [isEditing, setIsEditing] = useState(isEditable)
   const [inputValue, setInputValue] = useState(defaultValue || '')
@@ -82,7 +84,6 @@ const TableCell = ({
   const baseClassName = cn(
     'border border-grey-3 py-[6px] px-2 font-open-sans text-grey-13 text-sm',
     isSelected && 'bg-purple-2',
-    !isHeader && !isEditing && !isSelected && 'hover:bg-[#F5F5FF]',
     isEditing && 'bg-purple-1',
     className
   )
@@ -93,7 +94,7 @@ const TableCell = ({
 
   if (isHeader) {
     return (
-      <div className={cn(baseClassName, 'bg-grey-2')}>
+      <div className={cn(baseClassName, 'bg-grey-1')}>
         <div className='font-semibold'>{defaultValue}</div>
       </div>
     )
@@ -103,8 +104,8 @@ const TableCell = ({
     <div
       className={baseClassName}
       onClick={handleClick}
-      onDoubleClick={handleEditStart}
       onKeyDown={handleKeyDown}
+      onDoubleClick={isReadOnly ? undefined : handleEditStart}
     >
       {isEditing && !selectDropdown ? (
         <Input
