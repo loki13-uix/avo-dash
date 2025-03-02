@@ -1,17 +1,18 @@
-import { type TreeNode, folderTree } from '@/constants/tree-data'
+import type { TreeNode } from '@/constants/tree-data'
 import { useTreeSelection } from '@/hook/use-tree-selection'
-import {
-  calcPadLeft,
-  findNodeById,
-  findParentNode,
-  getParentFolderIds,
-  isDescendant,
-  removeNode,
-} from '@/lib/utils'
+import { calcPadLeft } from '@/lib/utils'
 import FileItem from '@/shared/components/atoms/file'
 import FolderItem from '@/shared/components/atoms/folder'
 import { DropIndicator } from '@/shared/components/atoms/tree/drop-indicator'
 import { RenderPreview } from '@/shared/components/atoms/tree/preview-overlay'
+import { useTreeContext } from '@/shared/context/tree-data-context'
+import {
+  findNodeById,
+  getParentFolderIds,
+  getParentNodeById,
+  isDescendant,
+  removeNodeById,
+} from '@/utils/tree'
 import {
   DndContext,
   type DragEndEvent,
@@ -36,7 +37,7 @@ type TreeNodeProps = {
 export type Edge = 'top' | 'bottom' | 'left' | 'right'
 
 function Tree() {
-  const [treeNodes, setTreeNodes] = useState<TreeNode[]>(folderTree)
+  const { treeNodes, setTreeNodes } = useTreeContext()
   const [expandedFolders, setExpandedFolders] = useState<string[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const [draggedNode, setDraggedNode] = useState<TreeNode | null>(null)
@@ -93,7 +94,7 @@ function Tree() {
         const node = findNodeById(newTreeNodes, id)
         if (!node) continue
 
-        newTreeNodes = removeNode(newTreeNodes, id)
+        newTreeNodes = removeNodeById(newTreeNodes, id)
         const targetNodeInNewTree = findNodeById(newTreeNodes, targetId)
 
         if (targetNode.variant === 'folder') {
@@ -101,7 +102,7 @@ function Tree() {
             targetNodeInNewTree.nodes.unshift(node)
           }
         } else {
-          const targetParent = findParentNode(treeNodes, targetId)
+          const targetParent = getParentNodeById(treeNodes, targetId)
           if (targetParent) {
             const targetParentInNewTree = findNodeById(
               newTreeNodes,
@@ -128,7 +129,7 @@ function Tree() {
       const node = sourceNode
 
       // Remove node from its current location
-      newTreeNodes = removeNode(newTreeNodes, sourceId)
+      newTreeNodes = removeNodeById(newTreeNodes, sourceId)
       const targetNodeInNewTree = findNodeById(newTreeNodes, targetId)
 
       // Add node to target folder if target is a folder, otherwise to target's parent
@@ -138,7 +139,7 @@ function Tree() {
         }
       } else {
         // Find parent of target to add next to target
-        const targetParent = findParentNode(treeNodes, targetId)
+        const targetParent = getParentNodeById(treeNodes, targetId)
         if (targetParent) {
           const targetParentInNewTree = findNodeById(
             newTreeNodes,
@@ -247,6 +248,7 @@ function Tree() {
     return (
       <FolderItem
         name={node.name}
+        id={node.id}
         isSelected={isSelected}
         key={node.id}
         isExpanded={expandedFolders.includes(node.id)}

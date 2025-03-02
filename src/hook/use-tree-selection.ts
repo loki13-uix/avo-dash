@@ -1,30 +1,18 @@
 import type { TreeNode } from '@/constants/tree-data'
 import useClickOutside from '@/hook/use-click-outside'
+import {
+  getParentNodeById,
+  getSelectedParentOfChild,
+  getSiblingsById,
+  isSelectedNodeHaveParent,
+} from '@/utils/tree'
 import { useState } from 'react'
 import type React from 'react'
 
-export const findParentById = (
-  tree: TreeNode[],
-  id: string,
-  parent: TreeNode | null = null
-): TreeNode | null => {
-  for (const node of tree) {
-    if (node.id === id) return parent
-    const found = findParentById(node.nodes, id, node)
-    if (found) return found
-  }
-  return null
-}
-
-export const findSiblings = (tree: TreeNode[], id: string): TreeNode[] => {
-  const parent = findParentById(tree, id)
-  return parent ? parent.nodes : tree
-}
-
-export const useTreeSelection = (
+export const useTreeSelection = <T extends HTMLElement | null>(
   treeData: TreeNode[],
   isRangeSelection: boolean,
-  containerRef: React.RefObject<HTMLElement>
+  containerRef: React.RefObject<T>
 ) => {
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [lastClickedId, setLastClickedId] = useState<string | null>(null)
@@ -33,23 +21,36 @@ export const useTreeSelection = (
 
   const handleSelect = (data: TreeNode, event: React.MouseEvent) => {
     const id = data.id
-    const siblings = findSiblings(treeData, id)
+    const siblings = getSiblingsById(treeData, id)
     const currentIndex = siblings.findIndex((node) => node.id === id)
     const lastClickedIndex = siblings.findIndex(
       (node) => node.id === lastClickedId
     )
     const isSameParent =
-      findParentById(treeData, id) ===
-      findParentById(treeData, lastClickedId ?? '')
+      getParentNodeById(treeData, id) ===
+      getParentNodeById(treeData, lastClickedId ?? '')
 
-    if (event.metaKey || (event.ctrlKey && lastClickedId)) {
-      if (isSameParent) {
-        setSelectedIds((prev) =>
-          prev.includes(id)
-            ? prev.filter((selectedId) => selectedId !== id)
-            : [...prev, id]
-        )
-      }
+    if (isSelectedNodeHaveParent(treeData, id, selectedIds)) {
+      return
+    }
+
+    const parentId = getSelectedParentOfChild(treeData, id, selectedIds)
+    if (parentId) {
+      setSelectedIds((prev) => {
+        const filtered = prev.filter((selectedId) => selectedId !== parentId)
+        return [...filtered, id]
+      })
+      setLastClickedId(id)
+      return
+    }
+
+    if (event.metaKey || event.ctrlKey) {
+      setSelectedIds((prev) =>
+        prev.includes(id)
+          ? prev.filter((selectedId) => selectedId !== id)
+          : [...prev, id]
+      )
+      setLastClickedId(id)
     } else if (isRangeSelection && event.shiftKey && isSameParent) {
       if (currentIndex !== -1 && lastClickedIndex !== -1) {
         const startIndex = Math.min(currentIndex, lastClickedIndex)

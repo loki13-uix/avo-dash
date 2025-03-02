@@ -3,12 +3,13 @@
 import type { IconName } from '@/constants/icons'
 import useClickOutside from '@/hook/use-click-outside'
 import { cn } from '@/lib/utils'
+import { useTreeContext } from '@/shared/context/tree-data-context'
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import type React from 'react'
 import { Icon } from './icon'
-
 type FolderItemProps = {
+  id: string
   name: string
   isExpanded?: boolean
   level?: number
@@ -25,6 +26,7 @@ type FolderItemProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 function FolderItem({
+  id,
   name,
   isSelected = false,
   children,
@@ -42,8 +44,9 @@ function FolderItem({
   const [folderName, setFolderName] = useState(name)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const clickTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const { updateTreeNodeName } = useTreeContext()
 
-  function handleName(e: { target: { value: React.SetStateAction<string> } }) {
+  function handleName(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setFolderName(e.target.value)
     if (inputRef) {
       const textarea = inputRef.current
@@ -54,17 +57,20 @@ function FolderItem({
     }
   }
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
     clickTimeout.current = setTimeout(() => {
       onSelect?.(e)
       clickTimeout.current = null
     }, 20)
   }
 
-  const handleDoubleClick = () => {
+  const handleDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
     if (clickTimeout.current) {
       clearTimeout(clickTimeout.current)
       clickTimeout.current = null
     }
+
     if (canRename) {
       setIsEditing(true)
     }
@@ -77,12 +83,13 @@ function FolderItem({
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter') {
       setIsEditing(false)
+      updateTreeNodeName(id, folderName)
     }
   }
 
-  useClickOutside(inputRef as React.RefObject<HTMLElement>, () =>
+  useClickOutside(inputRef, () => {
     setIsEditing(false)
-  )
+  })
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -93,16 +100,24 @@ function FolderItem({
     }
   }, [isEditing])
 
+  function handleToggle(e: React.MouseEvent<SVGSVGElement>) {
+    e.stopPropagation()
+    if (clickTimeout.current) {
+      clearTimeout(clickTimeout.current)
+      clickTimeout.current = null
+    }
+    onToggle()
+  }
+
   return (
     <>
       <div
         data-selected={isSelected}
         className={cn(
-          'px-2 py-1 gap-2 data-[selected="true"]:bg-purple-1 min-h-8 w-full flex transition-all duration-250 items-start',
+          'px-2 py-1 gap-2 data-[selected="true"]:bg-purple-1 min-h-8 w-full flex transition-all duration-250 items-start select-none',
           isSelected && 'bg-purple-1'
         )}
         onClick={handleClick}
-        onDoubleClick={handleDoubleClick}
         {...props}
       >
         {!isPreview && (
@@ -113,7 +128,7 @@ function FolderItem({
               'fill-grey-12 mt-1 shrink-0',
               isExpanded ? 'rotate-270' : 'rotate-180 '
             )}
-            onClick={onToggle}
+            onClick={handleToggle}
           />
         )}
 
@@ -140,7 +155,10 @@ function FolderItem({
           />
         ) : (
           <div className='flex justify-between items-start w-full'>
-            <span className='text-grey text-[13px] cursor-pointer py-[0.8px] px-[3px] break-all'>
+            <span
+              className='text-grey text-[13px] cursor-pointer py-[0.8px] px-[3px] break-all'
+              onDoubleClick={handleDoubleClick}
+            >
               {folderName}
             </span>
             {isPreview && isSelected && selectedIds.length > 1 && (
