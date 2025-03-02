@@ -62,6 +62,9 @@ const TableCell = ({
 
   const handleValueChange = (newValue: string) => {
     setInputValue(newValue)
+    if (selectDropdown) {
+      onChange?.(newValue)
+    }
   }
 
   const handleClick = (e: React.MouseEvent) => {
@@ -81,7 +84,7 @@ const TableCell = ({
 
   const baseClassName = cn(
     'border border-grey-3 py-[6px] px-2 font-open-sans text-grey-13 text-sm',
-    isSelected && 'bg-purple-2',
+    isSelected && 'bg-purple-1',
     !isHeader && !isEditing && !isSelected && 'hover:bg-[#F5F5FF]',
     isEditing && 'bg-purple-1',
     className

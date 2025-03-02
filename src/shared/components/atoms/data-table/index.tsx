@@ -1,23 +1,5 @@
 'use client'
 
-import {
-  DndContext,
-  type DragEndEvent,
-  DragOverlay,
-  type DragStartEvent,
-  PointerSensor,
-  closestCorners,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core'
-import {
-  type ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from '@tanstack/react-table'
-
-import { CellPreview } from '@/shared/components/atoms/data-table/cell-preview'
 import { DraggableTableRow } from '@/shared/components/atoms/data-table/draggable-table-row'
 import {
   Table,
@@ -28,10 +10,25 @@ import {
   TableRow,
 } from '@/shared/components/ui/table'
 import {
+  DndContext,
+  type DragEndEvent,
+  type DragStartEvent,
+  PointerSensor,
+  closestCorners,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
+import {
   SortableContext,
   arrayMove,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
+import {
+  type ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
 import { useState } from 'react'
 
 interface DataTableProps<TData extends { id: string | number }, TValue> {
@@ -49,8 +46,8 @@ export function DataTable<TData extends { id: string | number }, TValue>({
   isSortable = true,
   selectedRows = [],
 }: DataTableProps<TData, TValue>) {
-  const [activeId, setActiveId] = useState<string | null>(null)
-  const [draggedNode, setDraggedNode] = useState<TData | null>(null)
+  const [_activeId, setActiveId] = useState<string | null>(null)
+  const [_draggedNode, setDraggedNode] = useState<TData | null>(null)
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -75,7 +72,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
       const selectedItems = data.filter((item) =>
         selectedRows.includes(item.id.toString())
       )
-      setDraggedNode(selectedItems as any)
+      setDraggedNode(selectedItems)
     } else {
       setDraggedNode(data[index])
     }
@@ -96,18 +93,21 @@ export function DataTable<TData extends { id: string | number }, TValue>({
 
         if (selectedRows.includes(activeId)) {
           const selectedIndices = items
-            .map((item, index) =>
+            .map((item: { id: { toString: () => string } }, index: any) =>
               selectedRows.includes(item.id.toString()) ? index : -1
             )
-            .filter((index) => index !== -1)
-            .sort((a, b) => a - b)
+            .filter((index: number) => index !== -1)
+            .sort((a: number, b: number) => a - b)
 
           const newItems = [...items]
-          const itemsToMove = selectedIndices.map((index) => items[index])
+          const itemsToMove = selectedIndices.map(
+            (index: number) => items[index]
+          )
 
-          selectedIndices.reverse().forEach((index) => {
+          selectedIndices.reverse()
+          for (const index of selectedIndices) {
             newItems.splice(index, 1)
-          })
+          }
 
           const insertIndex =
             overIndex > activeIndex
@@ -131,6 +131,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
               <TableHead
                 key={header.id}
                 className='border-r last:border-r-0 h-8'
+                style={{ width: header.getSize() }}
               >
                 {header.isPlaceholder
                   ? null
@@ -161,7 +162,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
           <TableRow>
             <TableCell
               colSpan={columns.length}
-              className='h-8 text-center border-r last:border-r-0'
+              className='text-center border-r last:border-r-0'
             >
               No results.
             </TableCell>

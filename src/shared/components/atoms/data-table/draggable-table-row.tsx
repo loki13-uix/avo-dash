@@ -33,7 +33,11 @@ export function DraggableTableRow<TData>({
       className='border-b'
     >
       {row.getVisibleCells().map((cell) => (
-        <TableCell key={cell.id} className='border-r last:bord p-0 h-8'>
+        <TableCell
+          key={cell.id}
+          className='border-r last:bord p-0 h-8'
+          style={{ width: cell.column.getSize() }}
+        >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </TableCell>
       ))}
