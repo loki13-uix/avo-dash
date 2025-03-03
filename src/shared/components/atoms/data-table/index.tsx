@@ -57,8 +57,6 @@ export function DataTable<TData extends { id: string | number }, TValue>({
     })
   )
 
-  console.log(activeId, 'activeId')
-
   const table = useReactTable({
     data,
     columns,
