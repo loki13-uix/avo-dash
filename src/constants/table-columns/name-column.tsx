@@ -23,7 +23,7 @@ export const NameColumn = ({
 }: NameColumnProps) => (
   <TableCell
     defaultValue={row.name}
-    className='border-none px-2 py-1.5'
+    className='border-none h-8'
     isSelected={isSelected}
     isReadOnly={isReadOnly}
     onChange={(newValue) => {

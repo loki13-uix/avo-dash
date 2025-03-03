@@ -57,6 +57,8 @@ export function DataTable<TData extends { id: string | number }, TValue>({
     })
   )
 
+  console.log(activeId, 'activeId')
+
   const table = useReactTable({
     data,
     columns,
@@ -183,7 +185,9 @@ export function DataTable<TData extends { id: string | number }, TValue>({
       onDragStart={handleDragStart}
     >
       <div className='rounded-md border border-grey-3'>{tableContent}</div>
-      {activeId && <DraggableRowOverlay row={table.getRow(activeId)} />}
+      {activeId !== null ? (
+        <DraggableRowOverlay row={table.getRow(activeId)} />
+      ) : null}
     </DndContext>
   ) : (
     <div className='rounded-md'>{tableContent}</div>
