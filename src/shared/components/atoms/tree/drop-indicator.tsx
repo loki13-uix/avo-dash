@@ -41,7 +41,7 @@ export function DropIndicator({ edge, gap }: { edge: Edge; gap: string }) {
       }
       className={`
         absolute z-10 pointer-events-none
-		max-w-96
+        w-full
         bg-grey-2
         h-2 rounded-md
         ${orientationStyles[orientation]} 

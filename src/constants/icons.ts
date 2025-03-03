@@ -4,6 +4,7 @@ import Camera from '@/shared/icons/camera'
 import Capture from '@/shared/icons/capture'
 import Caret from '@/shared/icons/caret'
 import Chevron from '@/shared/icons/chevron'
+import ChevronDownIcon from '@/shared/icons/chevron-down'
 import Close from '@/shared/icons/close'
 import Comment from '@/shared/icons/comment'
 import ControlButton from '@/shared/icons/control-button'
@@ -97,6 +98,7 @@ export const iconNames = [
   'upload',
   'utilities',
   'wait',
+  'chevron-down',
   'dots',
 ] as const
 
@@ -154,4 +156,5 @@ export const iconRegistry = new Map<
   ['upload', Upload],
   ['utilities', Utilities],
   ['wait', Wait],
+  ['chevron-down', ChevronDownIcon],
 ] as const)
