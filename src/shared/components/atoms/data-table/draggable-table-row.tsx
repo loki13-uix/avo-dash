@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import { DropIndicator } from '@/shared/components/atoms/tree/drop-indicator'
 import { TableCell, TableRow } from '@/shared/components/ui/table'
 import { useSortable } from '@dnd-kit/sortable'
@@ -38,9 +39,10 @@ export function DraggableTableRow<TData>({
       {row.getVisibleCells().map((cell) => (
         <TableCell
           key={cell.id}
-          className={`${
-            isDragOverlay ? '' : 'border-r last:border-r-0'
-          } p-0 h-8`}
+          className={cn(
+            'p-0 h-8',
+            !isDragOverlay && 'border-r last:border-r-0'
+          )}
           style={{ width: cell.column.getSize() }}
         >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
