@@ -1,4 +1,5 @@
 'use client'
+import useClickOutside from '@/hook/use-click-outside'
 import { cn } from '@/lib/utils'
 import { useEffect, useRef, useState } from 'react'
 import type React from 'react'
@@ -35,6 +36,8 @@ const TableCell = ({
   const [inputValue, setInputValue] = useState(defaultValue || '')
   const inputRef = useRef<HTMLInputElement>(null)
 
+  useClickOutside(inputRef, () => handleEditEnd(false))
+
   useEffect(() => {
     setInputValue(defaultValue || '')
   }, [defaultValue])
@@ -56,7 +59,7 @@ const TableCell = ({
   const handleEditEnd = (commit: boolean) => {
     setIsEditing(false)
     onEditingChange?.(false)
-    if (commit && inputValue !== defaultValue) {
+    if (commit && inputValue !== defaultValue && inputValue !== '') {
       onChange?.(inputValue)
     } else {
       setInputValue(defaultValue || '')
@@ -86,7 +89,7 @@ const TableCell = ({
   }
 
   const baseClassName = cn(
-    'border border-grey-3 py-[6px] px-2 font-open-sans text-grey-13 text-sm h-8',
+    ' py-[6px] px-2 font-open-sans text-grey-13 text-sm h-8',
     isSelected && 'bg-purple-1',
     isEditing && 'bg-purple-1',
     className
@@ -116,9 +119,9 @@ const TableCell = ({
           ref={inputRef}
           value={inputValue}
           onChange={(e) => handleValueChange(e.target.value)}
-          onBlur={() => handleEditEnd(true)}
           onKeyDown={handleKeyDown}
-          className='text-sm bg-white rounded-sm border border-[#9494F5]'
+          onBlur={() => handleEditEnd(false)}
+          className='text-sm bg-white rounded-sm border border-[#9494F5] px-1'
         />
       ) : selectDropdown ? (
         <Select value={defaultValue} onValueChange={handleValueChange}>

@@ -18,7 +18,7 @@ const initialData: TableRow[] = [
 ]
 
 const meta: Meta<typeof DataTable> = {
-  title: 'Design System/atoms/DataTable',
+  title: 'Design System/atoms/table/data-table',
   component: DataTable,
   parameters: {
     layout: 'centered',
@@ -30,6 +30,21 @@ const meta: Meta<typeof DataTable> = {
   argTypes: {
     columns: { table: { disable: true } },
     data: { table: { disable: true } },
+    setData: {
+      table: {
+        disable: true,
+      },
+    },
+    isSortable: {
+      table: {
+        disable: true,
+      },
+    },
+    selectedRows: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 
