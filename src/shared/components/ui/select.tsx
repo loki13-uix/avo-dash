@@ -42,7 +42,6 @@ function SelectTrigger({
         e.stopPropagation()
         setIsOpen(!isOpen)
       }}
-      onBlur={() => setIsOpen(false)}
       {...props}
     >
       {children}
