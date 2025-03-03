@@ -127,7 +127,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
   }
 
   const tableContent = (
-    <Table className='border-collapse border border-grey-3 last:border-b-0'>
+    <Table className='border-collapse border border-grey-3 '>
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
@@ -163,10 +163,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
           </SortableContext>
         ) : (
           <TableRow>
-            <TableCell
-              colSpan={columns.length}
-              className='text-center border-r last:border-r-0'
-            >
+            <TableCell colSpan={columns.length} className='text-center'>
               No results.
             </TableCell>
           </TableRow>
@@ -182,7 +179,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
     >
-      <div className='rounded-md border border-grey-3'>{tableContent}</div>
+      <div className='rounded-md'>{tableContent}</div>
       {activeId !== null ? (
         <DraggableRowOverlay row={table.getRow(activeId)} />
       ) : null}
