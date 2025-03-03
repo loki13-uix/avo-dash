@@ -39,7 +39,10 @@ function SelectTrigger({
         "border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex h-9 w-full items-center justify-between  px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none  disabled:cursor-not-allowed disabled:opacity-50 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
-      onPointerDown={() => setIsOpen(!isOpen)}
+      onPointerDown={(e) => {
+        e.stopPropagation()
+        setIsOpen(!isOpen)
+      }}
       {...props}
     >
       {children}
