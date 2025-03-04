@@ -48,7 +48,7 @@ export function DraggableTableRow<TData>({
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </TableCell>
       ))}
-      {isOver && !isDragOverlay && <DropIndicator edge='bottom' gap='8px' />}
+      {isOver && !isDragOverlay && !isSelected && <DropIndicator />}
     </TableRow>
   )
 

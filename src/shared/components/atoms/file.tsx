@@ -83,6 +83,7 @@ function FileItem({
       className={cn(
         'flex items-start min-h-8 py-1 px-2 hover:bg-purple-0 w-full gap-2',
         isSelected && 'bg-purple-1 hover:bg-purple-1',
+        isPreview && 'border border-purple-primary rounded-[4px]',
         className
       )}
       onClick={handleClick}
@@ -97,9 +98,7 @@ function FileItem({
             {name}
           </span>
           {isPreview && isSelected && selectedIds.length > 1 && (
-            <span className='text-grey text-[13px] px-1 py-[0.8px] ml-2'>
-              +{selectedIds.length - 1}
-            </span>
+            <div className='absolute -left-1 -top-1 right-1 h-full bg-purple-1 border border-purple-primary -z-10 rounded-[4px]' />
           )}
         </div>
       ) : (
