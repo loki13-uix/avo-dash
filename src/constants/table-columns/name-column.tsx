@@ -1,4 +1,4 @@
-import TableCell from '../../shared/components/atoms/table-cell'
+import TableCell from '@/shared/components/atoms/table-cell'
 
 type TableRow = {
   id: string

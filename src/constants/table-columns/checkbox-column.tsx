@@ -1,4 +1,4 @@
-import TableCellLeading from '../../shared/components/atoms/tablecell-leading'
+import TableCellLeading from '@/shared/components/atoms/tablecell-leading'
 
 type TableRow = {
   id: string
