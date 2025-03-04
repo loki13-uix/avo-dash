@@ -227,7 +227,7 @@ function Tree() {
         {isOver &&
           node.variant !== 'folder' &&
           over?.id !== activeId &&
-          !isSelected && <DropIndicator edge='left' gap='4px' />}
+          !isSelected && <DropIndicator />}
       </div>
     )
   }
