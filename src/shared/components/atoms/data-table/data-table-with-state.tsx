@@ -14,6 +14,7 @@ type DataTableWithStateProps = {
   includeIcons?: boolean
   includeCheckbox?: boolean
   includeDropdown?: boolean
+  isSortable?: boolean
 }
 
 export const DataTableWithState = ({
@@ -21,6 +22,7 @@ export const DataTableWithState = ({
   includeIcons = false,
   includeCheckbox = false,
   includeDropdown = false,
+  isSortable = true,
 }: DataTableWithStateProps) => {
   const [data, setData] = useState(initialData)
   const {
@@ -58,6 +60,7 @@ export const DataTableWithState = ({
       data={data}
       setData={setData}
       selectedRows={selectedRows}
+      isSortable={isSortable}
     />
   )
 }
