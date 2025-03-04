@@ -1,4 +1,5 @@
 'use client'
+import useClickOutside from '@/hook/use-click-outside'
 import { cn } from '@/lib/utils'
 import { useEffect, useRef, useState } from 'react'
 import type React from 'react'
@@ -34,6 +35,8 @@ const TableCell = ({
   const [inputValue, setInputValue] = useState(defaultValue || '')
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
+  useClickOutside(inputRef, () => handleEditEnd(false))
+
   useEffect(() => {
     setInputValue(defaultValue || '')
   }, [defaultValue])
@@ -58,7 +61,7 @@ const TableCell = ({
   const handleEditEnd = (commit: boolean) => {
     setIsEditing(false)
     onEditingChange?.(false)
-    if (commit && inputValue !== defaultValue) {
+    if (commit && inputValue !== defaultValue && inputValue !== '') {
       onChange?.(inputValue)
     } else {
       setInputValue(defaultValue || '')
@@ -81,7 +84,7 @@ const TableCell = ({
     onSelect?.(e)
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter') {
       handleEditEnd(true)
       e.preventDefault()
@@ -122,7 +125,6 @@ const TableCell = ({
           ref={inputRef}
           value={inputValue}
           onChange={(e) => handleValueChange(e.target.value)}
-          onBlur={() => handleEditEnd(true)}
           onKeyDown={handleKeyDown}
           className='text-sm bg-white rounded-sm border border-[#9494F5] resize-none w-full break-all px-1'
           rows={1}
