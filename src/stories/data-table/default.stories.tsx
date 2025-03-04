@@ -1,8 +1,6 @@
 import { DataTable } from '@/shared/components/atoms/data-table'
 import { DataTableWithState } from '@/shared/components/atoms/data-table/data-table-with-state'
-import { createColumns } from '@/utils/create-columns-data-table'
 import type { Meta, StoryObj } from '@storybook/react'
-import type { ColumnDef } from '@tanstack/react-table'
 
 type TableRow = {
   id: string
@@ -53,15 +51,14 @@ export default meta
 type Story = StoryObj<typeof DataTable>
 
 export const ReadOnly: Story = {
-  args: {
-    columns: createColumns({}) as unknown as ColumnDef<
-      { id: string | number },
-      unknown
-    >[],
-    data: initialData,
-  },
+  render: () => (
+    <DataTableWithState
+      initialData={initialData}
+      includeIcons={false}
+      isSortable={false}
+    />
+  ),
 }
-
 export const DataControls: Story = {
   render: () => (
     <DataTableWithState initialData={initialData} includeIcons={true} />
