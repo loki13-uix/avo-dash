@@ -113,7 +113,7 @@ export default function Home() {
         return (
           <TableCell
             defaultValue={row.original.name}
-            className='border-0 h-8'
+            className='border-0 '
             selectDropdown
             options={[
               {
@@ -150,7 +150,7 @@ export default function Home() {
         return (
           <TableCell
             defaultValue={row.original.age.toString()}
-            className='border-0 h-8'
+            className='border-0'
             isSelected={selectedRows.includes(row.original.id)}
             onChange={(newValue) => {
               const newAge = Number.parseInt(newValue)
@@ -179,7 +179,7 @@ export default function Home() {
         return (
           <TableCell
             defaultValue={row.original.email}
-            className='border-0 h-8'
+            className='border-0 '
             isSelected={selectedRows.includes(row.original.id)}
             onChange={(newValue) => {
               setData(
@@ -205,7 +205,7 @@ export default function Home() {
         return (
           <TableCell
             defaultValue={row.original.phone}
-            className='border-0 h-8'
+            className='border-0 '
             isSelected={selectedRows.includes(row.original.id)}
             onChange={(newValue) => {
               setData(
@@ -235,7 +235,7 @@ export default function Home() {
         return (
           <TableCell
             defaultValue={row.original.address}
-            className='border-0 h-8'
+            className='border-0 '
             isSelected={selectedRows.includes(row.original.id)}
             onChange={(newValue) => {
               setData(

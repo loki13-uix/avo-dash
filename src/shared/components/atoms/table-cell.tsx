@@ -2,7 +2,6 @@
 import { cn } from '@/lib/utils'
 import { useEffect, useRef, useState } from 'react'
 import type React from 'react'
-import { Input } from '../ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select'
 type TableCellProps = {
   defaultValue?: string
@@ -33,7 +32,7 @@ const TableCell = ({
 }: TableCellProps) => {
   const [isEditing, setIsEditing] = useState(isEditable)
   const [inputValue, setInputValue] = useState(defaultValue || '')
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
     setInputValue(defaultValue || '')
@@ -43,6 +42,9 @@ const TableCell = ({
     if (isEditing && inputRef.current) {
       inputRef.current.focus()
       inputRef.current.select()
+      const textarea = inputRef.current
+      const height = textarea.scrollHeight ?? 0
+      textarea.style.height = height > 0 ? `${height}px` : 'auto'
     }
   }, [isEditing])
 
@@ -65,6 +67,10 @@ const TableCell = ({
 
   const handleValueChange = (newValue: string) => {
     setInputValue(newValue)
+    if (inputRef.current) {
+      inputRef.current.style.height = 'auto'
+      inputRef.current.style.height = `${inputRef.current.scrollHeight}px`
+    }
     if (selectDropdown) {
       onChange?.(newValue)
     }
@@ -75,7 +81,7 @@ const TableCell = ({
     onSelect?.(e)
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') {
       handleEditEnd(true)
       e.preventDefault()
@@ -86,7 +92,7 @@ const TableCell = ({
   }
 
   const baseClassName = cn(
-    'border border-grey-3 py-[6px] px-2 font-open-sans text-grey-13 text-sm h-8',
+    'border border-grey-3 py-[6px] px-2 font-open-sans text-grey-13 text-sm min-h-10',
     isSelected && 'bg-purple-1',
     isEditing && 'bg-purple-1',
     className
@@ -112,13 +118,14 @@ const TableCell = ({
       onDoubleClick={isReadOnly ? undefined : handleEditStart}
     >
       {isEditing && !selectDropdown ? (
-        <Input
+        <textarea
           ref={inputRef}
           value={inputValue}
           onChange={(e) => handleValueChange(e.target.value)}
           onBlur={() => handleEditEnd(true)}
           onKeyDown={handleKeyDown}
-          className='text-sm bg-white rounded-sm border border-[#9494F5]'
+          className='text-sm bg-white rounded-sm border border-[#9494F5] resize-none w-full break-all px-1'
+          rows={1}
         />
       ) : selectDropdown ? (
         <Select value={defaultValue} onValueChange={handleValueChange}>
@@ -134,7 +141,9 @@ const TableCell = ({
           </SelectContent>
         </Select>
       ) : (
-        <div>{selectDropdown ? selectedOption?.label : defaultValue}</div>
+        <div className='break-all px-1'>
+          {selectDropdown ? selectedOption?.label : defaultValue}
+        </div>
       )}
     </div>
   )
