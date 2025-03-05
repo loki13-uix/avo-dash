@@ -152,7 +152,7 @@ function FolderItem({
             className={cn(
               'text-grey text-[13px] resize-none overflow-hidden',
               isEditing &&
-                'border border-purple-primary rounded-sm focus:outline-none py-0 px-0.5 w-full'
+                'border border-purple-primary rounded-sm focus:outline-none py-0 px-0.5 w-full bg-white'
             )}
             onClick={(e) => e.stopPropagation()}
           />
