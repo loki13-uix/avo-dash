@@ -25,7 +25,7 @@ const TableCellActions = ({
   return (
     <div
       className={cn(
-        'flex items-center border border-grey-3 hover:bg-[#F5F5FF] px-2 py-1.5 gap-x-2 cursor-pointer',
+        'flex items-center border border-grey-3 hover:bg-[#F5F5FF] px-2 py-1.5 gap-x-2 cursor-pointer min-h-10',
         isSelected && 'bg-purple-1',
         isHeader && 'bg-grey-1',
         className
