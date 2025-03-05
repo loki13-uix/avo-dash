@@ -107,7 +107,7 @@ const TableCell = ({
 
   if (isHeader) {
     return (
-      <div className={cn(baseClassName, 'bg-grey-1')}>
+      <div className={cn(baseClassName, 'bg-grey-1 min-h-8')}>
         <div className='font-semibold'>{defaultValue}</div>
       </div>
     )
@@ -126,7 +126,7 @@ const TableCell = ({
           value={inputValue}
           onChange={(e) => handleValueChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          className='text-sm bg-white rounded-sm border border-[#9494F5] resize-none w-full break-all px-1 focus:outline-none hidescroll'
+          className='text-sm bg-white rounded-sm border border-purple-primary resize-none w-full break-all px-1 focus:outline-none hidescroll'
           rows={1}
         />
       ) : selectDropdown ? (
