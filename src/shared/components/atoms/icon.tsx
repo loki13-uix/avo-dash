@@ -19,12 +19,15 @@ export const Icon: React.FC<IconProps> = ({
   style,
   ...props
 }) => {
+  console.log(name, 'name')
   const IconComponent = iconRegistry.get(name)
 
   if (!IconComponent) {
     console.warn(`Icon "${name}" not found`)
     return null
   }
+
+  console.log(className, 'className')
 
   return (
     <IconComponent
