@@ -117,7 +117,7 @@ function FolderItem({
         className={cn(
           'px-2 py-1 gap-2 data-[selected="true"]:bg-purple-1 min-h-8 w-full flex transition-all duration-250 items-start select-none',
           isSelected && 'bg-purple-1',
-          isPreview && 'border border-purple-primary rounded-[4px]',
+          isPreview && 'border border-purple-primary rounded-[4px] opacity-60',
           className
         )}
         onClick={handleClick}

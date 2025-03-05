@@ -21,8 +21,8 @@ const TableCellLeading = ({
     <div
       className={cn(
         'border border-grey-3 px-2 py-[6px] flex items-center min-h-10',
-        isHeader ? 'bg-grey-1' : 'hover:bg-[#F5F5FF]',
-        selectedState && 'bg-purple-1',
+        isHeader && 'bg-grey-1 min-h-8',
+        selectedState ? 'bg-purple-1' : 'hover:bg-purple-0',
         group && 'bg-grey-2 border border-grey-3 gap-x-2',
         className
       )}
