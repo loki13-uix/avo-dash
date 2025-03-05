@@ -9,5 +9,6 @@ export default function Home() {
     <TreeProvider initialTreeNodes={folderTree}>
       <Tree />
     </TreeProvider>
+    // <TableComponent />
   )
 }

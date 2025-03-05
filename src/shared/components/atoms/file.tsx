@@ -110,7 +110,7 @@ function FileItem({
           onKeyDown={handleKeyDown}
           className={cn(
             'text-grey text-[13px] resize-none overflow-hidden',
-            'border border-purple-primary rounded-sm focus:outline-none px-[3px] py-0 w-full'
+            'border border-purple-primary rounded-sm focus:outline-none px-[3px] py-0 w-full bg-white'
           )}
           spellCheck={false}
           rows={1}

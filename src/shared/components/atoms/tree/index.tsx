@@ -269,7 +269,7 @@ function Tree() {
         selectedIds={selectedIds}
         style={{ paddingLeft: calcPadLeft(level) }}
         className={cn(
-          'flex gap-2 h-8',
+          'flex gap-2',
           isDragOver &&
             !isSelected &&
             'bg-grey-2 border border-dashed border-purple-primary w-full rounded-sm'

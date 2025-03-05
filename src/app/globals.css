@@ -249,3 +249,7 @@
 .icon path {
   fill: currentColor;
 }
+
+.hidescroll::-webkit-scrollbar {
+   display: none;
+}
