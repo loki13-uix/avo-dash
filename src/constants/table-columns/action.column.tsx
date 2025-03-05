@@ -1,4 +1,4 @@
-import TableCellActions from '../../shared/components/atoms/table-cell-actions'
+import TableCellActions from '@/shared/components/atoms/table-cell-actions'
 
 type TableRow = {
   id: string

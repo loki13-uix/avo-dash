@@ -83,6 +83,7 @@ export const createColumns = ({
         row={row.original}
         isSelected={selectedRows.includes(row.original.id)}
         onValueChange={onEmailChange}
+        isReadOnly={!includeIcons}
       />
     ),
   })

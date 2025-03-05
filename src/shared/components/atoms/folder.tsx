@@ -38,6 +38,7 @@ function FolderItem({
   canRename = true,
   isPreview,
   selectedIds,
+  className,
   ...props
 }: FolderItemProps) {
   const [isEditing, setIsEditing] = useState(false)
@@ -115,7 +116,9 @@ function FolderItem({
         data-selected={isSelected}
         className={cn(
           'px-2 py-1 gap-2 data-[selected="true"]:bg-purple-1 min-h-8 w-full flex transition-all duration-250 items-start select-none',
-          isSelected && 'bg-purple-1'
+          isSelected && 'bg-purple-1',
+          isPreview && 'border border-purple-primary rounded-[4px]',
+          className
         )}
         onClick={handleClick}
         {...props}
@@ -125,7 +128,7 @@ function FolderItem({
             name={'chevron'}
             size={16}
             className={cn(
-              'fill-grey-12 mt-1 shrink-0',
+              'text-purple-primary mt-1 shrink-0',
               isExpanded ? 'rotate-270' : 'rotate-180 '
             )}
             onClick={handleToggle}
@@ -149,7 +152,7 @@ function FolderItem({
             className={cn(
               'text-grey text-[13px] resize-none overflow-hidden',
               isEditing &&
-                'border border-purple-primary rounded-sm focus:outline-none py-0 px-0.5 w-full'
+                'border border-purple-primary rounded-sm focus:outline-none py-0 px-0.5 w-full bg-white'
             )}
             onClick={(e) => e.stopPropagation()}
           />
@@ -162,9 +165,7 @@ function FolderItem({
               {folderName}
             </span>
             {isPreview && isSelected && selectedIds.length > 1 && (
-              <span className='text-grey text-[13px] px-1 py-[0.8px] ml-2'>
-                +{selectedIds.length - 1}
-              </span>
+              <div className='absolute -left-1 -top-1 right-1 h-full bg-purple-1 border border-purple-primary -z-10 rounded-[4px]' />
             )}
           </div>
         )}

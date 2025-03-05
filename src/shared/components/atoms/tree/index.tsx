@@ -1,6 +1,6 @@
 import type { TreeNode } from '@/constants/tree-data'
 import { useTreeSelection } from '@/hook/use-tree-selection'
-import { calcPadLeft } from '@/lib/utils'
+import { calcPadLeft, cn } from '@/lib/utils'
 import FileItem from '@/shared/components/atoms/file'
 import FolderItem from '@/shared/components/atoms/folder'
 import { DropIndicator } from '@/shared/components/atoms/tree/drop-indicator'
@@ -16,6 +16,7 @@ import {
 import {
   DndContext,
   type DragEndEvent,
+  type DragOverEvent,
   DragOverlay,
   type DragStartEvent,
   PointerSensor,
@@ -25,7 +26,6 @@ import {
 } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
 import { useRef, useState } from 'react'
 import type React from 'react'
 
@@ -67,6 +67,15 @@ function Tree() {
     }
   }
 
+  const handleDragOver = (event: DragOverEvent) => {
+    const { over } = event
+    if (over?.id !== activeId) {
+      setTimeout(() => {
+        setExpandedFolders((prev) => [...prev, over?.id as string])
+      }, 2000)
+    }
+  }
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
     setActiveId(null)
@@ -76,6 +85,8 @@ function Tree() {
 
     const sourceId = active.id as string
     const targetId = over.id as string
+
+    if (selectedIds.includes(targetId)) return
 
     if (sourceId === targetId) return
 
@@ -190,27 +201,19 @@ function Tree() {
   }
 
   function SortableTreeNode({ node, level }: TreeNodeProps) {
-    const {
-      attributes,
-      listeners,
-      setNodeRef,
-      transform,
-      transition,
-      isDragging,
-      isOver,
-    } = useSortable({
-      id: node.id,
-      data: {
-        type: node.variant,
-        node,
-      },
-    })
+    const { attributes, listeners, setNodeRef, isDragging, isOver, over } =
+      useSortable({
+        id: node.id,
+        data: {
+          type: node.variant,
+          node,
+        },
+      })
 
     const style = {
-      transform: CSS.Transform.toString(transform),
-      transition,
       opacity: isDragging ? 0.4 : 1,
     }
+    const isSelected = selectedIds.includes(node.id)
 
     return (
       <div
@@ -220,13 +223,20 @@ function Tree() {
         {...listeners}
         className='relative'
       >
-        <TreeNodeComponent node={node} level={level} />
-        {isOver && <DropIndicator edge='bottom' gap='2px' />}
+        <TreeNodeComponent node={node} level={level} isDragOver={isOver} />
+        {isOver &&
+          node.variant !== 'folder' &&
+          over?.id !== activeId &&
+          !isSelected && <DropIndicator />}
       </div>
     )
   }
 
-  function TreeNodeComponent({ node, level }: TreeNodeProps) {
+  function TreeNodeComponent({
+    node,
+    level,
+    isDragOver,
+  }: TreeNodeProps & { isDragOver?: boolean }) {
     const isSelected = selectedIds.includes(node.id)
 
     if (node.variant === 'file') {
@@ -258,6 +268,12 @@ function Tree() {
         }
         selectedIds={selectedIds}
         style={{ paddingLeft: calcPadLeft(level) }}
+        className={cn(
+          'flex gap-2',
+          isDragOver &&
+            !isSelected &&
+            'bg-grey-2 border border-dashed border-purple-primary w-full rounded-sm'
+        )}
       >
         <div>
           <SortableContext
@@ -287,6 +303,7 @@ function Tree() {
         collisionDetection={rectIntersection}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
+        onDragOver={handleDragOver}
         onDragCancel={handleDragCancel}
       >
         <SortableContext
