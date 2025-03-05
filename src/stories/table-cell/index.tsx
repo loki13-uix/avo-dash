@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import TableCell from '@/shared/components/atoms/table-cell'
 import { useState } from 'react'
 
@@ -22,6 +23,7 @@ const TableCellWrapper = ({
     { value: 'dark', label: 'Dark' },
     { value: 'auto', label: 'Auto' },
   ]
+  const defaultCase = !isHeader && !isSelected
   return (
     <TableCell
       defaultValue={value}
@@ -31,6 +33,7 @@ const TableCellWrapper = ({
       options={options}
       isHeader={isHeader}
       isEditable={isEditable}
+      className={cn('min-h-8', defaultCase && 'hover:bg-purple-0')}
     />
   )
 }
