@@ -65,17 +65,18 @@ const Button = ({
   icon,
   ...props
 }: ButtonProps) => {
+  console.log(icon)
   return (
     <ShadcnButton
       className={cn(buttonVariants({ variant }), className)}
       {...props}
     >
-      {icon ? (
+      {icon && (
         <Icon
           name={icon}
           className={cn(iconVariants({ variant }), iconClassName)}
         />
-      ) : null}
+      )}
       {children}
     </ShadcnButton>
   )
