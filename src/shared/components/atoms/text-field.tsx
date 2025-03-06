@@ -7,10 +7,12 @@ const TextField = ({
   className,
   iconClassName,
   ref,
+  showIcon = true,
   ...props
 }: React.ComponentProps<'input'> & {
   ref?: React.Ref<HTMLInputElement>
   iconClassName?: string
+  showIcon?: boolean
 }) => {
   return (
     <div
@@ -25,14 +27,16 @@ const TextField = ({
         ref={ref}
         {...props}
       />
-      <Icon
-        name='search-icon'
-        className={cn(
-          'text-grey-12 peer-disabled:text-grey-3',
+      {showIcon && (
+        <Icon
+          name='search-icon'
+          className={cn(
+            'text-grey-12 peer-disabled:text-grey-3',
 
-          iconClassName
-        )}
-      />
+            iconClassName
+          )}
+        />
+      )}
     </div>
   )
 }

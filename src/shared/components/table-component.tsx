@@ -68,7 +68,7 @@ export const TableComponent = () => {
       header: () => {
         return (
           <TableCellLeading
-            className='border-0'
+            className='border-0 pl-6.5'
             isHeader
             checkboxProps={{
               checked: headerChecked,
@@ -77,8 +77,8 @@ export const TableComponent = () => {
           />
         )
       },
-      accessorKey: 'id',
-      size: 36,
+      accessorKey: 'checkbox',
+      size: 60,
       enableResizing: true,
       cell: ({ row }) => {
         return (
@@ -106,7 +106,7 @@ export const TableComponent = () => {
         <TableCell defaultValue='Name' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'name',
-      size: 300,
+      size: 250,
       enableResizing: true,
       cell: ({ row }) => {
         return (
