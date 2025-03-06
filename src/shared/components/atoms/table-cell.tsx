@@ -95,7 +95,7 @@ const TableCell = ({
   }
 
   const baseClassName = cn(
-    'border border-grey-3 py-[6px] px-2 font-open-sans text-grey-13 text-sm min-h-10',
+    'border border-grey-3 pt-[6px] px-2 font-open-sans text-grey-13 text-sm min-h-8',
     isSelected && 'bg-purple-1',
     isEditing && 'bg-purple-1',
     className

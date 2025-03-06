@@ -26,7 +26,7 @@ export const CheckboxColumn = ({
   if (isHeader) {
     return (
       <TableCellLeading
-        className='border-none'
+        className='border-none pl-6.5'
         checkboxProps={{
           checked: headerChecked,
           onCheckedChange: onHeaderCheckedChange,

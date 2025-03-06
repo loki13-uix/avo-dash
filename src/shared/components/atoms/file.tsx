@@ -94,7 +94,7 @@ function FileItem({
 
       {!isEditing ? (
         <div className='flex justify-between items-start w-full'>
-          <span className='text-grey text-[13px] px-1 py-[0.8px] break-all'>
+          <span className='text-grey text-sm px-1 py-[0.8px] break-all'>
             {name}
           </span>
           {isPreview && isSelected && selectedIds.length > 1 && (
@@ -109,7 +109,7 @@ function FileItem({
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
           className={cn(
-            'text-grey text-[13px] resize-none overflow-hidden',
+            'text-grey text-sm resize-none overflow-hidden',
             'border border-purple-primary rounded-sm focus:outline-none px-[3px] py-0 w-full bg-white'
           )}
           spellCheck={false}

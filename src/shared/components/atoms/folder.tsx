@@ -150,7 +150,7 @@ function FolderItem({
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
             className={cn(
-              'text-grey text-[13px] resize-none overflow-hidden',
+              'text-grey text-sm resize-none overflow-hidden',
               isEditing &&
                 'border border-purple-primary rounded-sm focus:outline-none py-0 px-0.5 w-full bg-white'
             )}
@@ -159,7 +159,7 @@ function FolderItem({
         ) : (
           <div className='flex justify-between items-start w-full'>
             <span
-              className='text-grey text-[13px] cursor-pointer py-[0.8px] px-[3px] break-all'
+              className='text-grey text-sm cursor-pointer py-[0.8px] px-[3px] break-all'
               onDoubleClick={handleDoubleClick}
             >
               {folderName}
