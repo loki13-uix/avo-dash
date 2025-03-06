@@ -73,8 +73,8 @@ export default function Home() {
         </div>
 
         {/* Main Content */}
-        <div className='flex-1 flex flex-col'>
-          <div className='w-full flex justify-end border border-grey-3 border-t-0 px-6 py-5'>
+        <div className='flex-1 flex flex-col bg-grey-1'>
+          <div className='w-full flex justify-end border border-grey-3 border-t-0  p-4'>
             <TableCellActions
               name={['plus-icon', 'pen', 'file-data', 'trash', 'dots']}
               iconClassName='size-5 '
@@ -90,12 +90,13 @@ export default function Home() {
               Save
             </Button>
           </div>
-
-          <DataTableWithState
-            initialData={initialData}
-            includeIcons={true}
-            includeCheckbox={true}
-          />
+          <div className='p-4'>
+            <DataTableWithState
+              initialData={initialData}
+              includeIcons={true}
+              includeCheckbox={true}
+            />
+          </div>
         </div>
       </div>
     </>

@@ -1,5 +1,6 @@
 'use client'
 
+import { cn } from '@/lib/utils'
 import { DraggableTableRow } from '@/shared/components/atoms/data-table/draggable-table-row'
 import {
   Table,
@@ -39,6 +40,7 @@ interface DataTableProps<TData extends { id: string | number }, TValue> {
   setData: (data: TData[] | ((prev: TData[]) => TData[])) => void
   isSortable?: boolean
   selectedRows?: string[]
+  className?: string
 }
 
 export function DataTable<TData extends { id: string | number }, TValue>({
@@ -47,6 +49,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
   setData,
   isSortable = true,
   selectedRows = [],
+  className,
 }: DataTableProps<TData, TValue>) {
   const [activeId, setActiveId] = useState<string | null>(null)
   const sensors = useSensors(
@@ -127,7 +130,9 @@ export function DataTable<TData extends { id: string | number }, TValue>({
   }
 
   const tableContent = (
-    <Table className='border-collapse border border-grey-3 '>
+    <Table
+      className={cn('border-collapse border border-grey-3 bg-white', className)}
+    >
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
