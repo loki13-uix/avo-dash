@@ -29,7 +29,7 @@ export function DraggableTableRow<TData>({
   }
 
   const rowContent = (
-    <TableRow ref={setNodeRef} className='border-b'>
+    <TableRow ref={setNodeRef} className='border-b group'>
       {row.getVisibleCells().map((cell) => (
         <TableCell
           key={cell.id}
@@ -47,7 +47,16 @@ export function DraggableTableRow<TData>({
               style={style}
               className='flex items-center justify-center'
             >
-              <Icon name='grip-bar' size={16} className='text-grey-11' />
+              <div style={{ width: 16 }}>
+                <Icon
+                  name='grip-bar'
+                  size={16}
+                  className={cn(
+                    'text-grey-11',
+                    isSelected ? 'block' : 'hidden group-hover:block'
+                  )}
+                />
+              </div>
               {flexRender(cell.column.columnDef.cell, cell.getContext())}
             </div>
           ) : (
