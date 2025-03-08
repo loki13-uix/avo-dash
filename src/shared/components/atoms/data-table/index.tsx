@@ -40,7 +40,7 @@ interface DataTableProps<TData extends { id: string | number }, TValue> {
   setData: (data: TData[] | ((prev: TData[]) => TData[])) => void
   isSortable?: boolean
   selectedRows?: string[]
-  className?:string
+  className?: string
 }
 
 export function DataTable<TData extends { id: string | number }, TValue>({
@@ -49,7 +49,7 @@ export function DataTable<TData extends { id: string | number }, TValue>({
   setData,
   isSortable = true,
   selectedRows = [],
-  className
+  className,
 }: DataTableProps<TData, TValue>) {
   const [activeId, setActiveId] = useState<string | null>(null)
   const sensors = useSensors(

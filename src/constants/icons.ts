@@ -103,7 +103,7 @@ export const iconNames = [
   'chevron-down',
   'dots',
   'logo',
-  'save'
+  'save',
 ] as const
 
 export type IconName = (typeof iconNames)[number]
@@ -161,6 +161,6 @@ export const iconRegistry = new Map<
   ['utilities', Utilities],
   ['wait', Wait],
   ['chevron-down', ChevronDownIcon],
-  ['logo',Logo],
-  ['save',Save]
+  ['logo', Logo],
+  ['save', Save],
 ] as const)

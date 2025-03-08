@@ -19,7 +19,7 @@ type TableCellProps = {
   isReadOnly?: boolean
   title?: string
   showIcon?: boolean
-  iconOnClick?:()=>void
+  iconOnClick?: () => void
 }
 
 const TableCell = ({
@@ -132,7 +132,7 @@ const TableCell = ({
               height={20}
               color='text-grey-13'
               onClick={iconOnClick}
-              rotate={iconOnClick?270:''}
+              rotate={iconOnClick ? 270 : ''}
             />
           </div>
         )}

@@ -6,12 +6,11 @@ import useFileStore from '@/shared/store/store'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useEffect, useState } from 'react'
 
-
-type TableComponentProps={
-  className?:string
+type TableComponentProps = {
+  className?: string
 }
 
-export const TableComponent = ({className}:TableComponentProps) => {
+export const TableComponent = ({ className }: TableComponentProps) => {
   const [headerChecked, setHeaderChecked] = useState<boolean | 'indeterminate'>(
     false
   )
