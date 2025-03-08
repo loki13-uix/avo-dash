@@ -243,6 +243,7 @@ function Tree({ isExpandedHeader }: { isExpandedHeader: boolean }) {
         <FileItem
           fileName={node.name}
           id={node.id}
+          data={node.data}
           isSelected={isSelected}
           canRename={true}
           selectedIds={selectedIds}
