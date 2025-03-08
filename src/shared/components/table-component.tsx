@@ -6,7 +6,12 @@ import useFileStore from '@/shared/store/store'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useEffect, useState } from 'react'
 
-export const TableComponent = () => {
+
+type TableComponentProps={
+  className?:string
+}
+
+export const TableComponent = ({className}:TableComponentProps) => {
   const [headerChecked, setHeaderChecked] = useState<boolean | 'indeterminate'>(
     false
   )
@@ -144,7 +149,7 @@ export const TableComponent = () => {
         <TableCell defaultValue='Email' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'email',
-      size: 400,
+      size: 450,
       enableResizing: true,
       cell: ({ row }) => {
         return (
@@ -245,6 +250,7 @@ export const TableComponent = () => {
       data={data}
       setData={setData}
       selectedRows={selectedRows}
+      className={className}
     />
   )
 }
