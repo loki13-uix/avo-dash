@@ -10,6 +10,7 @@ interface IconProps extends SVGProps<SVGSVGElement> {
   size?: number | string
   color?: string
   style?: React.CSSProperties
+  useDefaultColor?: boolean
 }
 export const Icon: React.FC<IconProps> = ({
   name,
@@ -18,6 +19,7 @@ export const Icon: React.FC<IconProps> = ({
   className,
   style,
   onClick,
+  useDefaultColor = true,
   ...props
 }) => {
   const IconComponent = iconRegistry.get(name)
@@ -32,7 +34,11 @@ export const Icon: React.FC<IconProps> = ({
       width={size}
       height={size}
       color={color}
-      className={cn('icon inline-block align-middle', className)}
+      className={cn(
+        'inline-block align-middle',
+        useDefaultColor && 'icon',
+        className
+      )}
       style={style}
       onClick={onClick}
       {...props}

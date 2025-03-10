@@ -62,7 +62,12 @@ export default function Home() {
   return (
     <div className='h-screen overflow-hidden'>
       <div className='border-b border-grey-4 px-4 py-3'>
-        <Icon name='logo' size={24} className='sticky top-0' />
+        <Icon
+          name='logo'
+          size={24}
+          className='sticky top-0'
+          useDefaultColor={false}
+        />
       </div>
 
       <ResizablePanelGroup direction='horizontal' className='h-screen'>
