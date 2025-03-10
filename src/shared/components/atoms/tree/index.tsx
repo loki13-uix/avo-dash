@@ -36,13 +36,12 @@ type TreeNodeProps = {
 
 export type Edge = 'top' | 'bottom' | 'left' | 'right'
 
-function Tree() {
+function Tree({ isHeaderExpanded }: { isHeaderExpanded: boolean }) {
   const { treeNodes, setTreeNodes } = useTreeContext()
   const [expandedFolders, setExpandedFolders] = useState<string[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const [draggedNode, setDraggedNode] = useState<TreeNode | null>(null)
   const [activeId, setActiveId] = useState<string | null>(null)
-
   const { selectedIds, handleSelect } = useTreeSelection(
     treeNodes,
     true,
@@ -244,6 +243,7 @@ function Tree() {
         <FileItem
           fileName={node.name}
           id={node.id}
+          data={node.data}
           isSelected={isSelected}
           canRename={true}
           selectedIds={selectedIds}
@@ -294,36 +294,35 @@ function Tree() {
   }
 
   return (
-    <div
-      className='w-96 h-full min-h-[100vh] overflow-auto shadow-xl p-3  select-none'
-      ref={containerRef}
-    >
-      <DndContext
-        sensors={sensors}
-        collisionDetection={rectIntersection}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        onDragOver={handleDragOver}
-        onDragCancel={handleDragCancel}
-      >
-        <SortableContext
-          items={treeNodes.map((node) => node.id)}
-          strategy={verticalListSortingStrategy}
+    <div className='select-none' ref={containerRef}>
+      {isHeaderExpanded && (
+        <DndContext
+          sensors={sensors}
+          collisionDetection={rectIntersection}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          onDragOver={handleDragOver}
+          onDragCancel={handleDragCancel}
         >
-          {treeNodes.map((node) => (
-            <SortableTreeNode key={node.id} node={node} level={0} />
-          ))}
-        </SortableContext>
+          <SortableContext
+            items={treeNodes.map((node) => node.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            {treeNodes.map((node) => (
+              <SortableTreeNode key={node.id} node={node} level={0} />
+            ))}
+          </SortableContext>
 
-        <DragOverlay>
-          {activeId ? (
-            <RenderPreview
-              draggedNode={draggedNode}
-              selectedIds={selectedIds}
-            />
-          ) : null}
-        </DragOverlay>
-      </DndContext>
+          <DragOverlay>
+            {activeId ? (
+              <RenderPreview
+                draggedNode={draggedNode}
+                selectedIds={selectedIds}
+              />
+            ) : null}
+          </DragOverlay>
+        </DndContext>
+      )}
     </div>
   )
 }

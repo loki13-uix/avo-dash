@@ -23,6 +23,7 @@ import Folder from '@/shared/icons/folder'
 import GripBar from '@/shared/icons/grip-bar'
 import Import from '@/shared/icons/import'
 import Info from '@/shared/icons/info'
+import Logo from '@/shared/icons/logo'
 import Magic from '@/shared/icons/magic'
 import Mobile from '@/shared/icons/mobile'
 import NotOk from '@/shared/icons/not-ok'
@@ -35,6 +36,7 @@ import Queued from '@/shared/icons/queued'
 import Report from '@/shared/icons/report'
 import Repository from '@/shared/icons/repository'
 import RightArrow from '@/shared/icons/right-arrow'
+import Save from '@/shared/icons/save'
 import Screen from '@/shared/icons/screen'
 import SearchIcon from '@/shared/icons/search-icon'
 import Suite from '@/shared/icons/suite'
@@ -100,6 +102,8 @@ export const iconNames = [
   'wait',
   'chevron-down',
   'dots',
+  'logo',
+  'save',
 ] as const
 
 export type IconName = (typeof iconNames)[number]
@@ -157,4 +161,6 @@ export const iconRegistry = new Map<
   ['utilities', Utilities],
   ['wait', Wait],
   ['chevron-down', ChevronDownIcon],
+  ['logo', Logo],
+  ['save', Save],
 ] as const)

@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 import { useEffect, useRef, useState } from 'react'
 import type React from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select'
+import { Icon } from './icon'
 type TableCellProps = {
   defaultValue?: string
   isSelected?: boolean
@@ -16,6 +17,9 @@ type TableCellProps = {
   className?: string
   onSelect?: (event: React.MouseEvent) => void
   isReadOnly?: boolean
+  title?: string
+  showIcon?: boolean
+  iconOnClick?: () => void
 }
 
 const TableCell = ({
@@ -30,6 +34,9 @@ const TableCell = ({
   className,
   onSelect,
   isReadOnly,
+  title,
+  showIcon = false,
+  iconOnClick,
 }: TableCellProps) => {
   const [isEditing, setIsEditing] = useState(isEditable)
   const [inputValue, setInputValue] = useState(defaultValue || '')
@@ -95,7 +102,7 @@ const TableCell = ({
   }
 
   const baseClassName = cn(
-    'border border-grey-3 py-[6px] px-2 font-open-sans text-grey-13 text-sm min-h-10',
+    'border border-grey-3 pt-[6px] px-2 font-open-sans text-grey-13 text-sm min-h-8',
     isSelected && 'bg-purple-1',
     isEditing && 'bg-purple-1',
     className
@@ -107,8 +114,28 @@ const TableCell = ({
 
   if (isHeader) {
     return (
-      <div className={cn(baseClassName, 'bg-grey-1 min-h-8')}>
-        <div className='font-semibold'>{defaultValue}</div>
+      <div
+        className={cn(
+          baseClassName,
+          'bg-grey-1 flex justify-between align-middle min-h-8'
+        )}
+      >
+        <div>
+          <span className='font-semibold'>{defaultValue}</span>
+          <span className='font-bold'>{title}</span>
+        </div>
+        {showIcon && (
+          <div>
+            <Icon
+              name='chevron-down'
+              width={20}
+              height={20}
+              color='text-grey-13'
+              onClick={iconOnClick}
+              rotate={iconOnClick ? 270 : ''}
+            />
+          </div>
+        )}
       </div>
     )
   }

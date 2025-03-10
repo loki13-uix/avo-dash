@@ -2,55 +2,31 @@ import { DataTable } from '@/shared/components/atoms/data-table'
 import TableCell from '@/shared/components/atoms/table-cell'
 import TableCellActions from '@/shared/components/atoms/table-cell-actions'
 import TableCellLeading from '@/shared/components/atoms/tablecell-leading'
+import useFileStore from '@/shared/store/store'
 import type { ColumnDef } from '@tanstack/react-table'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export const TableComponent = () => {
+type TableComponentProps = {
+  className?: string
+}
+
+export const TableComponent = ({ className }: TableComponentProps) => {
   const [headerChecked, setHeaderChecked] = useState<boolean | 'indeterminate'>(
     false
   )
-
-  const initialData = [
-    {
-      name: 'John Doe',
-      age: 25,
-      email: 'john.doe@example.com',
-      phone: '1234567890',
-      address: '123 Main St, Anytown, USA',
-      id: '1',
-    },
-    {
-      name: 'John Doe1',
-      age: 25,
-      email: 'john.doe@example.com',
-      phone: '1234567890',
-      address: '123 Main St, Anytown, USA',
-      id: '2',
-    },
-    {
-      name: 'John Doe45',
-      age: 26,
-      email: 'john.doe@example.com',
-      phone: '1234567890',
-      address: '123 Main St, Anytown, USA',
-      id: '3',
-    },
-    {
-      name: 'John Doe34',
-      age: 25,
-      email: 'john.doe@example.com',
-      phone: '1234567890',
-      address: '123 Main St, Anytown, USA',
-      id: '4',
-    },
-  ]
+  const selectedFile = useFileStore((state) => state.selectedFile)
+  const setSelectedFile = useFileStore((state) => state.setSelectedFile)
   const [selectedRows, setSelectedRows] = useState<string[]>([])
-  const [data, setData] = useState(initialData)
+  const [data, setData] = useState(selectedFile)
+
+  useEffect(() => {
+    setData(selectedFile)
+  }, [selectedFile])
 
   function handleHeaderCheckedChange(checked: boolean) {
     setHeaderChecked(checked)
     if (checked) {
-      setSelectedRows(initialData.map((row) => row.id))
+      setSelectedRows(selectedFile.map((row) => row.id))
     } else {
       setSelectedRows([])
     }
@@ -68,7 +44,7 @@ export const TableComponent = () => {
       header: () => {
         return (
           <TableCellLeading
-            className='border-0'
+            className='border-0 pl-6.5'
             isHeader
             checkboxProps={{
               checked: headerChecked,
@@ -77,8 +53,8 @@ export const TableComponent = () => {
           />
         )
       },
-      accessorKey: 'id',
-      size: 36,
+      accessorKey: 'checkbox',
+      size: 60,
       enableResizing: true,
       cell: ({ row }) => {
         return (
@@ -106,7 +82,7 @@ export const TableComponent = () => {
         <TableCell defaultValue='Name' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'name',
-      size: 300,
+      size: 250,
       enableResizing: true,
       cell: ({ row }) => {
         return (
@@ -126,7 +102,7 @@ export const TableComponent = () => {
             ]}
             isSelected={selectedRows.includes(row.original.id)}
             onChange={(newValue) => {
-              setData(
+              setSelectedFile(
                 data.map((item) =>
                   item.id === row.original.id
                     ? { ...item, name: newValue }
@@ -154,7 +130,7 @@ export const TableComponent = () => {
             onChange={(newValue) => {
               const newAge = Number.parseInt(newValue)
               if (!Number.isNaN(newAge)) {
-                setData(
+                setSelectedFile(
                   data.map((item) =>
                     item.id === row.original.id
                       ? { ...item, age: newAge }
@@ -172,7 +148,7 @@ export const TableComponent = () => {
         <TableCell defaultValue='Email' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'email',
-      size: 400,
+      size: 450,
       enableResizing: true,
       cell: ({ row }) => {
         return (
@@ -181,7 +157,7 @@ export const TableComponent = () => {
             className='border-0 '
             isSelected={selectedRows.includes(row.original.id)}
             onChange={(newValue) => {
-              setData(
+              setSelectedFile(
                 data.map((item) =>
                   item.id === row.original.id
                     ? { ...item, email: newValue }
@@ -207,7 +183,7 @@ export const TableComponent = () => {
             className='border-0 '
             isSelected={selectedRows.includes(row.original.id)}
             onChange={(newValue) => {
-              setData(
+              setSelectedFile(
                 data.map((item) =>
                   item.id === row.original.id
                     ? { ...item, phone: newValue }
@@ -237,7 +213,7 @@ export const TableComponent = () => {
             className='border-0 '
             isSelected={selectedRows.includes(row.original.id)}
             onChange={(newValue) => {
-              setData(
+              setSelectedFile(
                 data.map((item) =>
                   item.id === row.original.id
                     ? { ...item, address: newValue }
@@ -273,6 +249,7 @@ export const TableComponent = () => {
       data={data}
       setData={setData}
       selectedRows={selectedRows}
+      className={className}
     />
   )
 }

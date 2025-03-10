@@ -17,6 +17,7 @@ export const Icon: React.FC<IconProps> = ({
   color,
   className,
   style,
+  onClick,
   ...props
 }) => {
   const IconComponent = iconRegistry.get(name)
@@ -33,6 +34,7 @@ export const Icon: React.FC<IconProps> = ({
       color={color}
       className={cn('icon inline-block align-middle', className)}
       style={style}
+      onClick={onClick}
       {...props}
     />
   )

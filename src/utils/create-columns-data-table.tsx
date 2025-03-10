@@ -48,7 +48,7 @@ export const createColumns = ({
         />
       ),
       accessorKey: 'checkbox',
-      size: 36,
+      size: 60,
       cell: ({ row }) => (
         <CheckboxColumn
           row={row.original}
@@ -62,7 +62,7 @@ export const createColumns = ({
   columns.push({
     header: () => <HeaderCell title='Column with Select content' />,
     accessorKey: 'name',
-    size: 300,
+    size: 250,
     cell: ({ row }) => (
       <NameColumn
         row={row.original}
