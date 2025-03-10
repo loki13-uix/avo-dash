@@ -13,7 +13,7 @@ function TreeHeader({
   isExpanded,
   setIsExpanded,
   iconName = 'test-case',
-  headerText = 'test-case',
+  headerText = 'Default Test Case',
 }: TreeHeaderProps) {
   return (
     <div className='flex items-center justify-between'>

@@ -1,4 +1,12 @@
 'use client'
+import {
+  FOLDER_TREE_DEFAULT_SIZE,
+  FOLDER_TREE_MIN_SIZE,
+  MAIN_CONTENT_DEFAULT_SIZE,
+  SIDEBAR_DEFAULT_SIZE,
+  SIDEBAR_MAX_SIZE,
+  SIDEBAR_MIN_SIZE,
+} from '@/constants/constants'
 import { folderTree } from '@/constants/tree-data'
 import { Button } from '@/shared/components/atoms/button'
 import { Icon } from '@/shared/components/atoms/icon'
@@ -14,12 +22,11 @@ import {
 import useFileStore from '@/shared/store/store'
 
 import { Fragment, useEffect, useRef, useState } from 'react'
+const trees = [folderTree, folderTree]
 
 export default function Home() {
-  const trees = [folderTree, folderTree]
-  const panelRefs = useRef<(HTMLDivElement | null)[]>([null, null, null])
-
   const [expandedIndices, setExpandedIndices] = useState<number[]>([0])
+  const panelRefs = useRef<(HTMLDivElement | null)[]>([null, null])
 
   const handleExpand = (index: number) => {
     setExpandedIndices((prev) =>
@@ -28,7 +35,7 @@ export default function Home() {
   }
 
   const handleCollapse = (index: number) => {
-    setExpandedIndices((prev) => prev.filter((i) => i !== index))
+    setExpandedIndices((prev) => prev.filter((indices) => indices !== index))
   }
 
   useEffect(() => {
@@ -60,11 +67,10 @@ export default function Home() {
 
       <ResizablePanelGroup direction='horizontal' className='h-screen'>
         <ResizablePanel
-          minSize={25}
-          maxSize={40}
-          defaultSize={25}
-          className='!overflow-auto  z-1'
-          style={{ boxShadow: '0px 15px 40px 0px #CACAD58C' }}
+          minSize={SIDEBAR_MIN_SIZE}
+          maxSize={SIDEBAR_MAX_SIZE}
+          defaultSize={SIDEBAR_DEFAULT_SIZE}
+          className='!overflow-auto z-1 shadow-[0px_15px_40px_0px_rgba(202,202,213,0.55)]'
         >
           <div className='shadow-xl select-none flex h-screen flex-col overflow-auto'>
             <ResizablePanelGroup
@@ -81,9 +87,13 @@ export default function Home() {
               {trees.map((tree, index) => (
                 <Fragment key={index}>
                   <ResizablePanel
-                    minSize={3}
+                    minSize={FOLDER_TREE_MIN_SIZE}
                     className='!overflow-visible'
-                    defaultSize={expandedIndices.includes(index) ? 53 : 3}
+                    defaultSize={
+                      expandedIndices.includes(index)
+                        ? FOLDER_TREE_DEFAULT_SIZE
+                        : FOLDER_TREE_MIN_SIZE
+                    }
                   >
                     <div ref={setPanelRef(index)}>
                       <TreeWrapper
@@ -107,7 +117,7 @@ export default function Home() {
         <ResizableHandle />
 
         <ResizablePanel
-          defaultSize={70}
+          defaultSize={MAIN_CONTENT_DEFAULT_SIZE}
           className='overflow-auto !w-[calc(100vw-500px)]'
         >
           <div className='flex h-full flex-col bg-grey-1'>

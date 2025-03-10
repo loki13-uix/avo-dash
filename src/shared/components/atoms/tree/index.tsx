@@ -36,7 +36,7 @@ type TreeNodeProps = {
 
 export type Edge = 'top' | 'bottom' | 'left' | 'right'
 
-function Tree({ isExpandedHeader }: { isExpandedHeader: boolean }) {
+function Tree({ isHeaderExpanded }: { isHeaderExpanded: boolean }) {
   const { treeNodes, setTreeNodes } = useTreeContext()
   const [expandedFolders, setExpandedFolders] = useState<string[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
@@ -295,7 +295,7 @@ function Tree({ isExpandedHeader }: { isExpandedHeader: boolean }) {
 
   return (
     <div className='select-none' ref={containerRef}>
-      {isExpandedHeader && (
+      {isHeaderExpanded && (
         <DndContext
           sensors={sensors}
           collisionDetection={rectIntersection}

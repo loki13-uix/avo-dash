@@ -23,13 +23,14 @@ export function DraggableTableRow<TData>({
     }
   )
 
-  const style = {
-    opacity: isDragging ? 0.5 : 1,
-    cursor: isDragging ? 'grabbing' : 'grab',
-  }
-
   const rowContent = (
-    <TableRow ref={setNodeRef} className='border-b group'>
+    <TableRow
+      ref={setNodeRef}
+      className={cn(
+        'border-b group',
+        isDragging && 'opacity-50 cursor-grabbing'
+      )}
+    >
       {row.getVisibleCells().map((cell) => (
         <TableCell
           key={cell.id}
@@ -44,8 +45,10 @@ export function DraggableTableRow<TData>({
             <div
               {...attributes}
               {...listeners}
-              style={style}
-              className='flex items-center justify-center'
+              className={cn(
+                'flex items-center justify-center cursor-grab',
+                isDragging && 'opacity-50 cursor-grabbing'
+              )}
             >
               <div style={{ width: 16 }}>
                 <Icon

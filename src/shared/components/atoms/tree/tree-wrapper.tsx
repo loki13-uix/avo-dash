@@ -37,7 +37,7 @@ function TreeWrapper({
               placeholder='Search...'
             />
             <div className='overflow-y-auto flex-1'>
-              <Tree isExpandedHeader={isExpanded} />
+              <Tree isHeaderExpanded={isExpanded} />
             </div>
           </>
         )}

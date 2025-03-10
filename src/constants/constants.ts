@@ -1,0 +1,6 @@
+export const SIDEBAR_DEFAULT_SIZE = 25
+export const SIDEBAR_MIN_SIZE = 25
+export const SIDEBAR_MAX_SIZE = 40
+export const FOLDER_TREE_MIN_SIZE = 3
+export const FOLDER_TREE_DEFAULT_SIZE = 53
+export const MAIN_CONTENT_DEFAULT_SIZE = 100
