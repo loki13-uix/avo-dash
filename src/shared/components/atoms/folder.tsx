@@ -129,7 +129,8 @@ function FolderItem({
             size={16}
             className={cn(
               'text-purple-primary mt-1 shrink-0',
-              isExpanded ? 'rotate-270' : 'rotate-180 '
+              isExpanded ? 'rotate-270' : 'rotate-180 ',
+              'cursor-pointer'
             )}
             onClick={handleToggle}
           />
@@ -138,7 +139,10 @@ function FolderItem({
         <Icon
           name={iconName || 'folder'}
           size={16}
-          className={cn('text-yellow-400 mt-1 shrink-0', iconClassName)}
+          className={cn(
+            'text-yellow-400 mt-1 shrink-0 cursor-pointer',
+            iconClassName
+          )}
         />
 
         {isEditing ? (

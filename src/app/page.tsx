@@ -129,18 +129,51 @@ export default function Home() {
             {selectedFile.length > 0 && (
               <div className='w-full flex justify-end border-t-0 p-4 gap-1.5'>
                 <TableCellActions
-                  name={[
-                    'copy',
-                    'paste',
-                    'trash',
-                    'import',
-                    'export',
-                    'details',
-                  ]}
+                  // iconNames={[
+                  //   'copy',
+                  //   'paste',
+                  //   'trash',
+                  //   'import',
+                  //   'export',
+                  //   'details',
+                  // ]}
+                  iconNames='copy'
                   iconClassName='size-5'
                   iconColors='#8793A0'
-                  className='border-none gap-x-4'
+                  className='border-none '
                 />
+                <TableCellActions
+                  iconNames='paste'
+                  iconClassName='size-5'
+                  iconColors='#8793A0'
+                  className='border-none '
+                />
+                <TableCellActions
+                  iconNames='trash'
+                  iconClassName='size-5'
+                  iconColors='#8793A0'
+                  className='border-none '
+                />
+                <TableCellActions
+                  iconNames='import'
+                  iconClassName='size-5'
+                  iconColors='#8793A0'
+                  className='border-none '
+                />
+                <TableCellActions
+                  iconNames='export'
+                  iconClassName='size-5'
+                  iconColors='#8793A0'
+                  className='border-none '
+                />
+
+                <TableCellActions
+                  iconNames='details'
+                  iconClassName='size-5'
+                  iconColors='#8793A0'
+                  className='border-none '
+                />
+
                 <Button
                   variant='success'
                   className='border-none px-1.5 py-1 w-[78px] h-8'

@@ -102,7 +102,11 @@ function FileItem({
       onDoubleClick={handleDoubleClick}
       {...props}
     >
-      <Icon name='test-case' size={16} className='fill-grey-12 mt-1 shrink-0' />
+      <Icon
+        name='test-case'
+        size={16}
+        className='fill-grey-12 mt-1 shrink-0 cursor-pointer'
+      />
 
       {!isEditing ? (
         <div className='flex justify-between items-start w-full'>
