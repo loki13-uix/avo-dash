@@ -143,7 +143,10 @@ function FolderItem({
         <Icon
           name={iconName || 'folder'}
           size={16}
-          className={cn('text-yellow-400 mt-1 shrink-0', iconClassName)}
+          className={cn(
+            'text-yellow-400 mt-1 shrink-0 cursor-pointer',
+            iconClassName
+          )}
         />
 
         {isEditing ? (
