@@ -1,3 +1,4 @@
+import { NAME_OPTIONS } from '@/constants/constants'
 import { DataTable } from '@/shared/components/atoms/data-table'
 import TableCell from '@/shared/components/atoms/table-cell'
 import TableCellActions from '@/shared/components/atoms/table-cell-actions'
@@ -90,16 +91,7 @@ export const TableComponent = ({ className }: TableComponentProps) => {
             defaultValue={row.original.name}
             className='border-0 '
             selectDropdown
-            options={[
-              {
-                label: 'John Doe',
-                value: 'John Doe',
-              },
-              {
-                label: 'John Doe2',
-                value: 'John Doe2',
-              },
-            ]}
+            options={NAME_OPTIONS}
             isSelected={selectedRows.includes(row.original.id)}
             onChange={(newValue) => {
               setSelectedFile(

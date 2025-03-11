@@ -27,7 +27,7 @@ function TreeWrapper({
 
   return (
     <TreeProvider initialTreeNodes={initialTreeNodes}>
-      <div className='flex flex-col gap-2 p-3 transition-all duration-250'>
+      <div className='flex flex-col gap-2 p-3 transition-all duration-250 h-full'>
         <TreeHeader isExpanded={isExpanded} setIsExpanded={handleToggle} />
         {isExpanded && (
           <>
@@ -36,7 +36,7 @@ function TreeWrapper({
               className='w-full mb-4'
               placeholder='Search...'
             />
-            <div className='overflow-y-auto flex-1'>
+            <div className='overflow-y-auto'>
               <Tree isHeaderExpanded={isExpanded} />
             </div>
           </>

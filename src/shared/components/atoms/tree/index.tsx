@@ -209,18 +209,14 @@ function Tree({ isHeaderExpanded }: { isHeaderExpanded: boolean }) {
         },
       })
 
-    const style = {
-      opacity: isDragging ? 0.4 : 1,
-    }
     const isSelected = selectedIds.includes(node.id)
 
     return (
       <div
         ref={setNodeRef}
-        style={style}
         {...attributes}
         {...listeners}
-        className='relative'
+        className={cn('relative', isDragging && 'opacity-40')}
       >
         <TreeNodeComponent node={node} level={level} isDragOver={isOver} />
         {isOver &&

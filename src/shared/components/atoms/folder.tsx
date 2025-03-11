@@ -3,6 +3,7 @@
 import type { IconName } from '@/constants/icons'
 import useClickOutside from '@/hook/use-click-outside'
 import { cn } from '@/lib/utils'
+import { Button } from '@/shared/components/atoms/button'
 import { useTreeContext } from '@/shared/context/tree-data-context'
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
@@ -101,7 +102,7 @@ function FolderItem({
     }
   }, [isEditing])
 
-  function handleToggle(e: React.MouseEvent<SVGSVGElement>) {
+  function handleToggle(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation()
     if (clickTimeout.current) {
       clearTimeout(clickTimeout.current)
@@ -113,9 +114,8 @@ function FolderItem({
   return (
     <>
       <div
-        data-selected={isSelected}
         className={cn(
-          'px-2 py-1 gap-2 data-[selected="true"]:bg-purple-1 min-h-8 w-full flex transition-all duration-250 items-start select-none',
+          'px-2 py-1 gap-2 data-[selected="true"]:bg-purple-1 min-h-8 w-full flex transition-all duration-250 items-start select-none hover:bg-purple-1',
           isSelected && 'bg-purple-1',
           isPreview && 'border border-purple-primary rounded-[4px] opacity-60',
           className
@@ -124,15 +124,20 @@ function FolderItem({
         {...props}
       >
         {!isPreview && (
-          <Icon
-            name={'chevron'}
-            size={16}
-            className={cn(
-              'text-purple-primary mt-1 shrink-0',
-              isExpanded ? 'rotate-270' : 'rotate-180 '
-            )}
+          <Button
+            variant='secondary'
+            className='p-0 border-none h-5 w-5 bg-transparent'
             onClick={handleToggle}
-          />
+          >
+            <Icon
+              name={'chevron'}
+              size={16}
+              className={cn(
+                'text-purple-primary mt-1 shrink-0',
+                isExpanded ? 'rotate-270' : 'rotate-180 '
+              )}
+            />
+          </Button>
         )}
 
         <Icon
@@ -157,11 +162,11 @@ function FolderItem({
             onClick={(e) => e.stopPropagation()}
           />
         ) : (
-          <div className='flex justify-between items-start w-full'>
-            <span
-              className='text-grey text-sm cursor-pointer py-[0.8px] px-[3px] break-all'
-              onDoubleClick={handleDoubleClick}
-            >
+          <div
+            className='flex justify-between items-start w-full'
+            onDoubleClick={handleDoubleClick}
+          >
+            <span className='text-grey text-sm py-[0.8px] px-[3px] break-all'>
               {folderName}
             </span>
             {isPreview && isSelected && selectedIds.length > 1 && (
