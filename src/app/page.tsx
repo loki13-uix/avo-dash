@@ -129,46 +129,38 @@ export default function Home() {
             {selectedFile.length > 0 && (
               <div className='w-full flex justify-end border-t-0 p-4 gap-1.5'>
                 <TableCellActions
-                  // iconNames={[
-                  //   'copy',
-                  //   'paste',
-                  //   'trash',
-                  //   'import',
-                  //   'export',
-                  //   'details',
-                  // ]}
-                  iconNames='copy'
+                  icons='copy'
                   iconClassName='size-5'
                   iconColors='#8793A0'
                   className='border-none '
                 />
                 <TableCellActions
-                  iconNames='paste'
+                  icons='paste'
                   iconClassName='size-5'
                   iconColors='#8793A0'
                   className='border-none '
                 />
                 <TableCellActions
-                  iconNames='trash'
+                  icons='trash'
                   iconClassName='size-5'
                   iconColors='#8793A0'
                   className='border-none '
                 />
                 <TableCellActions
-                  iconNames='import'
+                  icons='import'
                   iconClassName='size-5'
                   iconColors='#8793A0'
                   className='border-none '
                 />
                 <TableCellActions
-                  iconNames='export'
+                  icons='export'
                   iconClassName='size-5'
                   iconColors='#8793A0'
                   className='border-none '
                 />
 
                 <TableCellActions
-                  iconNames='details'
+                  icons='details'
                   iconClassName='size-5'
                   iconColors='#8793A0'
                   className='border-none '

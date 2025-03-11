@@ -11,7 +11,7 @@ type Props = {
   isSelected?: boolean
   isHeader?: boolean
   className?: string
-  iconNames?: IconName
+  icons?: IconName
   iconColors?: string
   iconClassName?: string
 }
@@ -25,21 +25,24 @@ const TableCellActions = ({
   isHeader,
   isSelected,
   className,
-  iconNames,
+  icons,
   iconColors,
   iconClassName,
 }: Props) => {
   return (
-    <>
-      {!iconNames && (
-        <div
-          className={cn(
-            'flex items-center border border-grey-3 px-2 py-1.5 gap-x-2 cursor-pointer min-h-8',
-            isSelected ? 'bg-[#EBEBFF]' : !isHeader && 'hover:bg-[#F5F5FF]',
-            isHeader && 'bg-grey-1 min-h-8',
-            className
-          )}
-        >
+    <div
+      className={cn(
+        'flex items-center border border-grey-3 px-2 py-1.5 cursor-pointer min-h-8',
+        isSelected ? 'bg-[#EBEBFF]' : !isHeader && 'hover:bg-[#F5F5FF]',
+        isHeader && 'bg-grey-1 min-h-8',
+        !icons && 'gap-x-2',
+        className
+      )}
+    >
+      {icons ? (
+        <Icon name={icons} color={iconColors} className={iconClassName} />
+      ) : (
+        <>
           {plusIcon && (
             <Icon name='plus-icon' color='#605BFF' className='size-5' />
           )}
@@ -51,25 +54,9 @@ const TableCellActions = ({
             <Icon name='trash' color='#605BFF' className='size-5' />
           )}
           {dots && <Icon name='dots' color='#605BFF' className='size-5' />}
-        </div>
+        </>
       )}
-
-      {iconNames && (
-        <div
-          className={cn(
-            'flex items-center px-2 py-1.5 cursor-pointer min-h-8 hover:bg-[#F5F5FF]'
-          )}
-        >
-          {iconNames && (
-            <Icon
-              name={iconNames}
-              color={iconColors}
-              className={iconClassName}
-            />
-          )}
-        </div>
-      )}
-    </>
+    </div>
   )
 }
 

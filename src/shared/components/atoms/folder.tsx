@@ -128,9 +128,8 @@ function FolderItem({
             name={'chevron'}
             size={16}
             className={cn(
-              'text-purple-primary mt-1 shrink-0',
-              isExpanded ? 'rotate-270' : 'rotate-180 ',
-              'cursor-pointer'
+              'text-purple-primary mt-1 shrink-0 cursor-pointer',
+              isExpanded ? 'rotate-270' : 'rotate-180 '
             )}
             onClick={handleToggle}
           />

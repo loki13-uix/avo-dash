@@ -62,7 +62,7 @@ const meta: Meta<typeof TableCellActions> = {
       },
       description: 'This is of boolean type',
     },
-    iconNames: {
+    icons: {
       control: 'text',
       table: {
         disable: true,
