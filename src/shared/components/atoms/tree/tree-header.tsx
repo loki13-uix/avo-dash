@@ -22,7 +22,7 @@ function TreeHeader({
           name='chevron-down'
           size={16}
           className={cn(
-            'text-purple-primary shrink-0',
+            'text-purple-primary shrink-0 cursor-pointer',
             !isExpanded && 'rotate-270'
           )}
           onClick={() => setIsExpanded(!isExpanded)}

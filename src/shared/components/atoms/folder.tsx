@@ -128,7 +128,7 @@ function FolderItem({
             name={'chevron'}
             size={16}
             className={cn(
-              'text-purple-primary mt-1 shrink-0',
+              'text-purple-primary mt-1 shrink-0 cursor-pointer',
               isExpanded ? 'rotate-270' : 'rotate-180 '
             )}
             onClick={handleToggle}
@@ -138,7 +138,10 @@ function FolderItem({
         <Icon
           name={iconName || 'folder'}
           size={16}
-          className={cn('text-yellow-400 mt-1 shrink-0', iconClassName)}
+          className={cn(
+            'text-yellow-400 mt-1 shrink-0 cursor-pointer',
+            iconClassName
+          )}
         />
 
         {isEditing ? (
