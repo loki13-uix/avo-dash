@@ -91,9 +91,8 @@ function FileItem({
 
   return (
     <div
-      data-selected={isSelected}
       className={cn(
-        'flex items-start min-h-8 py-1 px-2 hover:bg-purple-0 w-full gap-2',
+        'flex items-start min-h-8 py-1 px-2 hover:bg-purple-0 w-full gap-2 !cursor-pointer',
         isSelected && 'bg-purple-1 hover:bg-purple-1',
         isPreview && 'border border-purple-primary rounded-[4px] opacity-60',
         className

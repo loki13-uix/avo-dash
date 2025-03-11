@@ -30,10 +30,6 @@ export const useTreeSelection = <T extends HTMLElement | null>(
       getParentNodeById(treeData, id) ===
       getParentNodeById(treeData, lastClickedId ?? '')
 
-    if (isSelectedNodeHaveParent(treeData, id, selectedIds)) {
-      return
-    }
-
     const parentId = getSelectedParentOfChild(treeData, id, selectedIds)
     if (parentId) {
       setSelectedIds((prev) => {
@@ -45,6 +41,9 @@ export const useTreeSelection = <T extends HTMLElement | null>(
     }
 
     if (event.metaKey || event.ctrlKey) {
+      if (isSelectedNodeHaveParent(treeData, id, selectedIds)) {
+        return
+      }
       setSelectedIds((prev) =>
         prev.includes(id)
           ? prev.filter((selectedId) => selectedId !== id)
@@ -52,6 +51,9 @@ export const useTreeSelection = <T extends HTMLElement | null>(
       )
       setLastClickedId(id)
     } else if (isRangeSelection && event.shiftKey && isSameParent) {
+      if (isSelectedNodeHaveParent(treeData, id, selectedIds)) {
+        return
+      }
       if (currentIndex !== -1 && lastClickedIndex !== -1) {
         const startIndex = Math.min(currentIndex, lastClickedIndex)
         const endIndex = Math.max(currentIndex, lastClickedIndex)

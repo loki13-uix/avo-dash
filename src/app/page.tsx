@@ -22,11 +22,11 @@ import {
 import useFileStore from '@/shared/store/store'
 
 import { Fragment, useEffect, useRef, useState } from 'react'
-const trees = [folderTree, folderTree]
+const trees = [folderTree, folderTree, folderTree]
 
 export default function Home() {
   const [expandedIndices, setExpandedIndices] = useState<number[]>([0])
-  const panelRefs = useRef<(HTMLDivElement | null)[]>([null, null])
+  const panelRefs = useRef<(HTMLDivElement | null)[]>([null, null, null])
 
   const handleExpand = (index: number) => {
     setExpandedIndices((prev) =>
@@ -44,9 +44,14 @@ export default function Home() {
         const resizablePanel = panel.closest('[data-panel]')
         if (resizablePanel && resizablePanel instanceof HTMLElement) {
           if (!expandedIndices.includes(index)) {
-            resizablePanel.style.flex = '0 0 10px'
+            resizablePanel.style.flexGrow = '0'
+            resizablePanel.style.flexShrink = '0'
+            resizablePanel.style.flexBasis = '50px'
           } else {
-            resizablePanel.style.flex = '1 1 0'
+            resizablePanel.style.flexGrow = '1'
+            resizablePanel.style.flexShrink = '1'
+            resizablePanel.style.flexBasis = '50px'
+            resizablePanel.style.maxHeight = '78%'
           }
         }
       }
@@ -60,7 +65,7 @@ export default function Home() {
   const selectedFile = useFileStore((state) => state.selectedFile)
 
   return (
-    <div className='h-screen overflow-hidden'>
+    <div className='h-dvh overflow-hidden'>
       <div className='border-b border-grey-4 px-4 py-3'>
         <Icon
           name='logo'
@@ -70,18 +75,15 @@ export default function Home() {
         />
       </div>
 
-      <ResizablePanelGroup direction='horizontal' className='h-screen'>
+      <ResizablePanelGroup direction='horizontal' className='h-dvh'>
         <ResizablePanel
           minSize={SIDEBAR_MIN_SIZE}
           maxSize={SIDEBAR_MAX_SIZE}
           defaultSize={SIDEBAR_DEFAULT_SIZE}
-          className='!overflow-auto z-1 shadow-[0px_15px_40px_0px_rgba(202,202,213,0.55)]'
+          className='z-1 shadow-[0px_15px_40px_0px_rgba(202,202,213,0.55)]'
         >
           <div className='shadow-xl select-none flex h-screen flex-col overflow-auto'>
-            <ResizablePanelGroup
-              direction='vertical'
-              className='h-full !overflow-auto  max-h-[calc(100vh-50px)]'
-            >
+            <ResizablePanelGroup direction='vertical' className='h-full'>
               <TableCell
                 isHeader
                 defaultValue='Project: '
@@ -89,32 +91,33 @@ export default function Home() {
                 title='Web Project'
                 showIcon
               />
-              {trees.map((tree, index) => (
-                <Fragment key={index}>
-                  <ResizablePanel
-                    minSize={FOLDER_TREE_MIN_SIZE}
-                    className='!overflow-visible'
-                    defaultSize={
-                      expandedIndices.includes(index)
-                        ? FOLDER_TREE_DEFAULT_SIZE
-                        : FOLDER_TREE_MIN_SIZE
-                    }
-                  >
-                    <div ref={setPanelRef(index)}>
-                      <TreeWrapper
-                        key={index}
-                        initialTreeNodes={tree}
-                        isExpanded={expandedIndices.includes(index)}
-                        onExpand={() => handleExpand(index)}
-                        onCollapse={() => handleCollapse(index)}
-                      />
-                    </div>
-                  </ResizablePanel>
-                  {index !== trees.length - 1 && (
-                    <ResizableHandle className='!h-0.5 bg-muted' />
-                  )}
-                </Fragment>
-              ))}
+              <div className='h-[calc(100vh-100px)] overflow-auto flex flex-col'>
+                {trees.map((tree, index) => (
+                  <Fragment key={index}>
+                    <ResizablePanel
+                      minSize={FOLDER_TREE_MIN_SIZE}
+                      defaultSize={
+                        expandedIndices.includes(index)
+                          ? FOLDER_TREE_DEFAULT_SIZE
+                          : FOLDER_TREE_MIN_SIZE
+                      }
+                    >
+                      <div ref={setPanelRef(index)} className='h-full'>
+                        <TreeWrapper
+                          key={index}
+                          initialTreeNodes={tree}
+                          isExpanded={expandedIndices.includes(index)}
+                          onExpand={() => handleExpand(index)}
+                          onCollapse={() => handleCollapse(index)}
+                        />
+                      </div>
+                    </ResizablePanel>
+                    {index !== trees.length - 1 && (
+                      <ResizableHandle className='!h-0.5 bg-muted' />
+                    )}
+                  </Fragment>
+                ))}
+              </div>
             </ResizablePanelGroup>
           </div>
         </ResizablePanel>
