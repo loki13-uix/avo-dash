@@ -1,7 +1,5 @@
 'use client'
 import {
-  FOLDER_TREE_DEFAULT_SIZE,
-  FOLDER_TREE_MIN_SIZE,
   MAIN_CONTENT_DEFAULT_SIZE,
   SIDEBAR_DEFAULT_SIZE,
   SIDEBAR_MAX_SIZE,
@@ -9,6 +7,7 @@ import {
 } from '@/constants/constants'
 import type { IconName } from '@/constants/icons'
 import { type TreeNode, folderTree } from '@/constants/tree-data'
+import { cn } from '@/lib/utils'
 import { Button } from '@/shared/components/atoms/button'
 import { Icon } from '@/shared/components/atoms/icon'
 import TableCell from '@/shared/components/atoms/table-cell'
@@ -22,7 +21,7 @@ import {
 } from '@/shared/components/ui/resizable'
 import useFileStore from '@/shared/store/store'
 
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useState } from 'react'
 const trees: {
   id: number
   headerIcon: IconName
@@ -51,40 +50,15 @@ const trees: {
 
 export default function Home() {
   const [expandedIndices, setExpandedIndices] = useState<number[]>([0])
-  const panelRefs = useRef<(HTMLDivElement | null)[]>([null, null, null])
-
-  const handlePanelResize = (id: number, expanded: boolean) => {
-    const resizablePanel = panelRefs.current[id]?.closest('[data-panel]')
-    if (resizablePanel && resizablePanel instanceof HTMLElement) {
-      resizablePanel.style.flex = expanded ? '1 1 180px' : '0 0 50px'
-    }
-  }
-
-  useEffect(() => {
-    panelRefs.current.forEach((ref, index) => {
-      const resizablePanel = ref?.closest('[data-panel]')
-      if (resizablePanel && resizablePanel instanceof HTMLElement) {
-        resizablePanel.style.flexBasis = index === 0 ? '180px' : '50px'
-        resizablePanel.style.flexGrow = '0'
-        resizablePanel.style.flexShrink = '0'
-      }
-    })
-  }, [])
 
   const handleExpand = (id: number) => {
     setExpandedIndices((prev) =>
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     )
-    handlePanelResize(id, true)
   }
 
   const handleCollapse = (id: number) => {
     setExpandedIndices((prev) => prev.filter((indices) => indices !== id))
-    handlePanelResize(id, false)
-  }
-
-  const setPanelRef = (id: number) => (el: HTMLDivElement | null) => {
-    panelRefs.current[id] = el
   }
 
   const selectedFile = useFileStore((state) => state.selectedFile)
@@ -120,19 +94,13 @@ export default function Home() {
                 {trees.map((tree, index) => (
                   <Fragment key={tree.id}>
                     <ResizablePanel
-                      minSize={
-                        expandedIndices.includes(tree.id)
-                          ? FOLDER_TREE_MIN_SIZE
-                          : 1
-                      }
-                      defaultSize={
-                        expandedIndices.includes(tree.id)
-                          ? FOLDER_TREE_DEFAULT_SIZE
-                          : FOLDER_TREE_MIN_SIZE
-                      }
-                      className='!min-h-[50px]'
+                      minSize={22}
+                      className={cn(
+                        !expandedIndices.includes(tree.id) &&
+                          '!flex-grow-0 !flex-shrink-0 min-h-[50px]'
+                      )}
                     >
-                      <div ref={setPanelRef(tree.id)} className='h-full'>
+                      <div className='h-full'>
                         <TreeWrapper
                           key={tree.id}
                           initialTreeNodes={tree.treeNodes}
@@ -144,9 +112,15 @@ export default function Home() {
                         />
                       </div>
                     </ResizablePanel>
-                    {index !== trees.length - 1 && (
-                      <ResizableHandle className='!h-0.5 bg-muted' />
-                    )}
+                    {index !== trees.length - 1 &&
+                      expandedIndices.length > 0 && (
+                        <ResizableHandle
+                          className='!h-0.5 bg-muted'
+                          disabled={
+                            !expandedIndices.includes(trees[index + 1]?.id)
+                          }
+                        />
+                      )}
                   </Fragment>
                 ))}
               </div>
