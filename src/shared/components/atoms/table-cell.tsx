@@ -105,6 +105,7 @@ const TableCell = ({
     'border border-grey-3 pt-[6px] px-2 font-open-sans text-grey-13 text-sm min-h-8',
     isSelected && 'bg-purple-1',
     isEditing && 'bg-purple-1',
+    selectDropdown && 'pt-0',
     className
   )
 
@@ -153,12 +154,12 @@ const TableCell = ({
           value={inputValue}
           onChange={(e) => handleValueChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          className='text-sm bg-white rounded-sm border border-purple-primary resize-none w-full break-all px-1 focus:outline-none hidescroll'
+          className='text-sm bg-white rounded-sm border border-purple-primary resize-none w-full break-all px-1 focus:outline-none hidescroll h-full'
           rows={1}
         />
       ) : selectDropdown ? (
         <Select value={defaultValue} onValueChange={handleValueChange}>
-          <SelectTrigger className='shadow-none p-0 min-h-8 bg-transparent w-full'>
+          <SelectTrigger className='shadow-none p-0 min-h-8 bg-transparent w-full cursor-pointer h-full'>
             <span>{selectedOption?.label}</span>
           </SelectTrigger>
           <SelectContent>

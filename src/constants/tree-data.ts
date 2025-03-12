@@ -167,7 +167,7 @@ export const folderTree: TreeNode[] = [
                   {
                     id: '6',
                     name: 'Leonard William',
-                    email: 'leonard.william@example.com',
+                    email: 'leonard.will@example.com',
                     phone: '4445556666',
                     address: '321 Science St, Pasadena, USA',
                     age: 33,
@@ -175,7 +175,7 @@ export const folderTree: TreeNode[] = [
                   {
                     id: '7',
                     name: 'Monica Geller',
-                    email: 'monica.geller@example.com',
+                    email: 'monica.geller@example.co',
                     phone: '7778889999',
                     address: '654 Coffee St, New York, USA',
                     age: 30,
@@ -183,7 +183,7 @@ export const folderTree: TreeNode[] = [
                   {
                     id: '8',
                     name: 'Nina Williams',
-                    email: 'nina.williams@example.com',
+                    email: 'nina.will@example.com',
                     phone: '2223334444',
                     address: '159 Fighter St, Tokyo, Japan',
                     age: 24,
@@ -462,7 +462,7 @@ export const folderTree: TreeNode[] = [
                   {
                     id: '1',
                     name: 'Leonard William',
-                    email: 'leonard.william@example.com',
+                    email: 'leonard.will@example.com',
                     phone: '4445556666',
                     address: '321 Science St, Pasadena, USA',
                     age: 33,
@@ -470,7 +470,7 @@ export const folderTree: TreeNode[] = [
                   {
                     id: '2',
                     name: 'Monica Geller',
-                    email: 'monica.geller@example.com',
+                    email: 'monica.geller@example.co',
                     phone: '7778889999',
                     address: '654 Coffee St, New York, USA',
                     age: 30,
@@ -478,7 +478,7 @@ export const folderTree: TreeNode[] = [
                   {
                     id: '3',
                     name: 'Nina Williams',
-                    email: 'nina.williams@example.com',
+                    email: 'nina.will@example.com',
                     phone: '2223334444',
                     address: '159 Fighter St, Tokyo, Japan',
                     age: 24,
@@ -663,7 +663,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '1',
                 name: 'Leonard William',
-                email: 'leonard.william@example.com',
+                email: 'leonard.will@example.com',
                 phone: '4445556666',
                 address: '321 Science St, Pasadena, USA',
                 age: 33,
@@ -671,7 +671,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '2',
                 name: 'Monica Geller',
-                email: 'monica.geller@example.com',
+                email: 'monica.geller@example.co',
                 phone: '7778889999',
                 address: '654 Coffee St, New York, USA',
                 age: 30,
@@ -679,7 +679,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '3',
                 name: 'Nina Williams',
-                email: 'nina.williams@example.com',
+                email: 'nina.will@example.com',
                 phone: '2223334444',
                 address: '159 Fighter St, Tokyo, Japan',
                 age: 24,
@@ -872,7 +872,7 @@ export const folderTree: TreeNode[] = [
                       {
                         id: '1',
                         name: 'Leonard William',
-                        email: 'leonard.william@example.com',
+                        email: 'leonard.will@example.com',
                         phone: '4445556666',
                         address: '321 Science St, Pasadena, USA',
                         age: 33,
@@ -880,7 +880,7 @@ export const folderTree: TreeNode[] = [
                       {
                         id: '2',
                         name: 'Monica Geller',
-                        email: 'monica.geller@example.com',
+                        email: 'monica.geller@example.co',
                         phone: '7778889999',
                         address: '654 Coffee St, New York, USA',
                         age: 30,
@@ -888,7 +888,7 @@ export const folderTree: TreeNode[] = [
                       {
                         id: '3',
                         name: 'Nina Williams',
-                        email: 'nina.williams@example.com',
+                        email: 'nina.will@example.com',
                         phone: '2223334444',
                         address: '159 Fighter St, Tokyo, Japan',
                         age: 24,
@@ -1071,7 +1071,7 @@ export const folderTree: TreeNode[] = [
                       {
                         id: '1',
                         name: 'Leonard William',
-                        email: 'leonard.william@example.com',
+                        email: 'leonard.will@example.com',
                         phone: '4445556666',
                         address: '321 Science St, Pasadena, USA',
                         age: 33,
@@ -1079,7 +1079,7 @@ export const folderTree: TreeNode[] = [
                       {
                         id: '2',
                         name: 'Monica Geller',
-                        email: 'monica.geller@example.com',
+                        email: 'monica.geller@example.co',
                         phone: '7778889999',
                         address: '654 Coffee St, New York, USA',
                         age: 30,
@@ -1087,7 +1087,7 @@ export const folderTree: TreeNode[] = [
                       {
                         id: '3',
                         name: 'Nina Williams',
-                        email: 'nina.williams@example.com',
+                        email: 'nina.will@example.com',
                         phone: '2223334444',
                         address: '159 Fighter St, Tokyo, Japan',
                         age: 24,
@@ -1286,7 +1286,7 @@ export const folderTree: TreeNode[] = [
                   {
                     id: '1',
                     name: 'Leonard William',
-                    email: 'leonard.william@example.com',
+                    email: 'leonard.will@example.com',
                     phone: '4445556666',
                     address: '321 Science St, Pasadena, USA',
                     age: 33,
@@ -1294,7 +1294,7 @@ export const folderTree: TreeNode[] = [
                   {
                     id: '2',
                     name: 'Monica Geller',
-                    email: 'monica.geller@example.com',
+                    email: 'monica.geller@example.co',
                     phone: '7778889999',
                     address: '654 Coffee St, New York, USA',
                     age: 30,
@@ -1302,7 +1302,7 @@ export const folderTree: TreeNode[] = [
                   {
                     id: '3',
                     name: 'Nina Williams',
-                    email: 'nina.williams@example.com',
+                    email: 'nina.will@example.com',
                     phone: '2223334444',
                     address: '159 Fighter St, Tokyo, Japan',
                     age: 24,
@@ -1391,7 +1391,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '1',
                 name: 'Diana Prince',
-                email: 'diana.prince@example.com',
+                email: 'diana.prince@example.co',
                 phone: '4445556666',
                 address: '654 Maple St, Star City, USA',
                 age: 28,
@@ -1407,7 +1407,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '3',
                 name: 'Fiona Gallagher',
-                email: 'fiona.gallagher@example.com',
+                email: 'fiona.gall@example.com',
                 phone: '2223334444',
                 address: '159 Birch St, Coast City, USA',
                 age: 27,
@@ -1415,7 +1415,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '4',
                 name: 'George Costanza',
-                email: 'george.costanza@example.co',
+                email: 'george.costa@example.co',
                 phone: '3334445555',
                 address: '753 Walnut St, Smallville, USA',
                 age: 31,
@@ -1423,7 +1423,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '5',
                 name: 'Hannah Baker',
-                email: 'hannah.baker@example.com',
+                email: 'hannah.baker@example.co',
                 phone: '6667778888',
                 address: '852 Spruce St, Hill Valley, USA',
                 age: 19,
@@ -1439,7 +1439,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '1',
                 name: 'John Doe12312',
-                email: 'john.doe324@example.com',
+                email: 'john.doe34@example.co',
                 phone: '324242423',
                 address: '1223 New York, USA',
                 age: 56,
@@ -1447,7 +1447,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '2',
                 name: 'Jane Doe243423',
-                email: 'jane.doe122@example.com',
+                email: 'jane.doe12@example.co',
                 phone: '123213123',
                 address: '1223 New Street, USA',
                 age: 34,
@@ -1455,7 +1455,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '3',
                 name: 'Ivy League',
-                email: 'ivy.league@example.com',
+                email: 'ivy.lea@example.co',
                 phone: '5556667777',
                 address: '123 Ivy St, Ivy Town, USA',
                 age: 29,
@@ -1463,7 +1463,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '4',
                 name: 'Jack Sparrow',
-                email: 'jack.sparrow@example.com',
+                email: 'jack.sp@example.com',
                 phone: '8889990000',
                 address: '456 Pirate Cove, Caribbean, USA',
                 age: 45,
@@ -1471,7 +1471,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '5',
                 name: 'Kara Danvers',
-                email: 'kara.danvers@example.com',
+                email: 'kara.dan@example.co',
                 phone: '1112223333',
                 address: '789 Fortress St, National City, USA',
                 age: 26,
@@ -1487,7 +1487,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '1',
                 name: 'Leonard William',
-                email: 'leonard.william@example.com',
+                email: 'leonard.will@example.co',
                 phone: '4445556666',
                 address: '321 Science St, Pasadena, USA',
                 age: 33,
@@ -1495,7 +1495,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '2',
                 name: 'Monica Geller',
-                email: 'monica.geller@example.com',
+                email: 'monica.geller@example.co',
                 phone: '7778889999',
                 address: '654 Coffee St, New York, USA',
                 age: 30,
@@ -1503,7 +1503,7 @@ export const folderTree: TreeNode[] = [
               {
                 id: '3',
                 name: 'Nina Williams',
-                email: 'nina.williams@example.com',
+                email: 'nina.will@example.com',
                 phone: '2223334444',
                 address: '159 Fighter St, Tokyo, Japan',
                 age: 24,
@@ -1683,7 +1683,7 @@ export const folderTree: TreeNode[] = [
       {
         id: '1',
         name: 'Leonard William',
-        email: 'leonard.william@example.com',
+        email: 'leonard.will@example.com',
         phone: '4445556666',
         address: '321 Science St, Pasadena, USA',
         age: 33,
@@ -1691,7 +1691,7 @@ export const folderTree: TreeNode[] = [
       {
         id: '2',
         name: 'Monica Geller',
-        email: 'monica.geller@example.com',
+        email: 'monica.geller@example.co',
         phone: '7778889999',
         address: '654 Coffee St, New York, USA',
         age: 30,
@@ -1699,7 +1699,7 @@ export const folderTree: TreeNode[] = [
       {
         id: '3',
         name: 'Nina Williams',
-        email: 'nina.williams@example.com',
+        email: 'nina.will@example.com',
         phone: '2223334444',
         address: '159 Fighter St, Tokyo, Japan',
         age: 24,
