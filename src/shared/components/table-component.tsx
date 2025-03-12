@@ -55,7 +55,7 @@ export const TableComponent = ({ className }: TableComponentProps) => {
         )
       },
       accessorKey: 'checkbox',
-      size: 60,
+      size: 65,
       enableResizing: true,
       cell: ({ row }) => {
         return (
@@ -83,13 +83,11 @@ export const TableComponent = ({ className }: TableComponentProps) => {
         <TableCell defaultValue='Name' className='border-0 w-full' isHeader />
       ),
       accessorKey: 'name',
-      size: 250,
-      enableResizing: true,
       cell: ({ row }) => {
         return (
           <TableCell
             defaultValue={row.original.name}
-            className='border-0 '
+            className='border-0 w-[200px]'
             selectDropdown
             options={NAME_OPTIONS}
             isSelected={selectedRows.includes(row.original.id)}

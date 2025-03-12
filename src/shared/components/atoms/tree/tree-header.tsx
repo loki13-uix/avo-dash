@@ -8,6 +8,7 @@ interface TreeHeaderProps {
   setIsExpanded: (isExpanded: boolean) => void
   iconName?: IconName
   headerText?: string
+  iconClassName?: string
 }
 
 function TreeHeader({
@@ -15,6 +16,7 @@ function TreeHeader({
   setIsExpanded,
   iconName = 'test-case',
   headerText = 'Default Test Case',
+  iconClassName,
 }: TreeHeaderProps) {
   return (
     <div className='flex items-center justify-between'>
@@ -34,14 +36,20 @@ function TreeHeader({
           />
         </Button>
         <div className='flex items-center gap-1'>
-          <Icon name={iconName} size={20} className='fill-grey-12  shrink-0' />
-          <span>{headerText}</span>
+          <Icon
+            name={iconName}
+            size={20}
+            className={cn('fill-grey-12  shrink-0', iconClassName)}
+          />
+          <span className='text-grey-13 font-semibold text-sm'>
+            {headerText}
+          </span>
         </div>
       </div>
       <Icon
         name='plus-icon'
         size={18}
-        className='shrink-0 text-purple-primary  mt-1'
+        className='shrink-0 text-purple-primary'
       />
     </div>
   )

@@ -104,7 +104,7 @@ function FileItem({
       <Icon
         name='test-case'
         size={16}
-        className='fill-grey-12 mt-1 shrink-0 cursor-pointer'
+        className='text-grey-12 mt-1 shrink-0 cursor-pointer'
       />
 
       {!isEditing ? (
