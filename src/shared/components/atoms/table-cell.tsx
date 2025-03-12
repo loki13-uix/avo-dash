@@ -158,7 +158,7 @@ const TableCell = ({
         />
       ) : selectDropdown ? (
         <Select value={defaultValue} onValueChange={handleValueChange}>
-          <SelectTrigger className='shadow-none p-0 h-auto bg-transparent w-full'>
+          <SelectTrigger className='shadow-none p-0 min-h-8 bg-transparent w-full'>
             <span>{selectedOption?.label}</span>
           </SelectTrigger>
           <SelectContent>

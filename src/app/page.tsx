@@ -7,7 +7,8 @@ import {
   SIDEBAR_MAX_SIZE,
   SIDEBAR_MIN_SIZE,
 } from '@/constants/constants'
-import { folderTree } from '@/constants/tree-data'
+import type { IconName } from '@/constants/icons'
+import { type TreeNode, folderTree } from '@/constants/tree-data'
 import { Button } from '@/shared/components/atoms/button'
 import { Icon } from '@/shared/components/atoms/icon'
 import TableCell from '@/shared/components/atoms/table-cell'
@@ -22,44 +23,68 @@ import {
 import useFileStore from '@/shared/store/store'
 
 import { Fragment, useEffect, useRef, useState } from 'react'
-const trees = [folderTree, folderTree, folderTree]
+const trees: {
+  id: number
+  headerIcon: IconName
+  headerText: string
+  treeNodes: TreeNode[]
+}[] = [
+  {
+    id: 0,
+    headerIcon: 'repository',
+    headerText: 'Elements',
+    treeNodes: folderTree,
+  },
+  {
+    id: 1,
+    headerIcon: 'test-case',
+    headerText: 'Test Cases',
+    treeNodes: folderTree,
+  },
+  {
+    id: 2,
+    headerIcon: 'flow',
+    headerText: 'E2E Flows',
+    treeNodes: folderTree,
+  },
+]
 
 export default function Home() {
   const [expandedIndices, setExpandedIndices] = useState<number[]>([0])
   const panelRefs = useRef<(HTMLDivElement | null)[]>([null, null, null])
 
-  const handleExpand = (index: number) => {
-    setExpandedIndices((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
-    )
-  }
-
-  const handleCollapse = (index: number) => {
-    setExpandedIndices((prev) => prev.filter((indices) => indices !== index))
+  const handlePanelResize = (id: number, expanded: boolean) => {
+    const resizablePanel = panelRefs.current[id]?.closest('[data-panel]')
+    if (resizablePanel && resizablePanel instanceof HTMLElement) {
+      resizablePanel.style.flex = expanded ? '1 1 180px' : '0 0 50px'
+    }
   }
 
   useEffect(() => {
-    panelRefs.current.forEach((panel, index) => {
-      if (panel) {
-        const resizablePanel = panel.closest('[data-panel]')
-        if (resizablePanel && resizablePanel instanceof HTMLElement) {
-          if (!expandedIndices.includes(index)) {
-            resizablePanel.style.flexGrow = '0'
-            resizablePanel.style.flexShrink = '0'
-            resizablePanel.style.flexBasis = '50px'
-          } else {
-            resizablePanel.style.flexGrow = '1'
-            resizablePanel.style.flexShrink = '1'
-            resizablePanel.style.flexBasis = '50px'
-            resizablePanel.style.maxHeight = '78%'
-          }
-        }
+    panelRefs.current.forEach((ref, index) => {
+      const resizablePanel = ref?.closest('[data-panel]')
+      if (resizablePanel && resizablePanel instanceof HTMLElement) {
+        resizablePanel.style.flexBasis = index === 0 ? '180px' : '50px'
+        resizablePanel.style.flexGrow = '0'
+        resizablePanel.style.flexShrink = '0'
       }
     })
-  }, [expandedIndices])
+  }, [])
 
-  const setPanelRef = (index: number) => (el: HTMLDivElement | null) => {
-    panelRefs.current[index] = el
+  const handleExpand = (id: number) => {
+    setExpandedIndices((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    )
+    handlePanelResize(id, true)
+  }
+
+  const handleCollapse = (id: number) => {
+    setExpandedIndices((prev) => prev.filter((indices) => indices !== id))
+    handlePanelResize(id, false)
+  }
+
+  const setPanelRef = (id: number) => (el: HTMLDivElement | null) => {
+    panelRefs.current[id] = el
   }
 
   const selectedFile = useFileStore((state) => state.selectedFile)
@@ -82,7 +107,7 @@ export default function Home() {
           defaultSize={SIDEBAR_DEFAULT_SIZE}
           className='z-1 shadow-[0px_15px_40px_0px_rgba(202,202,213,0.55)]'
         >
-          <div className='shadow-xl select-none flex h-screen flex-col overflow-auto'>
+          <div className='shadow-xl select-none flex h-dvh flex-col overflow-auto'>
             <ResizablePanelGroup direction='vertical' className='h-full'>
               <TableCell
                 isHeader
@@ -91,24 +116,31 @@ export default function Home() {
                 title='Web Project'
                 showIcon
               />
-              <div className='h-[calc(100vh-100px)] overflow-auto flex flex-col'>
+              <div className='h-[calc(100vh-100px)] 2xl:h-[calc(100vh-80px)] overflow-auto flex flex-col'>
                 {trees.map((tree, index) => (
-                  <Fragment key={index}>
+                  <Fragment key={tree.id}>
                     <ResizablePanel
-                      minSize={FOLDER_TREE_MIN_SIZE}
+                      minSize={
+                        expandedIndices.includes(tree.id)
+                          ? FOLDER_TREE_MIN_SIZE
+                          : 1
+                      }
                       defaultSize={
-                        expandedIndices.includes(index)
+                        expandedIndices.includes(tree.id)
                           ? FOLDER_TREE_DEFAULT_SIZE
                           : FOLDER_TREE_MIN_SIZE
                       }
+                      className='!min-h-[50px]'
                     >
-                      <div ref={setPanelRef(index)} className='h-full'>
+                      <div ref={setPanelRef(tree.id)} className='h-full'>
                         <TreeWrapper
-                          key={index}
-                          initialTreeNodes={tree}
-                          isExpanded={expandedIndices.includes(index)}
-                          onExpand={() => handleExpand(index)}
-                          onCollapse={() => handleCollapse(index)}
+                          key={tree.id}
+                          initialTreeNodes={tree.treeNodes}
+                          isExpanded={expandedIndices.includes(tree.id)}
+                          onExpand={() => handleExpand(tree.id)}
+                          onCollapse={() => handleCollapse(tree.id)}
+                          headerIcon={tree.headerIcon}
+                          headerText={tree.headerText}
                         />
                       </div>
                     </ResizablePanel>

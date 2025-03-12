@@ -1,3 +1,4 @@
+import type { IconName } from '@/constants/icons'
 import type { TreeNode } from '@/constants/tree-data'
 import TextField from '@/shared/components/atoms/text-field'
 import Tree from '@/shared/components/atoms/tree'
@@ -9,6 +10,8 @@ interface TreeWrapperProps {
   isExpanded: boolean
   onExpand: () => void
   onCollapse: () => void
+  headerIcon?: IconName
+  headerText?: string
 }
 
 function TreeWrapper({
@@ -16,6 +19,8 @@ function TreeWrapper({
   isExpanded,
   onExpand,
   onCollapse,
+  headerIcon,
+  headerText,
 }: TreeWrapperProps) {
   const handleToggle = () => {
     if (isExpanded) {
@@ -28,7 +33,13 @@ function TreeWrapper({
   return (
     <TreeProvider initialTreeNodes={initialTreeNodes}>
       <div className='flex flex-col gap-2 p-3 transition-all duration-250 h-full'>
-        <TreeHeader isExpanded={isExpanded} setIsExpanded={handleToggle} />
+        <TreeHeader
+          isExpanded={isExpanded}
+          setIsExpanded={handleToggle}
+          iconName={headerIcon}
+          headerText={headerText}
+          iconClassName='text-grey-12'
+        />
         {isExpanded && (
           <>
             <TextField
