@@ -43,6 +43,11 @@ const meta: Meta<typeof DataTable> = {
         disable: true,
       },
     },
+    className: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 

@@ -25,6 +25,31 @@ const meta: Meta<typeof CheckBox> = {
       },
       options: ['left', 'right'],
     },
+    ref: {
+      table: {
+        disable: true,
+      },
+    },
+    labelProps: {
+      table: {
+        disable: true,
+      },
+    },
+    id: {
+      table: {
+        disable: true,
+      },
+    },
+    className: {
+      table: {
+        disable: true,
+      },
+    },
+    checkboxProps: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 

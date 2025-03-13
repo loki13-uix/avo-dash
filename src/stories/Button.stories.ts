@@ -37,6 +37,16 @@ const meta: Meta<typeof Button> = {
         defaultValue: { summary: 'false' },
       },
     },
+    children: {
+      table: {
+        disable: true,
+      },
+    },
+    iconClassName: {
+      table: {
+        disable: true,
+      },
+    },
     icon: {
       table: {
         disable: true,

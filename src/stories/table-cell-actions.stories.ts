@@ -80,6 +80,11 @@ const meta: Meta<typeof TableCellActions> = {
         disable: true,
       },
     },
+    className: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 

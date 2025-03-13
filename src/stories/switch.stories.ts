@@ -29,8 +29,36 @@ const meta: Meta<typeof Switch> = {
       options: ['left', 'right'],
     },
     onClick: {
+      table: {
+        disable: true,
+      },
       action: 'clicked',
       description: 'Function called when the switch is clicked',
+    },
+    ref: {
+      table: {
+        disable: true,
+      },
+    },
+    switchProps: {
+      table: {
+        disable: true,
+      },
+    },
+    id: {
+      table: {
+        disable: true,
+      },
+    },
+    className: {
+      table: {
+        disable: true,
+      },
+    },
+    labelProps: {
+      table: {
+        disable: true,
+      },
     },
   },
 }

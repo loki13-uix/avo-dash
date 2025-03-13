@@ -28,6 +28,11 @@ const meta: Meta<typeof TableCellLeading> = {
     selectedState: {
       description: 'this is selected state',
     },
+    className: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 
