@@ -26,6 +26,16 @@ const meta = {
       control: 'text',
       description: 'Input value',
     },
+    ref: {
+      table: {
+        disable: true,
+      },
+    },
+    iconClassName: {
+      table: {
+        disable: true,
+      },
+    },
   },
 } satisfies Meta<typeof TextField>
 

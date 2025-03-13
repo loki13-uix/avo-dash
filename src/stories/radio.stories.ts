@@ -32,6 +32,36 @@ const meta: Meta<typeof Radio> = {
       },
       options: ['left', 'right'],
     },
+    options: {
+      table: {
+        disable: true,
+      },
+    },
+    className: {
+      table: {
+        disable: true,
+      },
+    },
+    id: {
+      table: {
+        disable: true,
+      },
+    },
+    ref: {
+      table: {
+        disable: true,
+      },
+    },
+    radioGroupProps: {
+      table: {
+        disable: true,
+      },
+    },
+    labelProps: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 
