@@ -1,5 +1,4 @@
 import type { ApiError } from '@/api/types'
-import { wrapError } from '@/lib/utils'
 import axios, {
   type AxiosInstance,
   type AxiosRequestConfig,
@@ -65,7 +64,11 @@ export class AxiosClient {
               break
           }
 
-          console.error('API Error details:', wrapError(error))
+          console.error('API Error details:', {
+            message: error.message,
+            status: error.response?.status,
+            data: error.response?.data,
+          })
         } else {
           console.error('Unknown error:', error)
         }
@@ -175,7 +178,11 @@ export class AxiosClient {
 
   private handleError(error: unknown): ApiError {
     if (axios.isAxiosError(error)) {
-      return wrapError(error)
+      return {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      }
     }
 
     return {
