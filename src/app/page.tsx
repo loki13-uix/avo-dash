@@ -90,7 +90,7 @@ export default function Home() {
                 title='Web Project'
                 showIcon
               />
-              <div className='h-[calc(100vh-100px)] 2xl:h-[calc(100vh-80px)] overflow-auto flex flex-col'>
+              <div className='h-[calc(100vh-100px)] overflow-auto flex flex-col'>
                 {trees.map((tree, index) => (
                   <Fragment key={tree.id}>
                     <ResizablePanel
